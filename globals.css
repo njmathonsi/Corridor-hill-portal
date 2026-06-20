@@ -1,0 +1,131 @@
+/* ═══════════════════════════════════════════════════════════
+   CORRIDOR HILL — Global Design Tokens
+   app/globals.css
+═══════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Backgrounds */
+  --bg-base:    #09090b;
+  --bg-surface: #111113;
+  --bg-card:    #18181b;
+  --bg-raised:  #1f1f23;
+  --bg-hover:   #27272a;
+  --bg-active:  #2d2d32;
+
+  /* Borders */
+  --border-dim: rgba(255,255,255,0.06);
+  --border-mid: rgba(255,255,255,0.10);
+  --border-hi:  rgba(255,255,255,0.16);
+
+  /* Text */
+  --text-primary:   #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-tertiary:  #71717a;
+  --text-disabled:  #52525b;
+
+  /* Emerald — Checked In / Biometric Active / OK */
+  --emerald:      #10b981;
+  --emerald-dim:  rgba(16,185,129,0.15);
+  --emerald-ring: rgba(16,185,129,0.35);
+
+  /* Amber — Pending / Warning */
+  --amber:      #f59e0b;
+  --amber-dim:  rgba(245,158,11,0.15);
+  --amber-ring: rgba(245,158,11,0.35);
+
+  /* Blue — Primary action / Admin */
+  --blue:      #3b82f6;
+  --blue-dim:  rgba(59,130,246,0.15);
+  --blue-ring: rgba(59,130,246,0.35);
+
+  /* Rose — Danger / Not OK / Overdue */
+  --rose:      #f43f5e;
+  --rose-dim:  rgba(244,63,94,0.12);
+  --rose-ring: rgba(244,63,94,0.30);
+
+  /* Violet — Cat4 / Serious / Pro */
+  --violet:     #8b5cf6;
+  --violet-dim: rgba(139,92,246,0.15);
+  --violet-ring: rgba(139,92,246,0.35);
+
+  /* Layout */
+  --sidebar-w: 240px;
+
+  /* Radius */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 15px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg-active); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--bg-hover); }
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+/* ─── Mono utility ─── */
+.mono { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+
+/* ─── Animate fade-slide (shared page transition) ─── */
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-page { animation: fadeSlide 0.2s ease both; }
+
+/* ─── Pulse dot ─── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.75); }
+}
+.pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+/* ─── Scan ring animation ─── */
+@keyframes scanRing {
+  0%   { transform: scale(0.85); opacity: 0.6; }
+  100% { transform: scale(1.5);  opacity: 0; }
+}
+
+/* ─── Toast ─── */
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Modal ─── */
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
