@@ -1,0 +1,44 @@
+:root {
+  --bg-base: #09090b;
+  --bg-surface: #111113;
+  --bg-card: #18181b;
+  --bg-raised: #1f1f23;
+  --bg-active: #2d2d32;
+  --border-dim: rgba(255,255,255,0.06);
+  --border-mid: rgba(255,255,255,0.10);
+  --border-hi: rgba(255,255,255,0.16);
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #71717a;
+  --text-disabled: #52525b;
+  --emerald: #10b981;
+  --emerald-dim: rgba(16,185,129,0.15);
+  --emerald-ring: rgba(16,185,129,0.35);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245,158,11,0.15);
+  --amber-ring: rgba(245,158,11,0.35);
+  --blue: #3b82f6;
+  --blue-dim: rgba(59,130,246,0.15);
+  --blue-ring: rgba(59,130,246,0.35);
+  --rose: #f43f5e;
+  --rose-dim: rgba(244,63,94,0.12);
+  --rose-ring: rgba(244,63,94,0.30);
+  --violet: #8b5cf6;
+  --violet-dim: rgba(139,92,246,0.15);
+  --violet-ring: rgba(139,92,246,0.35);
+  --r-sm: 4px; --r-md: 8px; --r-lg: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg-active); border-radius: 99px; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+input, select, textarea { font-family: inherit; }
