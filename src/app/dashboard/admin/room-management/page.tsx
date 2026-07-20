@@ -33,11 +33,11 @@ export default async function RoomManagementPage() {
 
   return (
     <RoomExplorer
-      blocks={blocks ?? []}
-      units={units ?? []}
-      rooms={rooms ?? []}
-      leases={leases ?? []}
-      students={students ?? []}
+      blocks={(blocks ?? []) as any}
+      units={(units ?? []) as any}
+      rooms={(rooms ?? []) as any}
+      leases={(leases ?? []) as any}
+      students={(students ?? []) as any}
     />
   )
 }
