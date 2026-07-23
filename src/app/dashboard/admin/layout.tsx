@@ -4,25 +4,22 @@ import Link from 'next/link'
 import SignOutButton from '@/components/ui/SignOutButton'
 
 const NAV = [
-  { icon: '◈',  label: 'Overview',       href: '/dashboard/admin/overview' },
-  { icon: '🪪', label: 'Biometrics Hub', href: '/dashboard/admin/biometrics-hub' },
-  { icon: '🚪', label: 'Pass Tracker',   href: '/dashboard/admin/pass-tracker' },
-  { icon: '📋', label: 'Move-Out Audit', href: '/dashboard/admin/move-out-audit' },
-  { icon: '📥', label: 'Applications',   href: '/dashboard/admin/applications' },
-  { icon: '🏠', label: 'Room Mgmt',      href: '/dashboard/admin/room-management' },
-  { icon: '👥', label: 'Students',       href: '/dashboard/admin/students' },
-  { icon: '⚖️', label: 'Disciplinary',  href: '/dashboard/admin/disciplinary' },
+  { icon: '◈',  label: 'Overview',        href: '/dashboard/admin/overview' },
+  { icon: '🪪', label: 'Biometrics Hub',  href: '/dashboard/admin/biometrics-hub' },
+  { icon: '🚪', label: 'Pass Tracker',    href: '/dashboard/admin/pass-tracker' },
+  { icon: '📋', label: 'Move-Out Audit',  href: '/dashboard/admin/move-out-audit' },
+  { icon: '📥', label: 'Applications',    href: '/dashboard/admin/applications' },
+  { icon: '🏠', label: 'Room Mgmt',       href: '/dashboard/admin/room-management' },
+  { icon: '👥', label: 'Students',        href: '/dashboard/admin/students' },
+  { icon: '⚖️', label: 'Disciplinary',   href: '/dashboard/admin/disciplinary' },
+  { icon: '➕', label: 'Create Account',  href: '/dashboard/admin/create-account' },
 ]
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient()
   const { data: { session } } = await supabase.auth.getSession()
   if (!session) redirect('/auth/login')
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('full_name, role, email')
-    .eq('id', session.user.id)
-    .single()
+  const { data: profile } = await supabase.from('profiles').select('full_name, role, email').eq('id', session.user.id).single()
   if (profile?.role !== 'admin') redirect('/dashboard/student/home')
 
   return (
