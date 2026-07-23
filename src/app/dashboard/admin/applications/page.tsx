@@ -5,7 +5,7 @@ export default async function ApplicationsPage() {
   const supabase = createClient()
   const { data: apps } = await supabase
     .from('applications')
-    .select('id, status, academic_year, submitted_at, rejection_reason, financial_status, profiles!applications_student_id_fkey(full_name, student_number, faculty, student_year_type, funding_type, email)')
+    .select('id, status, academic_year, submitted_at, rejection_reason, student_id, profiles!applications_student_id_fkey(full_name, student_number, faculty, student_year_type, funding_type, email)')
     .order('submitted_at', { ascending: false })
 
   const statusColor: Record<string, { bg: string; color: string; border: string }> = {
@@ -35,9 +35,7 @@ export default async function ApplicationsPage() {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {(apps ?? []).length === 0 && (
-          <div style={{ textAlign: 'center', padding: 40, color: '#52525b', fontSize: 13 }}>No applications yet.</div>
-        )}
+        {(apps ?? []).length === 0 && <div style={{ textAlign: 'center', padding: 40, color: '#52525b', fontSize: 13 }}>No applications yet.</div>}
         {(apps ?? []).map(app => {
           const p = (app as any).profiles
           const c = statusColor[app.status] ?? statusColor.draft
@@ -49,30 +47,22 @@ export default async function ApplicationsPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 14, fontWeight: 700, color: '#fafafa' }}>{p?.full_name ?? '—'}</div>
-                  <div style={{ fontSize: 11, color: '#71717a', marginTop: 2 }}>
-                    {p?.student_number} · {p?.faculty} · {app.academic_year} · {p?.student_year_type === 'first_year' ? 'First Year' : 'Senior'} · {p?.funding_type ?? '—'}
-                  </div>
+                  <div style={{ fontSize: 11, color: '#71717a', marginTop: 2 }}>{p?.student_number} · {p?.faculty} · {app.academic_year} · {p?.student_year_type === 'first_year' ? 'First Year' : 'Senior'} · {p?.funding_type ?? '—'}</div>
                 </div>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                   <span style={{ padding: '4px 12px', borderRadius: 99, fontSize: 11, fontWeight: 600, background: c.bg, color: c.color, border: `1px solid ${c.border}` }}>
                     {app.status.replace('_',' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}
                   </span>
-                  <span style={{ fontSize: 11, color: '#52525b', fontFamily: 'monospace' }}>
-                    {app.submitted_at ? new Date(app.submitted_at).toLocaleDateString('en-ZA') : 'Draft'}
-                  </span>
+                  <span style={{ fontSize: 11, color: '#52525b', fontFamily: 'monospace' }}>{app.submitted_at ? new Date(app.submitted_at).toLocaleDateString('en-ZA') : 'Draft'}</span>
                 </div>
               </div>
 
-              {/* Action buttons for pending apps */}
               {(app.status === 'submitted' || app.status === 'under_review') && (
-                <ApplicationActions applicationId={app.id} studentName={p?.full_name ?? ''} />
+                <ApplicationActions applicationId={app.id} studentId={app.student_id} studentName={p?.full_name ?? ''} />
               )}
 
-              {/* Rejection reason */}
               {app.status === 'rejected' && app.rejection_reason && (
-                <div style={{ fontSize: 11, color: '#f43f5e', marginTop: 8, padding: '6px 10px', background: 'rgba(244,63,94,0.08)', borderRadius: 6 }}>
-                  Reason: {app.rejection_reason}
-                </div>
+                <div style={{ fontSize: 11, color: '#f43f5e', marginTop: 8, padding: '6px 10px', background: 'rgba(244,63,94,0.08)', borderRadius: 6 }}>Reason: {app.rejection_reason}</div>
               )}
             </div>
           )
