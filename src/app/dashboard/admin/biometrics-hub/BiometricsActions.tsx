@@ -8,9 +8,10 @@ interface Props {
   studentName: string
   isRegistered: boolean
   registrationId: string | null
+  isGuidedFlow?: boolean
 }
 
-export default function BiometricsActions({ studentId, studentName, isRegistered, registrationId }: Props) {
+export default function BiometricsActions({ studentId, studentName, isRegistered, registrationId, isGuidedFlow }: Props) {
   const [pending, startTransition] = useTransition()
   const [error, setError] = useState('')
   const supabase = createClient()
@@ -23,7 +24,6 @@ export default function BiometricsActions({ studentId, studentName, isRegistered
       const now = new Date().toISOString()
 
       if (registrationId) {
-        // Record already exists — UPDATE it directly by its own id (most reliable)
         const { error: err } = await supabase
           .from('biometric_registrations')
           .update({
@@ -35,10 +35,8 @@ export default function BiometricsActions({ studentId, studentName, isRegistered
             updated_at: now,
           })
           .eq('id', registrationId)
-
         if (err) { setError(err.message); return }
       } else {
-        // No record yet — INSERT a fresh one (only happens on first Register click)
         const { error: err } = await supabase
           .from('biometric_registrations')
           .insert({
@@ -49,8 +47,13 @@ export default function BiometricsActions({ studentId, studentName, isRegistered
             device_label: newStatus ? 'Admin Panel' : null,
             device_id: 'ADMIN-PANEL-' + studentId.slice(0, 8),
           })
-
         if (err) { setError(err.message); return }
+      }
+
+      // Chain: after registering (from guided flow), go to Documents review for this student
+      if (isGuidedFlow && newStatus) {
+        router.push(`/dashboard/admin/documents?student=${studentId}`)
+        return
       }
 
       router.refresh()
@@ -62,18 +65,9 @@ export default function BiometricsActions({ studentId, studentName, isRegistered
       <button
         onClick={handleToggle}
         disabled={pending}
-        style={{
-          padding: '5px 14px', borderRadius: 8,
-          fontSize: 11, fontWeight: 600,
-          cursor: pending ? 'not-allowed' : 'pointer',
-          border: '1px solid',
-          background: isRegistered ? 'rgba(244,63,94,0.12)' : 'rgba(16,185,129,0.12)',
-          color: isRegistered ? '#f43f5e' : '#10b981',
-          borderColor: isRegistered ? 'rgba(244,63,94,0.3)' : 'rgba(16,185,129,0.3)',
-          opacity: pending ? 0.5 : 1,
-        }}
+        style={{ padding: '5px 14px', borderRadius: 8, fontSize: 11, fontWeight: 600, cursor: pending ? 'not-allowed' : 'pointer', border: '1px solid', background: isRegistered ? 'rgba(244,63,94,0.12)' : 'rgba(16,185,129,0.12)', color: isRegistered ? '#f43f5e' : '#10b981', borderColor: isRegistered ? 'rgba(244,63,94,0.3)' : 'rgba(16,185,129,0.3)', opacity: pending ? 0.5 : 1 }}
       >
-        {pending ? '…' : isRegistered ? 'Deregister' : 'Register'}
+        {pending ? '…' : isRegistered ? 'Deregister' : isGuidedFlow ? 'Register → Continue' : 'Register'}
       </button>
       {error && <div style={{ fontSize: 10, color: '#f43f5e', marginTop: 4 }}>{error}</div>}
     </div>
