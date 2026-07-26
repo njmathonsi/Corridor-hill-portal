@@ -9,6 +9,7 @@ const NAV = [
   { icon: '🚪', label: 'Pass Tracker',    href: '/dashboard/admin/pass-tracker' },
   { icon: '📋', label: 'Move-Out Audit',  href: '/dashboard/admin/move-out-audit' },
   { icon: '📥', label: 'Applications',    href: '/dashboard/admin/applications' },
+  { icon: '🗂️', label: 'Documents', href: '/dashboard/admin/documents' },
   { icon: '🏠', label: 'Room Mgmt',       href: '/dashboard/admin/room-management' },
   { icon: '👥', label: 'Students',        href: '/dashboard/admin/students' },
   { icon: '⚖️', label: 'Disciplinary',   href: '/dashboard/admin/disciplinary' },
