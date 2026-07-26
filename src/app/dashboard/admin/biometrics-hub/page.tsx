@@ -21,7 +21,7 @@ export default async function BiometricsHubPage({ searchParams }: { searchParams
           <span style={{ fontSize: 20 }}>🪪</span>
           <div>
             <div style={{ fontSize: 13, fontWeight: 700, color: '#3b82f6' }}>Register biometrics for {guidedStudent.full_name}</div>
-            <div style={{ fontSize: 11, color: '#a1a1aa', marginTop: 2 }}>Room has been assigned. Complete onboarding by registering their biometrics below.</div>
+            <div style={{ fontSize: 11, color: '#a1a1aa', marginTop: 2 }}>Room assigned. Register biometrics, then you'll continue to document verification.</div>
           </div>
         </div>
       )}
@@ -68,7 +68,7 @@ export default async function BiometricsHubPage({ searchParams }: { searchParams
                   <td style={{ padding: '12px 16px', color: '#71717a' }}>{reg?.device_label ?? '—'}</td>
                   <td style={{ padding: '12px 16px', color: '#71717a', fontFamily: 'monospace', fontSize: 11 }}>{reg?.registered_at ? new Date(reg.registered_at).toLocaleDateString('en-ZA') : '—'}</td>
                   <td style={{ padding: '12px 16px' }}>
-                    <BiometricsActions studentId={s.id} studentName={s.full_name} isRegistered={!!isRegistered} registrationId={reg?.id ?? null} />
+                    <BiometricsActions studentId={s.id} studentName={s.full_name} isRegistered={!!isRegistered} registrationId={reg?.id ?? null} isGuidedFlow={isGuided} />
                   </td>
                 </tr>
               )
