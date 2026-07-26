@@ -7,6 +7,7 @@ const NAV = [
   { icon: '◈',  label: 'Dashboard',   href: '/dashboard/student/home' },
   { icon: '📥', label: 'Apply',        href: '/dashboard/student/apply' },
   { icon: '👤', label: 'My Profile',   href: '/dashboard/student/onboarding/step-1' },
+  { icon: '📄', label: 'My Documents', href: '/dashboard/student/documents' },
   { icon: '📜', label: 'Code of Conduct', href: '/dashboard/student/onboarding/step-4' },
   { icon: '🏠', label: 'My Room',     href: '/dashboard/student/my-room' },
   { icon: '🚪', label: 'My Passes',   href: '/dashboard/student/my-passes' },
