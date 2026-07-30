@@ -114,9 +114,9 @@ export default async function OverviewPage() {
           </Link>
         ))}
       </div>
-    </div>
-  )
-  <div style={{ marginTop: 20 }}>
+      <div style={{ marginTop: 20 }}>
   <QuickAccessLineNav />
 </div>
+    </div>
+  )
 }
