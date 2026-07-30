@@ -1,4 +1,5 @@
-import { createClient } from '@/lib/supabase/server'
+import { QuickAccessLineNav } from '@/components/effects/QuickAccessLineNav'
+import { QuickAccessLineNav } from '@/components/effects/QuickAccessLineNav'import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 
 export default async function OverviewPage() {
@@ -115,4 +116,7 @@ export default async function OverviewPage() {
       </div>
     </div>
   )
+  <div style={{ marginTop: 20 }}>
+  <QuickAccessLineNav />
+</div>
 }
