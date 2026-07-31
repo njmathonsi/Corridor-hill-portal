@@ -113,7 +113,6 @@ export default async function OverviewPage() {
           </Link>
         ))}
       </div>
-</div>
     </div>
   )
 }
