@@ -5,10 +5,10 @@ import './LineSidebar.css'
 const FALLOFF_CURVES = { linear:p=>p, smooth:p=>p*p*(3-2*p), sharp:p=>p*p*p }
 
 export default function LineSidebar({
-  items=[], accentColor='#A855F7', textColor='#c4c4c4', markerColor='#6c6c6c',
+  items=[], icons=null, accentColor='#A855F7', textColor='#c4c4c4', markerColor='#6c6c6c',
   showIndex=true, showMarker=true, proximityRadius=100, maxShift=30, falloff='smooth',
   markerLength=60, markerGap=0, tickScale=0.5, scaleTick=true, itemGap=20, fontSize=1.1,
-  smoothing=100, defaultActive=null, onItemClick, className='',
+  smoothing=100, defaultActive=null, activeIndex: controlledActive, onItemClick, className='',
 }) {
   const listRef = useRef(null)
   const itemRefs = useRef([])
@@ -16,9 +16,10 @@ export default function LineSidebar({
   const currentRef = useRef([])
   const rafRef = useRef(null)
   const lastRef = useRef(0)
-  const activeRef = useRef(defaultActive)
+  const activeRef = useRef(controlledActive ?? defaultActive)
   const smoothingRef = useRef(smoothing)
-  const [activeIndex, setActiveIndex] = useState(defaultActive)
+  const [internalActive, setInternalActive] = useState(defaultActive)
+  const activeIndex = controlledActive ?? internalActive
   activeRef.current = activeIndex
   smoothingRef.current = smoothing
 
@@ -67,9 +68,9 @@ export default function LineSidebar({
   }, [startLoop])
 
   const handleClick = useCallback((index,label) => {
-    setActiveIndex(index)
+    if (controlledActive === undefined) setInternalActive(index)
     onItemClick?.(index,label)
-  }, [onItemClick])
+  }, [onItemClick, controlledActive])
 
   useEffect(() => { startLoop() }, [activeIndex, startLoop])
   useEffect(() => () => { if(rafRef.current!=null) cancelAnimationFrame(rafRef.current) }, [])
@@ -89,6 +90,7 @@ export default function LineSidebar({
               aria-current={activeIndex===index?'true':undefined} onClick={()=>handleClick(index,label)}>
             {showMarker && <span className="line-sidebar__marker" aria-hidden="true" />}
             <span className="line-sidebar__label">
+              {icons?.[index] && <span className="line-sidebar__icon">{icons[index]}</span>}
               {showIndex && <span className="line-sidebar__index">{String(index+1).padStart(2,'0')}</span>}
               <span className="line-sidebar__text">{label}</span>
             </span>
