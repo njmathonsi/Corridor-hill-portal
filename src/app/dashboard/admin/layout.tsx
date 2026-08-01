@@ -1,4 +1,4 @@
-Aimport { createClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import SignOutButton from '@/components/ui/SignOutButton'
 import { SidebarLineNav } from '@/components/effects/SidebarLineNav'
