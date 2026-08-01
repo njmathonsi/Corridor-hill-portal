@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+Aimport { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import SignOutButton from '@/components/ui/SignOutButton'
 import { SidebarLineNav } from '@/components/effects/SidebarLineNav'
@@ -24,32 +24,32 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   if (profile?.role !== 'admin') redirect('/dashboard/student/home')
 
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: '#09090b' }}>
-      <aside style={{ width: 220, minWidth: 220, height: '100vh', background: '#111113', borderRight: '1px solid rgba(255,255,255,0.06)', display: 'flex', flexDirection: 'column', position: 'fixed', left: 0, top: 0, zIndex: 50 }}>
-        <div style={{ padding: '18px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: 10 }}>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+      <aside className="glass-sidebar" style={{ width: 220, minWidth: 220, height: '100vh', display: 'flex', flexDirection: 'column', position: 'fixed', left: 0, top: 0, zIndex: 50 }}>
+        <div style={{ padding: '18px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(160deg,#2E4FCC,#6C2BD9,#A78BFA)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 800, color: '#fff', flexShrink: 0 }}>CH</div>
           <div>
             <div style={{ fontSize: 12, fontWeight: 700, color: '#fafafa' }}>Corridor Hill</div>
-            <div style={{ fontSize: 9, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Admin Portal</div>
+            <div style={{ fontSize: 9, color: '#a1a1aa', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Admin Portal</div>
           </div>
         </div>
 
+        {/* Sidebar nav logic/animation UNCHANGED — only the container wrapper became glass */}
         <nav style={{ padding: '10px 16px', flex: 1, overflowY: 'auto' }}>
           <SidebarLineNav items={NAV} />
         </nav>
 
-        <div style={{ padding: '10px 8px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <div style={{ padding: '8px 10px', borderRadius: 8, background: '#1f1f23', marginBottom: 8 }}>
+        <div style={{ padding: '10px 8px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+          <div className="glass-card" style={{ padding: '8px 10px', marginBottom: 8, animation: 'none' }}>
             <div style={{ fontSize: 11, fontWeight: 600, color: '#fafafa', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{profile?.full_name ?? 'Admin'}</div>
-            <div style={{ fontSize: 10, color: '#71717a' }}>Administrator</div>
+            <div style={{ fontSize: 10, color: '#a1a1aa' }}>Administrator</div>
           </div>
           <SignOutButton />
         </div>
       </aside>
-      <div style={{ marginLeft: 220, flex: 1, overflowY: 'auto', background: '#09090b' }}>
+      <div style={{ marginLeft: 220, flex: 1, overflowY: 'auto' }}>
         {children}
       </div>
     </div>
   )
 }
-1
