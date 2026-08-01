@@ -1,0 +1,64 @@
+/* ── Glassmorphism System — append to existing src/app/globals.css ── */
+
+.app-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: url('/images/building-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.app-bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(1px);
+}
+
+.glass-card {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  animation: glassPopIn 300ms ease both;
+  animation-delay: calc(var(--stagger, 0) * 60ms);
+}
+
+.glass-sidebar {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-btn {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: transform 150ms ease, background 150ms ease, box-shadow 150ms ease;
+  cursor: pointer;
+}
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+.glass-btn:active {
+  transform: scale(0.95);
+}
+
+@keyframes glassPopIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-card { animation: none; }
+}
