@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import TransitForm from './TransitForm'
 import CheckInButton from './CheckInButton'
+import { AlertTriangle, ArrowUpRight } from 'lucide-react'
 
 export default async function PassTrackerPage() {
   const supabase = createClient()
@@ -21,8 +22,8 @@ export default async function PassTrackerPage() {
       <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Log student departures · Manage the live building manifest</p>
 
       {overdue > 0 && (
-        <div style={{ marginBottom: 20, padding: '12px 16px', borderRadius: 10, background: 'rgba(244,63,94,0.1)', border: '1px solid rgba(244,63,94,0.3)', color: '#f43f5e', fontSize: 13, fontWeight: 600 }}>
-          ⚠️ {overdue} student{overdue > 1 ? 's' : ''} overdue for return — verify their whereabouts
+        <div className="glass-card" style={{ marginBottom: 20, padding: '12px 16px', background: 'rgba(244,63,94,0.1)', border: '1px solid rgba(244,63,94,0.3)', color: '#f43f5e', fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <AlertTriangle className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> {overdue} student{overdue > 1 ? 's' : ''} overdue for return — verify their whereabouts
         </div>
       )}
 
@@ -31,8 +32,8 @@ export default async function PassTrackerPage() {
           { label: 'Currently Outside', value: out,     color: '#f59e0b' },
           { label: 'Overdue',           value: overdue, color: '#f43f5e' },
           { label: 'Total Passes',      value: passes?.length ?? 0, color: '#fafafa' },
-        ].map(t => (
-          <div key={t.label} style={{ flex: 1, background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 18px' }}>
+        ].map((t, i) => (
+          <div key={t.label} className="glass-card" style={{ flex: 1, padding: '14px 18px', ['--stagger' as any]: i }}>
             <div style={{ fontSize: 28, fontWeight: 800, color: t.color }}>{t.value}</div>
             <div style={{ fontSize: 10, color: '#71717a', marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{t.label}</div>
           </div>
@@ -43,7 +44,7 @@ export default async function PassTrackerPage() {
         <TransitForm students={students ?? []} />
 
         {/* Live manifest table */}
-        <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, overflow: 'hidden' }}>
+        <div className="glass-card" style={{ overflow: 'hidden', ['--stagger' as any]: 3 }}>
           <div style={{ padding: '14px 18px', borderBottom: '1px solid rgba(255,255,255,0.06)', fontSize: 13, fontWeight: 600 }}>Live Building Manifest</div>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
             <thead>
@@ -70,8 +71,8 @@ export default async function PassTrackerPage() {
                   </td>
                   <td style={{ padding: '10px 16px', color: '#a1a1aa', maxWidth: 140, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.destination ?? '—'}</td>
                   <td style={{ padding: '10px 16px' }}>
-                    <span style={{ padding: '3px 8px', borderRadius: 99, fontSize: 10, fontWeight: 600, background: p.pass_status === 'overdue' ? 'rgba(244,63,94,0.15)' : 'rgba(245,158,11,0.15)', color: p.pass_status === 'overdue' ? '#f43f5e' : '#f59e0b', border: `1px solid ${p.pass_status === 'overdue' ? 'rgba(244,63,94,0.3)' : 'rgba(245,158,11,0.3)'}` }}>
-                      {p.pass_status === 'overdue' ? '⚠ Overdue' : '→ Out'}
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 99, fontSize: 10, fontWeight: 600, background: p.pass_status === 'overdue' ? 'rgba(244,63,94,0.15)' : 'rgba(245,158,11,0.15)', color: p.pass_status === 'overdue' ? '#f43f5e' : '#f59e0b', border: `1px solid ${p.pass_status === 'overdue' ? 'rgba(244,63,94,0.3)' : 'rgba(245,158,11,0.3)'}` }}>
+                      {p.pass_status === 'overdue' ? <AlertTriangle className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> : <ArrowUpRight className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />} {p.pass_status === 'overdue' ? 'Overdue' : 'Out'}
                     </span>
                   </td>
                   <td style={{ padding: '10px 16px' }}>

@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
+import { Plus, AlertTriangle } from 'lucide-react'
 
 export default async function DisciplinaryPage() {
   const supabase = createClient()
@@ -20,7 +21,9 @@ export default async function DisciplinaryPage() {
           <p style={{ fontSize: 13, color: '#71717a' }}>Code of Conduct enforcement · Offence tracking · Escalation management</p>
         </div>
         <Link href="/dashboard/admin/disciplinary/log">
-          <button style={{ padding: '8px 18px', borderRadius: 8, background: 'rgba(244,63,94,0.15)', color: '#f43f5e', border: '1px solid rgba(244,63,94,0.3)', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>+ Log Offence</button>
+          <button className="glass-btn group" style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 18px', borderRadius: 8, color: '#f43f5e', border: '1px solid rgba(244,63,94,0.3)', fontSize: 13, fontWeight: 600 }}>
+            <Plus className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Log Offence
+          </button>
         </Link>
       </div>
 
@@ -29,8 +32,8 @@ export default async function DisciplinaryPage() {
           { label: 'Total Offences', value: (summary ?? []).reduce((s, r) => s + Number(r.total_offences ?? 0), 0), color: '#fafafa' },
           { label: 'Total Fines', value: `R ${totalFines.toFixed(2)}`, color: '#f59e0b' },
           { label: 'Escalation Flags', value: flagged, color: '#f43f5e' },
-        ].map(t => (
-          <div key={t.label} style={{ flex: 1, background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 18px' }}>
+        ].map((t, i) => (
+          <div key={t.label} className="glass-card" style={{ flex: 1, padding: '14px 18px', ['--stagger' as any]: i }}>
             <div style={{ fontSize: 26, fontWeight: 800, color: t.color }}>{t.value}</div>
             <div style={{ fontSize: 10, color: '#71717a', marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{t.label}</div>
           </div>
@@ -38,7 +41,7 @@ export default async function DisciplinaryPage() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 16 }}>
-        <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, overflow: 'hidden' }}>
+        <div className="glass-card" style={{ overflow: 'hidden', ['--stagger' as any]: 3 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
             <thead><tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
               {['Student', 'Offences', 'Fines', 'Last Incident', 'Flags'].map(h => (
@@ -67,7 +70,7 @@ export default async function DisciplinaryPage() {
           </table>
         </div>
 
-        <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 16 }}>
+        <div className="glass-card" style={{ padding: 16, ['--stagger' as any]: 4 }}>
           <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 12 }}>Recent Offences</div>
           {(recent ?? []).length === 0 ? (
             <div style={{ color: '#52525b', fontSize: 12, textAlign: 'center', padding: 20 }}>No recent offences.</div>
@@ -79,7 +82,11 @@ export default async function DisciplinaryPage() {
               </div>
               <div style={{ fontSize: 11, color: '#a1a1aa' }}>{o.profiles?.full_name}</div>
               {Number(o.fine_amount_applied) > 0 && <div style={{ fontSize: 11, color: '#f59e0b', fontWeight: 600, marginTop: 4 }}>Fine: R {Number(o.fine_amount_applied).toFixed(2)}</div>}
-              {o.three_concurrent_flag && <div style={{ fontSize: 10, color: '#f43f5e', fontWeight: 700, marginTop: 4 }}>⚠ 3-Concurrent Rule — External DC</div>}
+              {o.three_concurrent_flag && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, color: '#f43f5e', fontWeight: 700, marginTop: 4 }}>
+                  <AlertTriangle className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> 3-Concurrent Rule — External DC
+                </div>
+              )}
             </div>
           ))}
         </div>

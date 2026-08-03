@@ -2,6 +2,7 @@
 import { useState, useTransition } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { Plus, X, Check, AlertTriangle, ArrowLeft, ArrowRight, ClipboardList } from 'lucide-react'
 
 const ITEMS = [
   { key: 'main_door_handle', name: 'Main Door Handle',    cat: 'Entry' },
@@ -110,20 +111,22 @@ export default function NewInspectionModal({ students, rooms }: { students: Stud
 
   return (
     <>
-      <button onClick={() => setOpen(true)} style={{ padding: '8px 18px', borderRadius: 8, background: 'rgba(59,130,246,0.15)', color: '#3b82f6', border: '1px solid rgba(59,130,246,0.3)', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
-        + New Inspection
+      <button onClick={() => setOpen(true)} className="glass-btn group" style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 18px', borderRadius: 8, color: '#3b82f6', border: '1px solid rgba(59,130,246,0.3)', fontSize: 13, fontWeight: 600 }}>
+        <Plus className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> New Inspection
       </button>
 
       {open && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: 20 }} onClick={e => e.target === e.currentTarget && closeAndReset()}>
-          <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 14, width: '100%', maxWidth: 620, maxHeight: '90vh', display: 'flex', flexDirection: 'column' }}>
+          <div className="glass-card" style={{ width: '100%', maxWidth: 620, maxHeight: '90vh', display: 'flex', flexDirection: 'column', animation: 'none' }}>
             {/* Header */}
             <div style={{ padding: '18px 22px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
               <div>
                 <div style={{ fontSize: 16, fontWeight: 700 }}>New Inspection</div>
                 <div style={{ fontSize: 11, color: '#71717a', marginTop: 2 }}>Step {step} of 3</div>
               </div>
-              <button onClick={closeAndReset} style={{ background: 'none', border: 'none', color: '#71717a', cursor: 'pointer', fontSize: 18 }}>✕</button>
+              <button onClick={closeAndReset} className="group" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+                <X className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
+              </button>
             </div>
 
             {/* Step indicators */}
@@ -131,7 +134,7 @@ export default function NewInspectionModal({ students, rooms }: { students: Stud
               {[{n:1,l:'Room & Inspector'},{n:2,l:'Item Checklist'},{n:3,l:'Review & Submit'}].map(s => (
                 <div key={s.n} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                   <div style={{ width: 24, height: 24, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, background: step > s.n ? '#10b981' : step === s.n ? 'rgba(59,130,246,0.2)' : '#27272a', color: step > s.n ? '#fff' : step === s.n ? '#3b82f6' : '#71717a', border: `1.5px solid ${step > s.n ? '#10b981' : step === s.n ? '#3b82f6' : 'rgba(255,255,255,0.1)'}` }}>
-                    {step > s.n ? '✓' : s.n}
+                    {step > s.n ? <Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> : s.n}
                   </div>
                   <span style={{ fontSize: 11, color: step === s.n ? '#fafafa' : '#71717a' }}>{s.l}</span>
                   {s.n < 3 && <div style={{ width: 20, height: 1, background: 'rgba(255,255,255,0.08)', margin: '0 4px' }} />}
@@ -185,8 +188,8 @@ export default function NewInspectionModal({ students, rooms }: { students: Stud
                               <span style={{ fontSize: 12, color: '#fafafa' }}>{item.name}</span>
                               <div style={{ display: 'flex', gap: 6 }}>
                                 {(['OK_Out','Not_OK'] as Cond[]).map(c => (
-                                  <button key={c} onClick={() => setCond(item.key, c)} style={{ padding: '3px 10px', borderRadius: 6, fontSize: 10, fontWeight: 600, cursor: 'pointer', border: '1px solid', background: cond === c ? (c === 'OK_Out' ? 'rgba(16,185,129,0.2)' : 'rgba(244,63,94,0.2)') : 'transparent', color: cond === c ? (c === 'OK_Out' ? '#10b981' : '#f43f5e') : '#71717a', borderColor: cond === c ? (c === 'OK_Out' ? 'rgba(16,185,129,0.4)' : 'rgba(244,63,94,0.4)') : 'rgba(255,255,255,0.08)' }}>
-                                    {c === 'OK_Out' ? '✓ OK' : '✕ Not OK'}
+                                  <button key={c} onClick={() => setCond(item.key, c)} className="glass-btn group" style={{ display: 'flex', alignItems: 'center', gap: 3, padding: '3px 10px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: cond === c ? (c === 'OK_Out' ? 'rgba(16,185,129,0.2)' : 'rgba(244,63,94,0.2)') : 'transparent', color: cond === c ? (c === 'OK_Out' ? '#10b981' : '#f43f5e') : '#71717a', border: `1px solid ${cond === c ? (c === 'OK_Out' ? 'rgba(16,185,129,0.4)' : 'rgba(244,63,94,0.4)') : 'rgba(255,255,255,0.08)'}` }}>
+                                    {c === 'OK_Out' ? <><Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> OK</> : <><X className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Not OK</>}
                                   </button>
                                 ))}
                               </div>
@@ -222,7 +225,9 @@ export default function NewInspectionModal({ students, rooms }: { students: Stud
                   {/* Damage summary */}
                   {ITEMS.filter(i => conditions[i.key]?.cond === 'Not_OK').length > 0 && (
                     <div style={{ background: 'rgba(244,63,94,0.08)', border: '1px solid rgba(244,63,94,0.3)', borderRadius: 10, padding: 14, marginBottom: 14 }}>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: '#f43f5e', marginBottom: 8 }}>⚠ Damaged Items</div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, fontWeight: 700, color: '#f43f5e', marginBottom: 8 }}>
+                        <AlertTriangle className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Damaged Items
+                      </div>
                       {ITEMS.filter(i => conditions[i.key]?.cond === 'Not_OK').map(item => (
                         <div key={item.key} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, padding: '4px 0', borderBottom: '1px solid rgba(244,63,94,0.15)' }}>
                           <span style={{ color: '#fafafa' }}>{item.name}</span>
@@ -254,16 +259,18 @@ export default function NewInspectionModal({ students, rooms }: { students: Stud
             {/* Footer */}
             <div style={{ padding: '14px 22px', borderTop: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', flexShrink: 0 }}>
               {step > 1 ? (
-                <button onClick={() => setStep(s => s - 1)} style={{ padding: '8px 16px', borderRadius: 8, background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', color: '#71717a', fontSize: 12, cursor: 'pointer' }}>← Back</button>
+                <button onClick={() => setStep(s => s - 1)} className="glass-btn group" style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '8px 16px', borderRadius: 8, fontSize: 12 }}>
+                  <ArrowLeft className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Back
+                </button>
               ) : <div />}
 
               {step < 3 ? (
-                <button onClick={() => setStep(s => s + 1)} disabled={step === 1 && (!roomId || !inspector)} style={{ padding: '8px 20px', borderRadius: 8, background: (step === 1 && (!roomId || !inspector)) ? '#27272a' : '#3b82f6', color: (step === 1 && (!roomId || !inspector)) ? '#52525b' : '#fff', border: 'none', fontSize: 13, fontWeight: 600, cursor: (step === 1 && (!roomId || !inspector)) ? 'not-allowed' : 'pointer' }}>
-                  Next →
+                <button onClick={() => setStep(s => s + 1)} disabled={step === 1 && (!roomId || !inspector)} className="glass-btn group" style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '8px 20px', borderRadius: 8, background: (step === 1 && (!roomId || !inspector)) ? '#27272a' : '#3b82f6', color: (step === 1 && (!roomId || !inspector)) ? '#52525b' : '#fff', border: 'none', fontSize: 13, fontWeight: 600, cursor: (step === 1 && (!roomId || !inspector)) ? 'not-allowed' : 'pointer' }}>
+                  Next <ArrowRight className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
                 </button>
               ) : (
-                <button onClick={handleSubmit} disabled={pending} style={{ padding: '8px 20px', borderRadius: 8, background: '#10b981', color: '#fff', border: 'none', fontSize: 13, fontWeight: 700, cursor: 'pointer', opacity: pending ? 0.5 : 1 }}>
-                  {pending ? 'Saving…' : '📋 Finalise Report'}
+                <button onClick={handleSubmit} disabled={pending} className="glass-btn group" style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 20px', borderRadius: 8, background: '#10b981', color: '#fff', border: 'none', fontSize: 13, fontWeight: 700, cursor: 'pointer', opacity: pending ? 0.5 : 1 }}>
+                  {pending ? 'Saving…' : <><ClipboardList className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Finalise Report</>}
                 </button>
               )}
             </div>

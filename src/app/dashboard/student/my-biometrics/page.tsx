@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import { Contact, Check, AlertTriangle } from 'lucide-react'
 
 export default async function MyBiometricsPage() {
   const supabase = createClient()
@@ -18,8 +19,10 @@ export default async function MyBiometricsPage() {
       <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Your biometric registration status and device information</p>
 
       {(!bio || bio.length === 0) ? (
-        <div style={{ background: '#18181b', border: '1px solid rgba(245,158,11,0.3)', borderRadius: 12, padding: 28, textAlign: 'center' }}>
-          <div style={{ fontSize: 36, marginBottom: 12 }}>🪪</div>
+        <div className="glass-card" style={{ border: '1px solid rgba(245,158,11,0.3)', padding: 28, textAlign: 'center' }}>
+          <div style={{ marginBottom: 12, display: 'flex', justifyContent: 'center' }}>
+            <Contact className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
+          </div>
           <div style={{ fontSize: 16, fontWeight: 700, color: '#f59e0b', marginBottom: 8 }}>Not Registered</div>
           <div style={{ fontSize: 13, color: '#a1a1aa', lineHeight: 1.6 }}>
             You have not completed biometric registration yet.<br/>
@@ -29,10 +32,11 @@ export default async function MyBiometricsPage() {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {bio.map((b, i) => (
-            <div key={i} style={{ background: '#18181b', border: `1px solid ${b.biometric_registered ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}`, borderRadius: 12, padding: 20 }}>
+            <div key={i} className="glass-card" style={{ border: `1px solid ${b.biometric_registered ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}`, padding: 20, ['--stagger' as any]: i }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-                <div style={{ fontSize: 16, fontWeight: 700, color: b.biometric_registered ? '#10b981' : '#f59e0b' }}>
-                  {b.biometric_registered ? '✓ Registered' : '⚠ Pending'}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 16, fontWeight: 700, color: b.biometric_registered ? '#10b981' : '#f59e0b' }}>
+                  {b.biometric_registered ? <Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> : <AlertTriangle className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />}
+                  {b.biometric_registered ? 'Registered' : 'Pending'}
                 </div>
                 <span style={{ padding: '3px 10px', borderRadius: 99, fontSize: 11, fontWeight: 600, background: b.sync_status === 'synced' ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.15)', color: b.sync_status === 'synced' ? '#10b981' : '#f59e0b', border: `1px solid ${b.sync_status === 'synced' ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}` }}>
                   {b.sync_status}

@@ -25,7 +25,7 @@ export default function CheckInButton({ studentId, studentName, keyNumber }: { s
   }
 
   return (
-    <button onClick={handleCheckIn} disabled={pending} style={{ padding: '5px 12px', borderRadius: 8, background: 'transparent', border: '1px solid rgba(255,255,255,0.12)', color: '#a1a1aa', fontSize: 11, cursor: pending ? 'not-allowed' : 'pointer', opacity: pending ? 0.5 : 1 }}>
+    <button onClick={handleCheckIn} disabled={pending} className="glass-btn" style={{ padding: '5px 12px', borderRadius: 8, fontSize: 11, opacity: pending ? 0.5 : 1 }}>
       {pending ? '…' : 'Check In'}
     </button>
   )

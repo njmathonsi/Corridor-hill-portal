@@ -22,11 +22,11 @@ export default async function ApplicationsPage() {
       <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Review, approve, and manage student accommodation applications</p>
 
       <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
-        {['submitted','under_review','approved','rejected'].map(s => {
+        {['submitted','under_review','approved','rejected'].map((s, i) => {
           const count = (apps ?? []).filter(a => a.status === s).length
           const c = statusColor[s]
           return (
-            <div key={s} style={{ flex: 1, background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 18px' }}>
+            <div key={s} className="glass-card" style={{ flex: 1, padding: '14px 18px', ['--stagger' as any]: i }}>
               <div style={{ fontSize: 26, fontWeight: 800, color: c.color }}>{count}</div>
               <div style={{ fontSize: 10, color: '#71717a', marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{s.replace('_',' ')}</div>
             </div>
@@ -36,11 +36,11 @@ export default async function ApplicationsPage() {
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {(apps ?? []).length === 0 && <div style={{ textAlign: 'center', padding: 40, color: '#52525b', fontSize: 13 }}>No applications yet.</div>}
-        {(apps ?? []).map(app => {
+        {(apps ?? []).map((app, i) => {
           const p = (app as any).profiles
           const c = statusColor[app.status] ?? statusColor.draft
           return (
-            <div key={app.id} style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '16px 20px' }}>
+            <div key={app.id} className="glass-card" style={{ padding: '16px 20px', ['--stagger' as any]: i + 4 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: app.status === 'submitted' || app.status === 'under_review' ? 14 : 0 }}>
                 <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg,#3b82f6,#8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: '#fff', flexShrink: 0 }}>
                   {p?.full_name?.split(' ').slice(0,2).map((n: string) => n[0]).join('') ?? '?'}

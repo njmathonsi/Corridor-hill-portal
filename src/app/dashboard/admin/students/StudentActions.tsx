@@ -20,7 +20,8 @@ export default function StudentActions({ userId, isActive, fullName }: { userId:
     <button
       onClick={toggleActive}
       disabled={pending}
-      style={{ padding: '4px 10px', borderRadius: 6, fontSize: 10, fontWeight: 600, cursor: 'pointer', border: '1px solid', background: isActive ? 'rgba(244,63,94,0.12)' : 'rgba(16,185,129,0.12)', color: isActive ? '#f43f5e' : '#10b981', borderColor: isActive ? 'rgba(244,63,94,0.3)' : 'rgba(16,185,129,0.3)', opacity: pending ? 0.5 : 1 }}
+      className="glass-btn"
+      style={{ padding: '4px 10px', borderRadius: 6, fontSize: 10, fontWeight: 600, color: isActive ? '#f43f5e' : '#10b981', border: `1px solid ${isActive ? 'rgba(244,63,94,0.3)' : 'rgba(16,185,129,0.3)'}`, opacity: pending ? 0.5 : 1 }}
     >
       {isActive ? 'Deactivate' : 'Activate'}
     </button>

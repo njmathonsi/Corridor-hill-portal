@@ -30,23 +30,23 @@ export default async function MoveOutAuditPage() {
           { label: 'In Progress', value: pending.length,   color: '#f59e0b' },
           { label: 'Finalised',   value: finalised.length, color: '#10b981' },
           { label: 'Total',       value: reports?.length ?? 0, color: '#fafafa' },
-        ].map(t => (
-          <div key={t.label} style={{ flex: 1, background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 18px' }}>
+        ].map((t, i) => (
+          <div key={t.label} className="glass-card" style={{ flex: 1, padding: '14px 18px', ['--stagger' as any]: i }}>
             <div style={{ fontSize: 26, fontWeight: 800, color: t.color }}>{t.value}</div>
             <div style={{ fontSize: 10, color: '#71717a', marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{t.label}</div>
           </div>
         ))}
       </div>
 
-      {[{ title: 'In Progress', list: pending }, { title: 'Finalised Reports', list: finalised }].map(section => (
+      {[{ title: 'In Progress', list: pending }, { title: 'Finalised Reports', list: finalised }].map((section, si) => (
         <div key={section.title} style={{ marginBottom: 24 }}>
           <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#71717a', marginBottom: 10 }}>
             {section.title} — {section.list.length}
           </div>
           {section.list.length === 0 ? (
             <div style={{ color: '#52525b', fontSize: 12, padding: '12px 0' }}>None.</div>
-          ) : section.list.map((r: any) => (
-            <div key={r.id} style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 20px', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 16 }}>
+          ) : section.list.map((r: any, ri: number) => (
+            <div key={r.id} className="glass-card" style={{ padding: '14px 20px', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 16, ['--stagger' as any]: 3 + si * 10 + ri }}>
               <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#3b82f6', background: 'rgba(59,130,246,0.15)', border: '1px solid rgba(59,130,246,0.3)', padding: '3px 8px', borderRadius: 4, flexShrink: 0 }}>{r.report_ref}</span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 13, fontWeight: 600 }}>

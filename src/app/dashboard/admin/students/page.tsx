@@ -14,7 +14,7 @@ export default async function StudentsPage() {
       <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>Students</h1>
       <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>{students?.length ?? 0} registered students</p>
 
-      <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, overflow: 'hidden' }}>
+      <div className="glass-card" style={{ overflow: 'hidden' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>

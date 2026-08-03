@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import { Check, Clock, AlertTriangle, Calendar } from 'lucide-react'
 
 export default async function MyConductPage() {
   const supabase = createClient()
@@ -53,18 +54,18 @@ export default async function MyConductPage() {
       <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Your disciplinary history and fine balance</p>
 
       {/* CoC acknowledgement status */}
-      <div style={{
-        marginBottom: 20, padding: '12px 18px', borderRadius: 12,
+      <div className="glass-card" style={{
+        marginBottom: 20, padding: '12px 18px',
         background: ack?.is_verified ? 'rgba(16,185,129,0.08)' : 'rgba(245,158,11,0.08)',
         border: `1px solid ${ack?.is_verified ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}`,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}>
-        <div style={{ fontSize: 12, fontWeight: 600, color: ack?.is_verified ? '#10b981' : '#f59e0b' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 600, color: ack?.is_verified ? '#10b981' : '#f59e0b' }}>
           {ack
             ? ack.is_verified
-              ? `✓ Code of Conduct Acknowledged & Verified — ${ack.document_version}`
-              : `⏳ Code of Conduct Signed — Awaiting admin verification (${ack.document_version})`
-            : '⚠ Code of Conduct not yet signed — go to Code of Conduct in the sidebar'}
+              ? <><Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Code of Conduct Acknowledged & Verified — {ack.document_version}</>
+              : <><Clock className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Code of Conduct Signed — Awaiting admin verification ({ack.document_version})</>
+            : <><AlertTriangle className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Code of Conduct not yet signed — go to Code of Conduct in the sidebar</>}
         </div>
         {ack?.acknowledged_at && (
           <div style={{ fontSize: 11, color: '#71717a', fontFamily: 'monospace' }}>
@@ -80,8 +81,8 @@ export default async function MyConductPage() {
           { label: 'Total Fines',    value: `R ${totalFines.toFixed(2)}`,  color: totalFines > 0 ? '#f59e0b' : '#10b981' },
           { label: 'Outstanding',    value: `R ${openFines.toFixed(2)}`,   color: openFines > 0 ? '#f43f5e' : '#10b981' },
           { label: 'Open Cases',     value: (offences ?? []).filter(o => !o.resolved).length, color: (offences ?? []).filter(o => !o.resolved).length > 0 ? '#f43f5e' : '#10b981' },
-        ].map(t => (
-          <div key={t.label} style={{ flex: 1, background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 18px' }}>
+        ].map((t, i) => (
+          <div key={t.label} className="glass-card" style={{ flex: 1, padding: '14px 18px', ['--stagger' as any]: i }}>
             <div style={{ fontSize: 22, fontWeight: 800, color: t.color }}>{String(t.value)}</div>
             <div style={{ fontSize: 10, color: '#71717a', marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{t.label}</div>
           </div>
@@ -90,18 +91,20 @@ export default async function MyConductPage() {
 
       {/* Offence list */}
       {(!offences || offences.length === 0) ? (
-        <div style={{ textAlign: 'center', padding: '48px 24px', background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.25)', borderRadius: 14 }}>
-          <div style={{ fontSize: 40, marginBottom: 10 }}>✓</div>
+        <div className="glass-card" style={{ textAlign: 'center', padding: '48px 24px', background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.25)' }}>
+          <div style={{ marginBottom: 10, display: 'flex', justifyContent: 'center' }}>
+            <Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
+          </div>
           <div style={{ fontSize: 18, fontWeight: 700, color: '#10b981', marginBottom: 6 }}>Clean Record</div>
           <div style={{ fontSize: 13, color: '#71717a' }}>No disciplinary incidents on record. Keep it up!</div>
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {offences.map(o => (
-            <div key={o.id} style={{
-              background: '#18181b',
-              border: `1px solid ${o.three_concurrent_flag ? 'rgba(244,63,94,0.35)' : 'rgba(255,255,255,0.08)'}`,
-              borderRadius: 12, padding: '16px 20px',
+          {offences.map((o, i) => (
+            <div key={o.id} className="glass-card" style={{
+              border: `1px solid ${o.three_concurrent_flag ? 'rgba(244,63,94,0.35)' : 'rgba(255,255,255,0.1)'}`,
+              padding: '16px 20px',
+              ['--stagger' as any]: i,
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
                 <div>
@@ -133,15 +136,17 @@ export default async function MyConductPage() {
                 {o.incident_description}
               </div>
 
-              <div style={{ display: 'flex', gap: 16, fontSize: 11, color: '#71717a' }}>
-                <span>📅 {new Date(o.incident_date).toLocaleDateString('en-ZA')}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, fontSize: 11, color: '#71717a' }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <Calendar className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> {new Date(o.incident_date).toLocaleDateString('en-ZA')}
+                </span>
                 <span>· {OUTCOMES[o.applied_outcome] ?? o.applied_outcome}</span>
                 <span>· Offence #{o.offence_count_at_time}</span>
               </div>
 
               {o.three_concurrent_flag && (
-                <div style={{ marginTop: 10, padding: '8px 12px', borderRadius: 8, background: 'rgba(244,63,94,0.1)', border: '1px solid rgba(244,63,94,0.3)', fontSize: 11, color: '#f43f5e', fontWeight: 700 }}>
-                  ⚠ 3-Concurrent Rule Applied — Referred to External Disciplinary Committee
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 10, padding: '8px 12px', borderRadius: 8, background: 'rgba(244,63,94,0.1)', border: '1px solid rgba(244,63,94,0.3)', fontSize: 11, color: '#f43f5e', fontWeight: 700 }}>
+                  <AlertTriangle className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> 3-Concurrent Rule Applied — Referred to External Disciplinary Committee
                 </div>
               )}
             </div>

@@ -2,6 +2,7 @@
 import { useState, useMemo, useTransition, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { Inbox, X, Check, DoorOpen, ChevronRight } from 'lucide-react'
 
 interface Block { id: number; code: string; description: string | null; gender: string | null }
 interface Unit  { id: number; unit_code: string; floor: number; block_id: number }
@@ -88,8 +89,8 @@ export default function RoomExplorer({ blocks, units, rooms, leases, students }:
     <div style={{ padding: 28 }}>
       {/* Guided workflow banner */}
       {preselectStudent && (
-        <div style={{ marginBottom: 20, padding: '14px 18px', borderRadius: 12, background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.3)', display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ fontSize: 20 }}>📥</span>
+        <div className="glass-card" style={{ marginBottom: 20, padding: '14px 18px', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.3)', display: 'flex', alignItems: 'center', gap: 12 }}>
+          <Inbox className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
           <div>
             <div style={{ fontSize: 13, fontWeight: 700, color: '#3b82f6' }}>Assigning room for {preselectStudent.full_name}</div>
             <div style={{ fontSize: 11, color: '#a1a1aa', marginTop: 2 }}>Navigate to a block → floor → unit, then click a room with an open bed to assign.</div>
@@ -118,11 +119,11 @@ export default function RoomExplorer({ blocks, units, rooms, leases, students }:
       {/* BLOCKS */}
       {!selectedBlock && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 700 }}>
-          {blockStats.map(({ block, total, occupied, pct, roomCount }) => {
+          {blockStats.map(({ block, total, occupied, pct, roomCount }, i) => {
             const color = pct >= 90 ? '#f43f5e' : pct >= 60 ? '#f59e0b' : '#10b981'
             const genderColor = GENDER_COLOR[block.gender ?? ''] ?? '#71717a'
             return (
-              <div key={block.id} onClick={() => goToBlock(block)} style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '18px 22px', cursor: 'pointer' }}>
+              <div key={block.id} onClick={() => goToBlock(block)} className="glass-card" style={{ padding: '18px 22px', cursor: 'pointer', ['--stagger' as any]: i }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                     <div style={{ width: 40, height: 40, borderRadius: 10, background: `${genderColor}22`, border: `1px solid ${genderColor}55`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 800, color: genderColor }}>{block.code}</div>
@@ -148,13 +149,13 @@ export default function RoomExplorer({ blocks, units, rooms, leases, students }:
       {/* FLOORS */}
       {selectedBlock && selectedFloor === null && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, maxWidth: 700 }}>
-          {floorsInBlock.map(floor => {
+          {floorsInBlock.map((floor, i) => {
             const { total, occupied } = floorStats(floor)
             const pct = total > 0 ? Math.round((occupied / total) * 100) : 0
             const color = pct >= 90 ? '#f43f5e' : pct >= 60 ? '#f59e0b' : '#10b981'
             const unitCount = units.filter(u => u.block_id === selectedBlock.id && u.floor === floor).length
             return (
-              <div key={floor} onClick={() => goToFloor(floor)} style={{ width: 170, background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '16px 18px', cursor: 'pointer' }}>
+              <div key={floor} onClick={() => goToFloor(floor)} className="glass-card" style={{ width: 170, padding: '16px 18px', cursor: 'pointer', ['--stagger' as any]: i }}>
                 <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 6 }}>Floor {floor}</div>
                 <div style={{ fontSize: 11, color: '#71717a', marginBottom: 10 }}>{unitCount} units · {total} beds</div>
                 <div style={{ fontSize: 18, fontWeight: 800, color }}>{pct}%</div>
@@ -168,7 +169,7 @@ export default function RoomExplorer({ blocks, units, rooms, leases, students }:
       {/* UNITS (accordion) */}
       {selectedBlock && selectedFloor !== null && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 700 }}>
-          {unitsOnFloor.map(unit => {
+          {unitsOnFloor.map((unit, i) => {
             const { total, occupied, roomCount } = unitStats(unit.id)
             const isExpanded = expandedUnitId === unit.id
             const unitRooms = rooms.filter(r => r.unit_id === unit.id).sort((a, b) => a.room_number.localeCompare(b.room_number))
@@ -176,10 +177,10 @@ export default function RoomExplorer({ blocks, units, rooms, leases, students }:
             const color = pct >= 90 ? '#f43f5e' : pct >= 60 ? '#f59e0b' : '#10b981'
 
             return (
-              <div key={unit.id} style={{ background: '#18181b', border: `1px solid ${isExpanded ? 'rgba(59,130,246,0.4)' : 'rgba(255,255,255,0.08)'}`, borderRadius: 12, overflow: 'hidden' }}>
-                <div onClick={() => toggleUnit(unit.id)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', cursor: 'pointer' }}>
+              <div key={unit.id} className="glass-card" style={{ overflow: 'hidden', border: `1px solid ${isExpanded ? 'rgba(59,130,246,0.4)' : 'rgba(255,255,255,0.1)'}`, ['--stagger' as any]: i }}>
+                <div onClick={() => toggleUnit(unit.id)} className="group" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', cursor: 'pointer' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <span style={{ display: 'inline-block', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s', color: '#71717a', fontSize: 14 }}>▶</span>
+                    <ChevronRight className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s, color 150ms' }} />
                     <div>
                       <div style={{ fontSize: 14, fontWeight: 700, color: '#fafafa' }}>Unit {selectedBlock.code}{unit.unit_code}</div>
                       <div style={{ fontSize: 11, color: '#71717a' }}>{roomCount} rooms · {total} beds</div>
@@ -300,13 +301,15 @@ function AssignModal({ room, blockCode, unitCode, students, existingLeases, pres
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100 }} onClick={e => e.target === e.currentTarget && onClose()}>
-      <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 12, padding: 24, width: '100%', maxWidth: 400 }}>
+      <div className="glass-card" style={{ padding: 24, width: '100%', maxWidth: 400, animation: 'none' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
           <div>
             <div style={{ fontSize: 15, fontWeight: 700 }}>Assign Room</div>
             <div style={{ fontSize: 11, color: '#71717a', marginTop: 2 }}>{blockCode}{unitCode}-{room.room_number.replace('Room ', '')} · {bedsLeft} bed{bedsLeft !== 1 ? 's' : ''} available</div>
           </div>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#71717a', cursor: 'pointer', fontSize: 18 }}>✕</button>
+          <button onClick={onClose} className="group" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+            <X className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
+          </button>
         </div>
 
         {existingLeases.length > 0 && (
@@ -330,9 +333,9 @@ function AssignModal({ room, blockCode, unitCode, students, existingLeases, pres
           <input value={keyNumber} onChange={e => setKeyNumber(e.target.value)} placeholder={`${blockCode}${unitCode}-K${existingLeases.length + 1}`} style={{ ...inp, fontFamily: 'monospace' }} />
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button onClick={onClose} style={{ flex: 1, padding: '9px', borderRadius: 8, background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', color: '#71717a', fontSize: 12, cursor: 'pointer' }}>Cancel</button>
-          <button onClick={handleAssign} disabled={!studentId || pending} style={{ flex: 2, padding: '9px', borderRadius: 8, background: studentId ? '#10b981' : '#27272a', color: studentId ? '#fff' : '#52525b', border: 'none', fontSize: 13, fontWeight: 700, cursor: studentId ? 'pointer' : 'not-allowed', opacity: pending ? 0.5 : 1 }}>
-            {pending ? 'Assigning…' : '✓ Assign'}
+          <button onClick={onClose} className="glass-btn" style={{ flex: 1, padding: '9px', borderRadius: 8, fontSize: 12 }}>Cancel</button>
+          <button onClick={handleAssign} disabled={!studentId || pending} className="glass-btn group" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, flex: 2, padding: '9px', borderRadius: 8, background: studentId ? '#10b981' : '#27272a', color: studentId ? '#fff' : '#52525b', border: 'none', fontSize: 13, fontWeight: 700, cursor: studentId ? 'pointer' : 'not-allowed', opacity: pending ? 0.5 : 1 }}>
+            {pending ? 'Assigning…' : <><Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Assign</>}
           </button>
         </div>
       </div>
@@ -357,10 +360,12 @@ function ViewModal({ room, leases, blockCode, unitCode, onClose }: { room: Room;
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100 }} onClick={e => e.target === e.currentTarget && onClose()}>
-      <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 12, padding: 24, width: '100%', maxWidth: 420 }}>
+      <div className="glass-card" style={{ padding: 24, width: '100%', maxWidth: 420, animation: 'none' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
           <div style={{ fontSize: 15, fontWeight: 700 }}>{blockCode}{unitCode}-{room.room_number.replace('Room ', '')}</div>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#71717a', cursor: 'pointer', fontSize: 18 }}>✕</button>
+          <button onClick={onClose} className="group" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+            <X className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
+          </button>
         </div>
         {leases.map(lease => (
           <div key={lease.id} style={{ marginBottom: 14, padding: '12px 14px', background: '#1f1f23', borderRadius: 8 }}>
@@ -369,12 +374,12 @@ function ViewModal({ room, leases, blockCode, unitCode, onClose }: { room: Room;
                 <span style={{ color: '#71717a' }}>{k}</span><span style={{ color: '#fafafa', fontWeight: 600 }}>{String(v)}</span>
               </div>
             ))}
-            <button onClick={() => handleCheckOut(lease)} disabled={pending} style={{ width: '100%', marginTop: 8, padding: '7px', borderRadius: 8, background: 'rgba(244,63,94,0.15)', color: '#f43f5e', border: '1px solid rgba(244,63,94,0.3)', fontSize: 11, fontWeight: 600, cursor: 'pointer', opacity: pending ? 0.5 : 1 }}>
-              {pending ? '…' : `🚪 Check Out ${lease.profiles?.full_name?.split(' ')[0]}`}
+            <button onClick={() => handleCheckOut(lease)} disabled={pending} className="glass-btn group" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%', marginTop: 8, padding: '7px', borderRadius: 8, color: '#f43f5e', border: '1px solid rgba(244,63,94,0.3)', fontSize: 11, fontWeight: 600, opacity: pending ? 0.5 : 1 }}>
+              {pending ? '…' : <><DoorOpen className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Check Out {lease.profiles?.full_name?.split(' ')[0]}</>}
             </button>
           </div>
         ))}
-        <button onClick={onClose} style={{ width: '100%', padding: '9px', borderRadius: 8, background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', color: '#71717a', fontSize: 12, cursor: 'pointer' }}>Close</button>
+        <button onClick={onClose} className="glass-btn" style={{ width: '100%', padding: '9px', borderRadius: 8, fontSize: 12 }}>Close</button>
       </div>
     </div>
   )

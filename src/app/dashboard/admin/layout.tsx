@@ -2,18 +2,22 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import SignOutButton from '@/components/ui/SignOutButton'
 import { SidebarLineNav } from '@/components/effects/SidebarLineNav'
+import Logo from '@/components/ui/Logo'
+import { LayoutDashboard, Contact, DoorOpen, ClipboardList, Inbox, FolderOpen, Home, Users, Scale, UserPlus } from 'lucide-react'
+
+const ICON_CLASS = 'w-5 h-5 text-white/70 group-hover:text-white transition-colors'
 
 const NAV = [
-  { icon: '◈',  label: 'Overview',        href: '/dashboard/admin/overview' },
-  { icon: '🪪', label: 'Biometrics Hub',  href: '/dashboard/admin/biometrics-hub' },
-  { icon: '🚪', label: 'Pass Tracker',    href: '/dashboard/admin/pass-tracker' },
-  { icon: '📋', label: 'Move-Out Audit',  href: '/dashboard/admin/move-out-audit' },
-  { icon: '📥', label: 'Applications',    href: '/dashboard/admin/applications' },
-  { icon: '🗂️', label: 'Documents',      href: '/dashboard/admin/documents' },
-  { icon: '🏠', label: 'Room Mgmt',       href: '/dashboard/admin/room-management' },
-  { icon: '👥', label: 'Students',        href: '/dashboard/admin/students' },
-  { icon: '⚖️', label: 'Disciplinary',   href: '/dashboard/admin/disciplinary' },
-  { icon: '➕', label: 'Create Account',  href: '/dashboard/admin/create-account' },
+  { icon: <LayoutDashboard className={ICON_CLASS} />, label: 'Overview',        href: '/dashboard/admin/overview' },
+  { icon: <Contact className={ICON_CLASS} />,         label: 'Biometrics Hub',  href: '/dashboard/admin/biometrics-hub' },
+  { icon: <DoorOpen className={ICON_CLASS} />,        label: 'Pass Tracker',    href: '/dashboard/admin/pass-tracker' },
+  { icon: <ClipboardList className={ICON_CLASS} />,   label: 'Move-Out Audit',  href: '/dashboard/admin/move-out-audit' },
+  { icon: <Inbox className={ICON_CLASS} />,           label: 'Applications',    href: '/dashboard/admin/applications' },
+  { icon: <FolderOpen className={ICON_CLASS} />,      label: 'Documents',       href: '/dashboard/admin/documents' },
+  { icon: <Home className={ICON_CLASS} />,            label: 'Room Mgmt',       href: '/dashboard/admin/room-management' },
+  { icon: <Users className={ICON_CLASS} />,           label: 'Students',        href: '/dashboard/admin/students' },
+  { icon: <Scale className={ICON_CLASS} />,           label: 'Disciplinary',   href: '/dashboard/admin/disciplinary' },
+  { icon: <UserPlus className={ICON_CLASS} />,        label: 'Create Account',  href: '/dashboard/admin/create-account' },
 ]
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -27,7 +31,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
       <aside className="glass-sidebar" style={{ width: 220, minWidth: 220, height: '100vh', display: 'flex', flexDirection: 'column', position: 'fixed', left: 0, top: 0, zIndex: 50 }}>
         <div style={{ padding: '18px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(160deg,#2E4FCC,#6C2BD9,#A78BFA)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 800, color: '#fff', flexShrink: 0 }}>CH</div>
+          <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Logo size={24} /></div>
           <div>
             <div style={{ fontSize: 12, fontWeight: 700, color: '#fafafa' }}>Corridor Hill</div>
             <div style={{ fontSize: 9, color: '#a1a1aa', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Admin Portal</div>

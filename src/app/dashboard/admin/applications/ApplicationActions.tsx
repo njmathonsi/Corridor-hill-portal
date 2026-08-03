@@ -2,6 +2,7 @@
 import { useState, useTransition } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { Check, Search, X } from 'lucide-react'
 
 export default function ApplicationActions({ applicationId, studentId, studentName }: { applicationId: string; studentId: string; studentName: string }) {
   const [rejectionReason, setRejectionReason] = useState('')
@@ -38,16 +39,16 @@ export default function ApplicationActions({ applicationId, studentId, studentNa
     })
   }
 
-  const btn = (label: string, onClick: () => void, bg: string, color: string, border: string) => (
-    <button onClick={onClick} disabled={pending} style={{ padding: '6px 14px', borderRadius: 8, fontSize: 11, fontWeight: 600, cursor: pending ? 'not-allowed' : 'pointer', background: bg, color, border: `1px solid ${border}`, opacity: pending ? 0.5 : 1 }}>{label}</button>
+  const btn = (label: string, icon: React.ReactNode, onClick: () => void, color: string, border: string) => (
+    <button onClick={onClick} disabled={pending} className="glass-btn group" style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 8, fontSize: 11, fontWeight: 600, color, border: `1px solid ${border}`, opacity: pending ? 0.5 : 1, cursor: pending ? 'not-allowed' : 'pointer' }}>{icon}{label}</button>
   )
 
   return (
     <div>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-        {btn('✓ Approve → Assign Room', handleApprove, 'rgba(16,185,129,0.15)', '#10b981', 'rgba(16,185,129,0.3)')}
-        {btn('🔍 Flag for Review', handleReview, 'rgba(245,158,11,0.15)', '#f59e0b', 'rgba(245,158,11,0.3)')}
-        {btn('✕ Reject', () => setShowReject(!showReject), 'rgba(244,63,94,0.12)', '#f43f5e', 'rgba(244,63,94,0.3)')}
+        {btn('Approve → Assign Room', <Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />, handleApprove, '#10b981', 'rgba(16,185,129,0.3)')}
+        {btn('Flag for Review', <Search className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />, handleReview, '#f59e0b', 'rgba(245,158,11,0.3)')}
+        {btn('Reject', <X className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />, () => setShowReject(!showReject), '#f43f5e', 'rgba(244,63,94,0.3)')}
       </div>
       {showReject && (
         <div style={{ marginTop: 10, display: 'flex', gap: 8 }}>

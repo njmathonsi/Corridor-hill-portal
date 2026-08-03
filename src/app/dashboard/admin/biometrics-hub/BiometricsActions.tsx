@@ -65,7 +65,8 @@ export default function BiometricsActions({ studentId, studentName, isRegistered
       <button
         onClick={handleToggle}
         disabled={pending}
-        style={{ padding: '5px 14px', borderRadius: 8, fontSize: 11, fontWeight: 600, cursor: pending ? 'not-allowed' : 'pointer', border: '1px solid', background: isRegistered ? 'rgba(244,63,94,0.12)' : 'rgba(16,185,129,0.12)', color: isRegistered ? '#f43f5e' : '#10b981', borderColor: isRegistered ? 'rgba(244,63,94,0.3)' : 'rgba(16,185,129,0.3)', opacity: pending ? 0.5 : 1 }}
+        className="glass-btn"
+        style={{ padding: '5px 14px', borderRadius: 8, fontSize: 11, fontWeight: 600, color: isRegistered ? '#f43f5e' : '#10b981', border: `1px solid ${isRegistered ? 'rgba(244,63,94,0.3)' : 'rgba(16,185,129,0.3)'}`, opacity: pending ? 0.5 : 1 }}
       >
         {pending ? '…' : isRegistered ? 'Deregister' : isGuidedFlow ? 'Register → Continue' : 'Register'}
       </button>

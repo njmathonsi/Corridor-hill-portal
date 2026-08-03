@@ -1,18 +1,22 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import Link from 'next/link'
 import SignOutButton from '@/components/ui/SignOutButton'
+import { SidebarLineNav } from '@/components/effects/SidebarLineNav'
+import Logo from '@/components/ui/Logo'
+import { LayoutDashboard, Inbox, User, FileText, ScrollText, Home, DoorOpen, Contact, Scale } from 'lucide-react'
+
+const ICON_CLASS = 'w-5 h-5 text-white/70 group-hover:text-white transition-colors'
 
 const NAV = [
-  { icon: '◈',  label: 'Dashboard',   href: '/dashboard/student/home' },
-  { icon: '📥', label: 'Apply',        href: '/dashboard/student/apply' },
-  { icon: '👤', label: 'My Profile',   href: '/dashboard/student/onboarding/step-1' },
-  { icon: '📄', label: 'My Documents', href: '/dashboard/student/documents' },
-  { icon: '📜', label: 'Code of Conduct', href: '/dashboard/student/onboarding/step-4' },
-  { icon: '🏠', label: 'My Room',     href: '/dashboard/student/my-room' },
-  { icon: '🚪', label: 'My Passes',   href: '/dashboard/student/my-passes' },
-  { icon: '🪪', label: 'Biometrics',  href: '/dashboard/student/my-biometrics' },
-  { icon: '⚖️', label: 'Conduct',    href: '/dashboard/student/my-conduct' },
+  { icon: <LayoutDashboard className={ICON_CLASS} />, label: 'Dashboard',       href: '/dashboard/student/home' },
+  { icon: <Inbox className={ICON_CLASS} />,           label: 'Apply',           href: '/dashboard/student/apply' },
+  { icon: <User className={ICON_CLASS} />,            label: 'My Profile',      href: '/dashboard/student/onboarding/step-1' },
+  { icon: <FileText className={ICON_CLASS} />,        label: 'My Documents',    href: '/dashboard/student/documents' },
+  { icon: <ScrollText className={ICON_CLASS} />,      label: 'Code of Conduct', href: '/dashboard/student/onboarding/step-4' },
+  { icon: <Home className={ICON_CLASS} />,            label: 'My Room',         href: '/dashboard/student/my-room' },
+  { icon: <DoorOpen className={ICON_CLASS} />,        label: 'My Passes',       href: '/dashboard/student/my-passes' },
+  { icon: <Contact className={ICON_CLASS} />,         label: 'Biometrics',      href: '/dashboard/student/my-biometrics' },
+  { icon: <Scale className={ICON_CLASS} />,           label: 'Conduct',         href: '/dashboard/student/my-conduct' },
 ]
 
 export default async function StudentLayout({ children }: { children: React.ReactNode }) {
@@ -27,34 +31,30 @@ export default async function StudentLayout({ children }: { children: React.Reac
   if (profile?.role === 'admin') redirect('/dashboard/admin/overview')
 
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: '#09090b' }}>
-      <aside style={{ width: 220, minWidth: 220, height: '100vh', background: '#111113', borderRight: '1px solid rgba(255,255,255,0.06)', display: 'flex', flexDirection: 'column', position: 'fixed', left: 0, top: 0, zIndex: 50 }}>
-        <div style={{ padding: '18px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(135deg,#10b981,#3b82f6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 800, color: '#fff', flexShrink: 0 }}>CH</div>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+      <aside className="glass-sidebar" style={{ width: 220, minWidth: 220, height: '100vh', display: 'flex', flexDirection: 'column', position: 'fixed', left: 0, top: 0, zIndex: 50 }}>
+        <div style={{ padding: '18px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Logo size={24} /></div>
           <div>
             <div style={{ fontSize: 12, fontWeight: 700, color: '#fafafa' }}>Corridor Hill</div>
-            <div style={{ fontSize: 9, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Student Portal</div>
+            <div style={{ fontSize: 9, color: '#a1a1aa', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Student Portal</div>
           </div>
         </div>
-        <nav style={{ padding: '10px 8px', flex: 1, overflowY: 'auto' }}>
-          {NAV.map(item => (
-            <Link key={item.href} href={item.href}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '8px 10px', borderRadius: 8, marginBottom: 2, color: '#a1a1aa', fontSize: 12, fontWeight: 500, transition: 'all 0.15s' }}>
-                <span style={{ fontSize: 14, width: 18, textAlign: 'center' }}>{item.icon}</span>
-                {item.label}
-              </div>
-            </Link>
-          ))}
+
+        {/* Sidebar nav logic/animation UNCHANGED — only the container wrapper became glass */}
+        <nav style={{ padding: '10px 16px', flex: 1, overflowY: 'auto' }}>
+          <SidebarLineNav items={NAV} />
         </nav>
-        <div style={{ padding: '10px 8px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <div style={{ padding: '8px 10px', borderRadius: 8, background: '#1f1f23', marginBottom: 8 }}>
+
+        <div style={{ padding: '10px 8px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+          <div className="glass-card" style={{ padding: '8px 10px', marginBottom: 8, animation: 'none' }}>
             <div style={{ fontSize: 11, fontWeight: 600, color: '#fafafa', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{profile?.full_name || 'Student'}</div>
-            <div style={{ fontSize: 10, color: '#71717a', fontFamily: 'monospace' }}>{profile?.student_number ?? '—'}</div>
+            <div style={{ fontSize: 10, color: '#a1a1aa', fontFamily: 'monospace' }}>{profile?.student_number ?? '—'}</div>
           </div>
           <SignOutButton />
         </div>
       </aside>
-      <div style={{ marginLeft: 220, flex: 1, overflowY: 'auto', background: '#09090b' }}>
+      <div style={{ marginLeft: 220, flex: 1, overflowY: 'auto' }}>
         {children}
       </div>
     </div>

@@ -2,6 +2,7 @@
 import { useState, useTransition } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { LogOut, LogIn } from 'lucide-react'
 
 interface Student { id: string; full_name: string; student_number: string }
 
@@ -43,14 +44,15 @@ export default function TransitForm({ students }: { students: Student[] }) {
   const lbl: React.CSSProperties = { fontSize: 10, fontWeight: 600, color: '#71717a', display: 'block', marginBottom: 4, letterSpacing: '0.06em' }
 
   return (
-    <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 16 }}>
+    <div className="glass-card" style={{ padding: 16 }}>
       <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 14 }}>Log New Transit</div>
 
       {/* Direction toggle */}
       <div style={{ display: 'flex', gap: 4, marginBottom: 14 }}>
         {(['exit','entry'] as const).map(d => (
-          <button key={d} onClick={() => setDirection(d)} style={{ flex: 1, padding: '8px', borderRadius: 8, fontSize: 11, fontWeight: 600, cursor: 'pointer', border: '1px solid', background: direction === d ? (d === 'exit' ? 'rgba(245,158,11,0.15)' : 'rgba(16,185,129,0.15)') : 'transparent', color: direction === d ? (d === 'exit' ? '#f59e0b' : '#10b981') : '#71717a', borderColor: direction === d ? (d === 'exit' ? 'rgba(245,158,11,0.3)' : 'rgba(16,185,129,0.3)') : 'rgba(255,255,255,0.08)' }}>
-            {d === 'exit' ? '→ Exit' : '← Entry'}
+          <button key={d} onClick={() => setDirection(d)} className="glass-btn group" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5, flex: 1, padding: '8px', borderRadius: 8, fontSize: 11, fontWeight: 600, background: direction === d ? (d === 'exit' ? 'rgba(245,158,11,0.15)' : 'rgba(16,185,129,0.15)') : 'transparent', color: direction === d ? (d === 'exit' ? '#f59e0b' : '#10b981') : '#71717a', border: `1px solid ${direction === d ? (d === 'exit' ? 'rgba(245,158,11,0.3)' : 'rgba(16,185,129,0.3)') : 'rgba(255,255,255,0.08)'}` }}>
+            {d === 'exit' ? <LogOut className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> : <LogIn className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />}
+            {d === 'exit' ? 'Exit' : 'Entry'}
           </button>
         ))}
       </div>
@@ -83,7 +85,7 @@ export default function TransitForm({ students }: { students: Student[] }) {
 
       {error && <div style={{ fontSize: 11, color: '#f43f5e', marginBottom: 10 }}>{error}</div>}
 
-      <button onClick={handleSubmit} disabled={pending} style={{ width: '100%', padding: '10px', borderRadius: 8, background: direction === 'exit' ? '#f59e0b' : '#10b981', color: direction === 'exit' ? '#000' : '#fff', border: 'none', fontSize: 13, fontWeight: 700, cursor: pending ? 'not-allowed' : 'pointer', opacity: pending ? 0.5 : 1 }}>
+      <button onClick={handleSubmit} disabled={pending} className="glass-btn" style={{ width: '100%', padding: '10px', borderRadius: 8, background: direction === 'exit' ? '#f59e0b' : '#10b981', color: direction === 'exit' ? '#000' : '#fff', border: 'none', fontSize: 13, fontWeight: 700, cursor: pending ? 'not-allowed' : 'pointer', opacity: pending ? 0.5 : 1 }}>
         {pending ? 'Logging…' : `Log ${direction === 'exit' ? 'Departure' : 'Return'}`}
       </button>
     </div>

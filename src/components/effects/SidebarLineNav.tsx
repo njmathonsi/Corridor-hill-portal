@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import LineSidebar from './LineSidebar'
 
 export interface NavItem {
-  icon: string
+  icon: React.ReactNode
   label: string
   href: string
 }

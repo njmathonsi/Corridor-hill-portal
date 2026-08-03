@@ -86,7 +86,7 @@ export default function LineSidebar({
     >
       <ul ref={listRef} className="line-sidebar__list" onPointerMove={handlePointerMove} onPointerLeave={handlePointerLeave}>
         {items.map((label,index) => (
-          <li key={`${label}-${index}`} ref={el=>{itemRefs.current[index]=el}} className="line-sidebar__item"
+          <li key={`${label}-${index}`} ref={el=>{itemRefs.current[index]=el}} className="line-sidebar__item group"
               aria-current={activeIndex===index?'true':undefined} onClick={()=>handleClick(index,label)}>
             {showMarker && <span className="line-sidebar__marker" aria-hidden="true" />}
             <span className="line-sidebar__label">

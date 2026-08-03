@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import { Home } from 'lucide-react'
 
 export default async function MyRoomPage() {
   const supabase = createClient()
@@ -15,7 +16,9 @@ export default async function MyRoomPage() {
     <div style={{ padding: 28 }}>
       <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>My Room</h1>
       <div style={{ marginTop: 60, textAlign: 'center', color: '#52525b' }}>
-        <div style={{ fontSize: 40, marginBottom: 12 }}>🏠</div>
+        <div style={{ marginBottom: 12, display: 'flex', justifyContent: 'center' }}>
+          <Home className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
+        </div>
         <div style={{ fontSize: 14, fontWeight: 600 }}>No room assigned yet</div>
         <div style={{ fontSize: 12, marginTop: 6 }}>Management will assign your room once your application is approved.</div>
       </div>
@@ -42,7 +45,7 @@ export default async function MyRoomPage() {
       <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Current accommodation details and lease information</p>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, maxWidth: 700 }}>
-        <div style={{ gridColumn: '1/-1', background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 20 }}>
+        <div className="glass-card" style={{ gridColumn: '1/-1', padding: 20, ['--stagger' as any]: 0 }}>
           <div style={{ fontSize: 10, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Your Room</div>
           <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: '-0.02em', marginBottom: 12 }}>
             Block {r?.units?.blocks?.code} · {r?.units?.unit_code} · {r?.room_number}
@@ -57,7 +60,7 @@ export default async function MyRoomPage() {
           </div>
         </div>
 
-        <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 20 }}>
+        <div className="glass-card" style={{ padding: 20, ['--stagger' as any]: 1 }}>
           <div style={{ fontSize: 10, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>Key Card</div>
           {lease.assigned_key_number ? (
             <>

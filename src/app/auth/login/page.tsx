@@ -1,5 +1,6 @@
 import LoginForm from './LoginForm'
 import Lightfall from '@/components/effects/Lightfall'
+import Logo from '@/components/ui/Logo'
 
 export default function LoginPage() {
   return (
@@ -29,11 +30,10 @@ export default function LoginPage() {
           <div style={{ textAlign: 'center', marginBottom: 28 }}>
             <div style={{
               width: 52, height: 52, borderRadius: 14, margin: '0 auto 14px',
-              background: 'linear-gradient(160deg, #2E4FCC 0%, #6C2BD9 55%, #A78BFA 100%)',
+              background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
               boxShadow: '0 0 24px rgba(108,43,217,0.45)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 20, fontWeight: 800, color: '#fff',
-            }}>CH</div>
+            }}><Logo size={38} /></div>
             <h1 style={{ fontSize: 22, fontWeight: 700, color: '#fafafa' }}>Corridor Hill</h1>
             <p style={{ fontSize: 13, color: '#a1a1aa', marginTop: 4 }}>Residence Management Portal · eMalahleni</p>
           </div>

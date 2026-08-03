@@ -2,6 +2,7 @@
 import { useState, useTransition } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { Scale, AlertOctagon } from 'lucide-react'
 
 interface Student { id: string; full_name: string; student_number: string }
 interface OffenceDef { id: number; category: string; offence_name: string; fine_1st: number|null; fine_2nd: number|null; fine_3rd: number|null; outcome_1st: string; outcome_2nd: string; outcome_3rd: string; involves_cost_recovery: boolean; requires_confiscation: boolean }
@@ -77,7 +78,7 @@ export default function OffenceLogForm({ students, offenceDefinitions }: { stude
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 260px', gap: 16, alignItems: 'start', maxWidth: 800 }}>
-      <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 20 }}>
+      <div className="glass-card" style={{ padding: 20 }}>
         {success && <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 12, background: 'rgba(16,185,129,0.12)', color: '#10b981', border: '1px solid rgba(16,185,129,0.3)', marginBottom: 16 }}>{success}</div>}
         {error   && <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 12, background: 'rgba(244,63,94,0.12)', color: '#f43f5e', border: '1px solid rgba(244,63,94,0.3)', marginBottom: 16 }}>{error}</div>}
 
@@ -125,8 +126,8 @@ export default function OffenceLogForm({ students, offenceDefinitions }: { stude
           </div>
         )}
 
-        <button onClick={handleSubmit} disabled={pending || !studentId || !offenceId || !description.trim()} style={{ width: '100%', padding: '11px', borderRadius: 8, background: (!studentId || !offenceId || !description.trim()) ? '#27272a' : 'rgba(244,63,94,0.15)', color: (!studentId || !offenceId || !description.trim()) ? '#52525b' : '#f43f5e', border: `1px solid ${(!studentId || !offenceId || !description.trim()) ? 'rgba(255,255,255,0.08)' : 'rgba(244,63,94,0.3)'}`, fontSize: 13, fontWeight: 700, cursor: (!studentId || !offenceId || !description.trim()) ? 'not-allowed' : 'pointer', opacity: pending ? 0.5 : 1 }}>
-          {pending ? 'Logging…' : '⚖ Log Offence & Apply Outcome'}
+        <button onClick={handleSubmit} disabled={pending || !studentId || !offenceId || !description.trim()} className="glass-btn group" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%', padding: '11px', borderRadius: 8, background: (!studentId || !offenceId || !description.trim()) ? '#27272a' : 'rgba(244,63,94,0.15)', color: (!studentId || !offenceId || !description.trim()) ? '#52525b' : '#f43f5e', border: `1px solid ${(!studentId || !offenceId || !description.trim()) ? 'rgba(255,255,255,0.08)' : 'rgba(244,63,94,0.3)'}`, fontSize: 13, fontWeight: 700, cursor: (!studentId || !offenceId || !description.trim()) ? 'not-allowed' : 'pointer', opacity: pending ? 0.5 : 1 }}>
+          {pending ? 'Logging…' : <><Scale className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Log Offence & Apply Outcome</>}
         </button>
       </div>
 
@@ -134,23 +135,25 @@ export default function OffenceLogForm({ students, offenceDefinitions }: { stude
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {def && studentId ? (
           <>
-            <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 16 }}>
+            <div className="glass-card" style={{ padding: 16 }}>
               <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#71717a', marginBottom: 8 }}>Escalation Tier</div>
               <div style={{ fontSize: 32, fontWeight: 800, color: tier === '1st' ? '#10b981' : tier === '2nd' ? '#f59e0b' : '#f43f5e' }}>{tier}</div>
               <div style={{ fontSize: 11, color: '#71717a', marginTop: 4 }}>{prevCount} previous offence{prevCount !== 1 ? 's' : ''}</div>
             </div>
-            <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 16 }}>
+            <div className="glass-card" style={{ padding: 16 }}>
               <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#71717a', marginBottom: 8 }}>Auto Outcome</div>
               <div style={{ fontSize: 14, fontWeight: 700, color: '#fafafa', marginBottom: 6 }}>{OUTCOME_LABELS[autoOutcome] ?? autoOutcome}</div>
               {autoFine > 0 && <div style={{ fontSize: 22, fontWeight: 800, color: '#f59e0b' }}>R {autoFine.toFixed(2)}</div>}
             </div>
             {def.category === 'cat4_serious' && (
-              <div style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.3)', borderRadius: 12, padding: 14 }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#8b5cf6', marginBottom: 4 }}>🚨 Serious Offence</div>
+              <div className="glass-card" style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.3)', padding: 14 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 700, color: '#8b5cf6', marginBottom: 4 }}>
+                  <AlertOctagon className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Serious Offence
+                </div>
                 <div style={{ fontSize: 11, color: '#8b5cf6', lineHeight: 1.5, opacity: 0.85 }}>Flags immediate referral to Management, TUT Judiciary, and Police.</div>
               </div>
             )}
-            <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 14 }}>
+            <div className="glass-card" style={{ padding: 14 }}>
               <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#71717a', marginBottom: 8 }}>Full Schedule</div>
               {[{tier:'1st',outcome:def.outcome_1st,fine:def.fine_1st},{tier:'2nd',outcome:def.outcome_2nd,fine:def.fine_2nd},{tier:'3rd',outcome:def.outcome_3rd,fine:def.fine_3rd}].map(row => (
                 <div key={row.tier} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: '1px solid rgba(255,255,255,0.04)', fontSize: 11 }}>
@@ -161,7 +164,7 @@ export default function OffenceLogForm({ students, offenceDefinitions }: { stude
             </div>
           </>
         ) : (
-          <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 20, textAlign: 'center', color: '#52525b', fontSize: 12 }}>
+          <div className="glass-card" style={{ padding: 20, textAlign: 'center', color: '#52525b', fontSize: 12 }}>
             Select a student and offence to see the auto-calculated outcome
           </div>
         )}

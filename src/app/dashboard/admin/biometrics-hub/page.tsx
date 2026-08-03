@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import BiometricsActions from './BiometricsActions'
+import { Contact } from 'lucide-react'
 
 export default async function BiometricsHubPage({ searchParams }: { searchParams: { registerStudent?: string } }) {
   const supabase = createClient()
@@ -17,8 +18,8 @@ export default async function BiometricsHubPage({ searchParams }: { searchParams
   return (
     <div style={{ padding: 28 }}>
       {guidedStudent && (
-        <div style={{ marginBottom: 20, padding: '14px 18px', borderRadius: 12, background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.3)', display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ fontSize: 20 }}>🪪</span>
+        <div className="glass-card" style={{ marginBottom: 20, padding: '14px 18px', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.3)', display: 'flex', alignItems: 'center', gap: 12 }}>
+          <Contact className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
           <div>
             <div style={{ fontSize: 13, fontWeight: 700, color: '#3b82f6' }}>Register biometrics for {guidedStudent.full_name}</div>
             <div style={{ fontSize: 11, color: '#a1a1aa', marginTop: 2 }}>Room assigned. Register biometrics, then you'll continue to document verification.</div>
@@ -34,15 +35,15 @@ export default async function BiometricsHubPage({ searchParams }: { searchParams
           { label: 'Registered', value: registered, color: '#10b981' },
           { label: 'Pending', value: pending, color: '#f59e0b' },
           { label: 'Total', value: students?.length ?? 0, color: '#fafafa' },
-        ].map(t => (
-          <div key={t.label} style={{ flex: 1, background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 18px' }}>
+        ].map((t, i) => (
+          <div key={t.label} className="glass-card" style={{ flex: 1, padding: '14px 18px', ['--stagger' as any]: i }}>
             <div style={{ fontSize: 28, fontWeight: 800, color: t.color }}>{t.value}</div>
             <div style={{ fontSize: 10, color: '#71717a', marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{t.label}</div>
           </div>
         ))}
       </div>
 
-      <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, overflow: 'hidden' }}>
+      <div className="glass-card" style={{ overflow: 'hidden', ['--stagger' as any]: 3 }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
