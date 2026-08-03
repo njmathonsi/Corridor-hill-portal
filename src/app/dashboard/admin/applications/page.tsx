@@ -42,7 +42,7 @@ export default async function ApplicationsPage() {
           return (
             <div key={app.id} className="glass-card" style={{ padding: '16px 20px', ['--stagger' as any]: i + 4 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: app.status === 'submitted' || app.status === 'under_review' ? 14 : 0 }}>
-                <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg,#3b82f6,#8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: '#fff', flexShrink: 0 }}>
+                <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg,#B45309,#F59E0B)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: '#fff', flexShrink: 0 }}>
                   {p?.full_name?.split(' ').slice(0,2).map((n: string) => n[0]).join('') ?? '?'}
                 </div>
                 <div style={{ flex: 1 }}>

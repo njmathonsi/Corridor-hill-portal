@@ -110,7 +110,7 @@ export default function Step1Page() {
         {error   && <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 12, background: 'rgba(244,63,94,0.12)', color: '#f43f5e', border: '1px solid rgba(244,63,94,0.3)' }}>{error}</div>}
         {success && <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 12, background: 'rgba(16,185,129,0.12)', color: '#10b981', border: '1px solid rgba(16,185,129,0.3)' }}>✓ Profile saved! Redirecting…</div>}
 
-        <button onClick={handleSave} disabled={loading} style={{ padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg,#3b82f6,#8b5cf6)', color: '#fff', border: 'none', fontSize: 14, fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.5 : 1 }}>
+        <button onClick={handleSave} disabled={loading} style={{ padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg,#B45309,#F59E0B)', color: '#fff', border: 'none', fontSize: 14, fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.5 : 1 }}>
           {loading ? 'Saving…' : 'Save Profile'}
         </button>
       </div>

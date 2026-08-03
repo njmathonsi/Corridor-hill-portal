@@ -3,16 +3,16 @@ export default function Logo({ size = 32 }: { size?: number }) {
     <svg width={size} height={size} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="logo-blade-1" x1="14" y1="6" x2="30" y2="50" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#5EEAD4" />
-          <stop offset="100%" stopColor="#2E4FCC" />
+          <stop offset="0%" stopColor="#F59E0B" />
+          <stop offset="100%" stopColor="#9A3412" />
         </linearGradient>
         <linearGradient id="logo-blade-2" x1="26" y1="14" x2="40" y2="50" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#3B82F6" />
-          <stop offset="100%" stopColor="#6C2BD9" />
+          <stop offset="0%" stopColor="#F59E0B" />
+          <stop offset="100%" stopColor="#B45309" />
         </linearGradient>
         <linearGradient id="logo-blade-3" x1="38" y1="20" x2="49" y2="50" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#8B5CF6" />
-          <stop offset="100%" stopColor="#A78BFA" />
+          <stop offset="0%" stopColor="#FBBF24" />
+          <stop offset="100%" stopColor="#D97706" />
         </linearGradient>
       </defs>
       <path d="M14 50 Q19 16 26 6 Q33 16 30 50 Z" fill="url(#logo-blade-1)" />

@@ -7,7 +7,7 @@ export default function LoginPage() {
     <div style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden', background: '#050810' }}>
       <div style={{ position: 'absolute', inset: 0 }}>
         <Lightfall
-          colors={['#A78BFA', '#6C2BD9', '#2E4FCC']}
+          colors={['#FBBF24', '#D97706', '#9A3412']}
           backgroundColor="#1B2A6B"
           speed={0.6}
           streakCount={10}
