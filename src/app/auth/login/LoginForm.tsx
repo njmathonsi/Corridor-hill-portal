@@ -28,7 +28,10 @@ export default function LoginForm() {
     const { data, error: err } = await supabase.auth.signInWithPassword({ email, password })
     if (err) { setError(err.message); setLoading(false); return }
     const { data: profile } = await supabase.from('profiles').select('role').eq('id', data.user.id).maybeSingle()
-    router.push(profile?.role === 'admin' ? '/dashboard/admin/overview' : '/dashboard/student/home')
+    const dest = profile?.role === 'admin' ? '/dashboard/admin/overview'
+      : profile?.role === 'maintenance' ? '/dashboard/maintenance'
+      : '/dashboard/student/home'
+    router.push(dest)
     router.refresh()
   }
 

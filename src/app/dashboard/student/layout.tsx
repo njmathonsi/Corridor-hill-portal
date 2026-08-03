@@ -5,7 +5,7 @@ import { SidebarLineNav } from '@/components/effects/SidebarLineNav'
 import Logo from '@/components/ui/Logo'
 import PageTransition from '@/components/ui/PageTransition'
 import MobileShell from '@/components/ui/MobileShell'
-import { LayoutDashboard, Inbox, User, FileText, ScrollText, Home, DoorOpen, Contact, Scale } from 'lucide-react'
+import { LayoutDashboard, Inbox, User, FileText, ScrollText, Home, DoorOpen, Contact, Scale, Wrench } from 'lucide-react'
 
 const ICON_CLASS = 'w-5 h-5 text-white/70 group-hover:text-white transition-colors'
 
@@ -16,6 +16,7 @@ const NAV = [
   { icon: <FileText className={ICON_CLASS} />,        label: 'My Documents',    href: '/dashboard/student/documents' },
   { icon: <ScrollText className={ICON_CLASS} />,      label: 'Code of Conduct', href: '/dashboard/student/onboarding/step-4' },
   { icon: <Home className={ICON_CLASS} />,            label: 'My Room',         href: '/dashboard/student/my-room' },
+  { icon: <Wrench className={ICON_CLASS} />,          label: 'Report an Issue', href: '/dashboard/student/report-issue' },
   { icon: <DoorOpen className={ICON_CLASS} />,        label: 'My Passes',       href: '/dashboard/student/my-passes' },
   { icon: <Contact className={ICON_CLASS} />,         label: 'Biometrics',      href: '/dashboard/student/my-biometrics' },
   { icon: <Scale className={ICON_CLASS} />,           label: 'Conduct',         href: '/dashboard/student/my-conduct' },
@@ -31,6 +32,7 @@ export default async function StudentLayout({ children }: { children: React.Reac
     .eq('id', session.user.id)
     .single()
   if (profile?.role === 'admin') redirect('/dashboard/admin/overview')
+  if (profile?.role === 'maintenance') redirect('/dashboard/maintenance')
 
   return (
     <MobileShell

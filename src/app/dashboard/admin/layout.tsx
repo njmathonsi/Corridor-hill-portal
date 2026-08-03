@@ -5,7 +5,7 @@ import { SidebarLineNav } from '@/components/effects/SidebarLineNav'
 import Logo from '@/components/ui/Logo'
 import PageTransition from '@/components/ui/PageTransition'
 import MobileShell from '@/components/ui/MobileShell'
-import { LayoutDashboard, Contact, DoorOpen, ClipboardList, Inbox, FolderOpen, Home, Users, Scale, UserPlus } from 'lucide-react'
+import { LayoutDashboard, Contact, DoorOpen, ClipboardList, Inbox, FolderOpen, Home, Users, Scale, UserPlus, Wrench } from 'lucide-react'
 
 const ICON_CLASS = 'w-5 h-5 text-white/70 group-hover:text-white transition-colors'
 
@@ -14,6 +14,7 @@ const NAV = [
   { icon: <Contact className={ICON_CLASS} />,         label: 'Biometrics Hub',  href: '/dashboard/admin/biometrics-hub' },
   { icon: <DoorOpen className={ICON_CLASS} />,        label: 'Pass Tracker',    href: '/dashboard/admin/pass-tracker' },
   { icon: <ClipboardList className={ICON_CLASS} />,   label: 'Move-Out Audit',  href: '/dashboard/admin/move-out-audit' },
+  { icon: <Wrench className={ICON_CLASS} />,          label: 'Maintenance',     href: '/dashboard/admin/maintenance' },
   { icon: <Inbox className={ICON_CLASS} />,           label: 'Applications',    href: '/dashboard/admin/applications' },
   { icon: <FolderOpen className={ICON_CLASS} />,      label: 'Documents',       href: '/dashboard/admin/documents' },
   { icon: <Home className={ICON_CLASS} />,            label: 'Room Mgmt',       href: '/dashboard/admin/room-management' },
@@ -27,6 +28,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const { data: { session } } = await supabase.auth.getSession()
   if (!session) redirect('/auth/login')
   const { data: profile } = await supabase.from('profiles').select('full_name, role, email').eq('id', session.user.id).single()
+  if (profile?.role === 'maintenance') redirect('/dashboard/maintenance')
   if (profile?.role !== 'admin') redirect('/dashboard/student/home')
 
   return (

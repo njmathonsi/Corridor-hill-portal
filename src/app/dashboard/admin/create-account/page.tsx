@@ -7,7 +7,7 @@ export default function CreateAccountPage() {
   const [fullName, setFullName]   = useState('')
   const [email, setEmail]         = useState('')
   const [password, setPassword]   = useState('')
-  const [role, setRole]           = useState<'student'|'admin'>('student')
+  const [role, setRole]           = useState<'student'|'admin'|'maintenance'>('student')
   const [studentNumber, setSN]    = useState('')
   const [loading, setLoading]     = useState(false)
   const [error, setError]         = useState('')
@@ -41,20 +41,21 @@ export default function CreateAccountPage() {
         full_name: fullName,
         role,
         student_number: role === 'student' ? (studentNumber || null) : null,
-        onboarding_complete: role === 'admin' ? true : false,
+        onboarding_complete: role === 'student' ? false : true,
       })
       .eq('id', data.user.id)
 
     if (updateErr) {
-      if (role === 'admin') {
-        setError(`Account created, but it could not be promoted to admin (a security policy blocks a brand-new account from granting itself admin rights). It exists as a plain student account for now — an existing admin will need to run a SQL update in Supabase to set its role. You are also now signed in as this new account — sign out and sign back in as yourself to keep administering.`)
+      if (role !== 'student') {
+        setError(`Account created, but it could not be promoted to ${role} (a security policy blocks a brand-new account from granting itself elevated rights). It exists as a plain student account for now — an existing admin will need to run a SQL update in Supabase to set its role. You are also now signed in as this new account — sign out and sign back in as yourself to keep administering.`)
       } else {
         setError(updateErr.message)
       }
       setLoading(false); return
     }
 
-    setSuccess(`✓ ${role === 'admin' ? 'Admin' : 'Student'} account created for ${fullName}. Note: you are now signed in as this new account — sign out and sign back in as yourself to keep administering.`)
+    const roleLabel = role === 'admin' ? 'Admin' : role === 'maintenance' ? 'Maintenance' : 'Student'
+    setSuccess(`✓ ${roleLabel} account created for ${fullName}. Note: you are now signed in as this new account — sign out and sign back in as yourself to keep administering.`)
     setFullName(''); setEmail(''); setPassword(''); setSN(''); setLoading(false)
   }
 
@@ -64,7 +65,7 @@ export default function CreateAccountPage() {
   return (
     <div style={{ padding: 28, maxWidth: 480 }}>
       <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>Create Account</h1>
-      <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Directly create a student or admin account without the public signup flow</p>
+      <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Directly create a student, admin, or maintenance account without the public signup flow</p>
 
       <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 12, background: 'rgba(245,158,11,0.1)', color: '#f59e0b', border: '1px solid rgba(245,158,11,0.3)', marginBottom: 16, lineHeight: 1.5 }}>
         ⚠ Creating an account signs your browser into that new account. You'll need to sign out and log back in as yourself afterward to keep administering.
@@ -75,11 +76,14 @@ export default function CreateAccountPage() {
         <div>
           <label style={lbl}>ACCOUNT TYPE</label>
           <div style={{ display: 'flex', gap: 8 }}>
-            {(['student','admin'] as const).map(r => (
-              <button key={r} onClick={() => setRole(r)} style={{ flex: 1, padding: '10px', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer', border: '1px solid', background: role === r ? (r === 'admin' ? 'rgba(139,92,246,0.15)' : 'rgba(59,130,246,0.15)') : 'transparent', color: role === r ? (r === 'admin' ? '#8b5cf6' : '#3b82f6') : '#71717a', borderColor: role === r ? (r === 'admin' ? 'rgba(139,92,246,0.3)' : 'rgba(59,130,246,0.3)') : 'rgba(255,255,255,0.08)' }}>
-                {r === 'admin' ? '👨‍💼 Admin' : '🎓 Student'}
-              </button>
-            ))}
+            {(['student','admin','maintenance'] as const).map(r => {
+              const accent = r === 'admin' ? '#8b5cf6' : r === 'maintenance' ? '#f59e0b' : '#3b82f6'
+              return (
+                <button key={r} onClick={() => setRole(r)} style={{ flex: 1, padding: '10px', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer', border: '1px solid', background: role === r ? `${accent}26` : 'transparent', color: role === r ? accent : '#71717a', borderColor: role === r ? `${accent}4d` : 'rgba(255,255,255,0.08)' }}>
+                  {r === 'admin' ? '👨‍💼 Admin' : r === 'maintenance' ? '🔧 Maintenance' : '🎓 Student'}
+                </button>
+              )
+            })}
           </div>
         </div>
 
@@ -109,7 +113,7 @@ export default function CreateAccountPage() {
         {success && <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 12, background: 'rgba(16,185,129,0.12)', color: '#10b981', border: '1px solid rgba(16,185,129,0.3)' }}>{success}</div>}
 
         <button onClick={handleCreate} disabled={loading} style={{ padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg,#B45309,#F59E0B)', color: '#fff', border: 'none', fontSize: 14, fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.5 : 1 }}>
-          {loading ? 'Creating…' : `+ Create ${role === 'admin' ? 'Admin' : 'Student'} Account`}
+          {loading ? 'Creating…' : `+ Create ${role === 'admin' ? 'Admin' : role === 'maintenance' ? 'Maintenance' : 'Student'} Account`}
         </button>
       </div>
     </div>
