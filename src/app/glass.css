@@ -109,3 +109,33 @@
     padding-top: 56px;
   }
 }
+
+/* ── Print: strip chrome, force a light printable report ── */
+@media print {
+  .app-bg, .app-bg-overlay, .app-sidebar-wrap, .mobile-menu-btn, .no-print {
+    display: none !important;
+  }
+  .app-main-content {
+    margin-left: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+  html, body {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .print-report {
+    background: #fff !important;
+  }
+  .print-report, .print-report * {
+    color: #111 !important;
+    border-color: #ddd !important;
+    box-shadow: none !important;
+  }
+  .print-report .glass-card {
+    background: #fff !important;
+    backdrop-filter: none !important;
+    border: 1px solid #ddd !important;
+    animation: none !important;
+  }
+}
