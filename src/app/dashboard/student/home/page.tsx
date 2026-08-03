@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Inbox, ArrowRight, ScrollText, KeyRound, Check, AlertTriangle, Clock } from 'lucide-react'
+import AnimatedNumber from '@/components/ui/AnimatedNumber'
 
 export default async function StudentHomePage() {
   const supabase = createClient()
@@ -108,8 +109,8 @@ export default async function StudentHomePage() {
       <div className="glass-card" style={{ border: `1px solid ${totalFines > 0 ? 'rgba(245,158,11,0.3)' : 'rgba(255,255,255,0.1)'}`, padding: 20 }}>
         <div style={{ fontSize: 10, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>Conduct Record</div>
         <div style={{ display: 'flex', gap: 24 }}>
-          <div><div style={{ fontSize: 24, fontWeight: 800, color: (offences?.length ?? 0) > 0 ? '#f43f5e' : '#10b981' }}>{offences?.length ?? 0}</div><div style={{ fontSize: 10, color: '#71717a', marginTop: 2 }}>OFFENCES</div></div>
-          <div><div style={{ fontSize: 24, fontWeight: 800, color: totalFines > 0 ? '#f59e0b' : '#10b981' }}>R {totalFines.toFixed(2)}</div><div style={{ fontSize: 10, color: '#71717a', marginTop: 2 }}>TOTAL FINES</div></div>
+          <div><div style={{ fontSize: 24, fontWeight: 800, color: (offences?.length ?? 0) > 0 ? '#f43f5e' : '#10b981' }}><AnimatedNumber value={offences?.length ?? 0} /></div><div style={{ fontSize: 10, color: '#71717a', marginTop: 2 }}>OFFENCES</div></div>
+          <div><div style={{ fontSize: 24, fontWeight: 800, color: totalFines > 0 ? '#f59e0b' : '#10b981' }}><AnimatedNumber value={totalFines} prefix="R " decimals={2} /></div><div style={{ fontSize: 10, color: '#71717a', marginTop: 2 }}>TOTAL FINES</div></div>
           <div><div style={{ fontSize: 24, fontWeight: 800, color: ack?.is_verified ? '#10b981' : '#f59e0b' }}>{ack?.is_verified ? <Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> : <Clock className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />}</div><div style={{ fontSize: 10, color: '#71717a', marginTop: 2 }}>COC STATUS</div></div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import AnimatedNumber from '@/components/ui/AnimatedNumber'
 import StudentDocumentsTable from './StudentDocumentsTable'
 
 export default async function AdminDocumentsPage({ searchParams }: { searchParams: { student?: string } }) {
@@ -54,7 +55,7 @@ export default async function AdminDocumentsPage({ searchParams }: { searchParam
           { label: 'Rejected Files', value: totalRejected, color: '#f43f5e' },
         ].map(t => (
           <div key={t.label} style={{ flex: 1, background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 18px' }}>
-            <div style={{ fontSize: 26, fontWeight: 800, color: t.color }}>{t.value}</div>
+            <div style={{ fontSize: 26, fontWeight: 800, color: t.color }}><AnimatedNumber value={t.value} /></div>
             <div style={{ fontSize: 10, color: '#71717a', marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{t.label}</div>
           </div>
         ))}

@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import AnimatedNumber from '@/components/ui/AnimatedNumber'
 import BiometricsActions from './BiometricsActions'
 import { Contact } from 'lucide-react'
 
@@ -37,7 +38,7 @@ export default async function BiometricsHubPage({ searchParams }: { searchParams
           { label: 'Total', value: students?.length ?? 0, color: '#fafafa' },
         ].map((t, i) => (
           <div key={t.label} className="glass-card" style={{ flex: 1, padding: '14px 18px', ['--stagger' as any]: i }}>
-            <div style={{ fontSize: 28, fontWeight: 800, color: t.color }}>{t.value}</div>
+            <div style={{ fontSize: 28, fontWeight: 800, color: t.color }}><AnimatedNumber value={t.value} /></div>
             <div style={{ fontSize: 10, color: '#71717a', marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{t.label}</div>
           </div>
         ))}

@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import AnimatedNumber from '@/components/ui/AnimatedNumber'
 import Link from 'next/link'
 import { Plus, AlertTriangle } from 'lucide-react'
 
@@ -30,11 +31,11 @@ export default async function DisciplinaryPage() {
       <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
         {[
           { label: 'Total Offences', value: (summary ?? []).reduce((s, r) => s + Number(r.total_offences ?? 0), 0), color: '#fafafa' },
-          { label: 'Total Fines', value: `R ${totalFines.toFixed(2)}`, color: '#f59e0b' },
+          { label: 'Total Fines', value: totalFines, prefix: 'R ', decimals: 2, color: '#f59e0b' },
           { label: 'Escalation Flags', value: flagged, color: '#f43f5e' },
         ].map((t, i) => (
           <div key={t.label} className="glass-card" style={{ flex: 1, padding: '14px 18px', ['--stagger' as any]: i }}>
-            <div style={{ fontSize: 26, fontWeight: 800, color: t.color }}>{t.value}</div>
+            <div style={{ fontSize: 26, fontWeight: 800, color: t.color }}><AnimatedNumber value={t.value} prefix={t.prefix ?? ''} decimals={t.decimals ?? 0} /></div>
             <div style={{ fontSize: 10, color: '#71717a', marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{t.label}</div>
           </div>
         ))}

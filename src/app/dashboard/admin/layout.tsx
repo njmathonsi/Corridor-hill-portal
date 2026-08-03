@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import SignOutButton from '@/components/ui/SignOutButton'
 import { SidebarLineNav } from '@/components/effects/SidebarLineNav'
 import Logo from '@/components/ui/Logo'
+import PageTransition from '@/components/ui/PageTransition'
 import { LayoutDashboard, Contact, DoorOpen, ClipboardList, Inbox, FolderOpen, Home, Users, Scale, UserPlus } from 'lucide-react'
 
 const ICON_CLASS = 'w-5 h-5 text-white/70 group-hover:text-white transition-colors'
@@ -52,7 +53,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         </div>
       </aside>
       <div style={{ marginLeft: 220, flex: 1, overflowY: 'auto' }}>
-        {children}
+        <PageTransition>{children}</PageTransition>
       </div>
     </div>
   )

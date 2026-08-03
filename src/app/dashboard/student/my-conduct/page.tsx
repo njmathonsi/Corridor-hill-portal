@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import AnimatedNumber from '@/components/ui/AnimatedNumber'
 import { redirect } from 'next/navigation'
 import { Check, Clock, AlertTriangle, Calendar } from 'lucide-react'
 
@@ -78,12 +79,12 @@ export default async function MyConductPage() {
       <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
         {[
           { label: 'Total Offences', value: offences?.length ?? 0,        color: (offences?.length ?? 0) > 0 ? '#f43f5e' : '#10b981' },
-          { label: 'Total Fines',    value: `R ${totalFines.toFixed(2)}`,  color: totalFines > 0 ? '#f59e0b' : '#10b981' },
-          { label: 'Outstanding',    value: `R ${openFines.toFixed(2)}`,   color: openFines > 0 ? '#f43f5e' : '#10b981' },
+          { label: 'Total Fines',    value: totalFines, prefix: 'R ', decimals: 2, color: totalFines > 0 ? '#f59e0b' : '#10b981' },
+          { label: 'Outstanding',    value: openFines, prefix: 'R ', decimals: 2, color: openFines > 0 ? '#f43f5e' : '#10b981' },
           { label: 'Open Cases',     value: (offences ?? []).filter(o => !o.resolved).length, color: (offences ?? []).filter(o => !o.resolved).length > 0 ? '#f43f5e' : '#10b981' },
         ].map((t, i) => (
           <div key={t.label} className="glass-card" style={{ flex: 1, padding: '14px 18px', ['--stagger' as any]: i }}>
-            <div style={{ fontSize: 22, fontWeight: 800, color: t.color }}>{String(t.value)}</div>
+            <div style={{ fontSize: 22, fontWeight: 800, color: t.color }}><AnimatedNumber value={t.value} prefix={t.prefix ?? ''} decimals={t.decimals ?? 0} /></div>
             <div style={{ fontSize: 10, color: '#71717a', marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{t.label}</div>
           </div>
         ))}

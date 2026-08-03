@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import ApplicationActions from './ApplicationActions'
+import AnimatedNumber from '@/components/ui/AnimatedNumber'
 
 export default async function ApplicationsPage() {
   const supabase = createClient()
@@ -27,7 +28,7 @@ export default async function ApplicationsPage() {
           const c = statusColor[s]
           return (
             <div key={s} className="glass-card" style={{ flex: 1, padding: '14px 18px', ['--stagger' as any]: i }}>
-              <div style={{ fontSize: 26, fontWeight: 800, color: c.color }}>{count}</div>
+              <div style={{ fontSize: 26, fontWeight: 800, color: c.color }}><AnimatedNumber value={count} /></div>
               <div style={{ fontSize: 10, color: '#71717a', marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{s.replace('_',' ')}</div>
             </div>
           )

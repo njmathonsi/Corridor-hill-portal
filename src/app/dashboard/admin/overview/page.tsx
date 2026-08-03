@@ -1,5 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
+import AnimatedNumber from '@/components/ui/AnimatedNumber'
+import { Contact, DoorOpen, ClipboardList, Inbox, Home, Scale, Users } from 'lucide-react'
 
 export default async function OverviewPage() {
   const supabase = createClient()
@@ -29,14 +31,15 @@ export default async function OverviewPage() {
     { label: 'Currently Outside',    value: outsideNow ?? 0,    color: (outsideNow ?? 0) > 0 ? '#f43f5e' : '#fafafa', href: '/dashboard/admin/pass-tracker' },
   ]
 
+  const ICON_CLASS = 'w-5 h-5 text-white/70 group-hover:text-white transition-colors'
   const modules = [
-    { icon: '🪪', label: 'Biometrics Hub',  href: '/dashboard/admin/biometrics-hub',  desc: 'Register and verify student biometrics' },
-    { icon: '🚪', label: 'Pass Tracker',    href: '/dashboard/admin/pass-tracker',    desc: 'Track building entries and exits' },
-    { icon: '📋', label: 'Move-Out Audit',  href: '/dashboard/admin/move-out-audit',  desc: 'Room inspections and damage reports' },
-    { icon: '📥', label: 'Applications',    href: '/dashboard/admin/applications',    desc: 'Review and approve applications' },
-    { icon: '🏠', label: 'Room Management', href: '/dashboard/admin/room-management', desc: 'Assign rooms and manage occupancy' },
-    { icon: '⚖️', label: 'Disciplinary',   href: '/dashboard/admin/disciplinary',    desc: 'Log offences and manage conduct' },
-    { icon: '👥', label: 'Students',        href: '/dashboard/admin/students',        desc: 'Manage all student accounts' },
+    { icon: <Contact className={ICON_CLASS} />,      label: 'Biometrics Hub',  href: '/dashboard/admin/biometrics-hub',  desc: 'Register and verify student biometrics' },
+    { icon: <DoorOpen className={ICON_CLASS} />,     label: 'Pass Tracker',    href: '/dashboard/admin/pass-tracker',    desc: 'Track building entries and exits' },
+    { icon: <ClipboardList className={ICON_CLASS} />, label: 'Move-Out Audit',  href: '/dashboard/admin/move-out-audit',  desc: 'Room inspections and damage reports' },
+    { icon: <Inbox className={ICON_CLASS} />,        label: 'Applications',    href: '/dashboard/admin/applications',    desc: 'Review and approve applications' },
+    { icon: <Home className={ICON_CLASS} />,         label: 'Room Management', href: '/dashboard/admin/room-management', desc: 'Assign rooms and manage occupancy' },
+    { icon: <Scale className={ICON_CLASS} />,        label: 'Disciplinary',   href: '/dashboard/admin/disciplinary',    desc: 'Log offences and manage conduct' },
+    { icon: <Users className={ICON_CLASS} />,        label: 'Students',        href: '/dashboard/admin/students',        desc: 'Manage all student accounts' },
   ]
 
   return (
@@ -49,7 +52,7 @@ export default async function OverviewPage() {
         {tiles.map((t, i) => (
           <Link key={t.label} href={t.href} style={{ flex: 1, minWidth: 140, textDecoration: 'none' }}>
             <div className="glass-card" style={{ padding: '14px 18px', ['--stagger' as any]: i }}>
-              <div style={{ fontSize: 30, fontWeight: 800, color: t.color, letterSpacing: '-0.03em' }}>{t.value}</div>
+              <div style={{ fontSize: 30, fontWeight: 800, color: t.color, letterSpacing: '-0.03em' }}><AnimatedNumber value={t.value} /></div>
               <div style={{ fontSize: 10, color: '#a1a1aa', marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{t.label}</div>
             </div>
           </Link>
@@ -105,8 +108,8 @@ export default async function OverviewPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
         {modules.map((m, i) => (
           <Link key={m.href} href={m.href} style={{ textDecoration: 'none' }}>
-            <div className="glass-btn glass-card" style={{ padding: '14px 16px', height: '100%', ['--stagger' as any]: i + 7, borderRadius: 12 }}>
-              <div style={{ fontSize: 20, marginBottom: 8 }}>{m.icon}</div>
+            <div className="glass-btn glass-card group" style={{ padding: '14px 16px', height: '100%', ['--stagger' as any]: i + 7, borderRadius: 12 }}>
+              <div style={{ marginBottom: 8 }}>{m.icon}</div>
               <div style={{ fontSize: 12, fontWeight: 700, color: '#fafafa', marginBottom: 3 }}>{m.label}</div>
               <div style={{ fontSize: 11, color: '#a1a1aa', lineHeight: 1.4 }}>{m.desc}</div>
             </div>

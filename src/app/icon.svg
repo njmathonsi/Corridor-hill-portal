@@ -1,0 +1,24 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="icon-bg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#29211c" />
+      <stop offset="100%" stop-color="#1a1613" />
+    </linearGradient>
+    <linearGradient id="icon-blade-1" x1="14" y1="6" x2="30" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#9A3412" />
+    </linearGradient>
+    <linearGradient id="icon-blade-2" x1="26" y1="14" x2="40" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+    <linearGradient id="icon-blade-3" x1="38" y1="20" x2="49" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FBBF24" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#icon-bg)" />
+  <path d="M14 50 Q19 16 26 6 Q33 16 30 50 Z" fill="url(#icon-blade-1)" />
+  <path d="M26 50 Q30 22 37 14 Q43 22 40 50 Z" fill="url(#icon-blade-2)" />
+  <path d="M38 50 Q41 26 47 20 Q52 26 49 50 Z" fill="url(#icon-blade-3)" />
+</svg>
