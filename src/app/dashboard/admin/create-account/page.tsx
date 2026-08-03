@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { createAccountAsAdmin } from '@/lib/actions/accounts'
 
 export default function CreateAccountPage() {
   const [fullName, setFullName]   = useState('')
@@ -12,8 +12,7 @@ export default function CreateAccountPage() {
   const [loading, setLoading]     = useState(false)
   const [error, setError]         = useState('')
   const [success, setSuccess]     = useState('')
-  const supabase = createClient()
-  const router   = useRouter()
+  const router = useRouter()
 
   async function handleCreate() {
     if (!fullName.trim() || !email.trim() || !password.trim()) {
@@ -23,40 +22,17 @@ export default function CreateAccountPage() {
 
     setLoading(true); setError(''); setSuccess('')
 
-    // Create the auth user
-    const { data, error: signUpErr } = await supabase.auth.signUp({
-      email, password,
-      options: { data: { full_name: fullName } },
-    })
+    const result = await createAccountAsAdmin({ fullName, email, password, role, studentNumber })
 
-    if (signUpErr) { setError(signUpErr.message); setLoading(false); return }
-    if (!data.user) { setError('Account creation failed — no user returned'); setLoading(false); return }
-
-    // Update the profile with role + extra details (the trigger creates the base row).
-    // Note: signUp() above already switched this browser's session to the new user,
-    // so this update — and any role change — runs as that new account, not as you.
-    const { error: updateErr } = await supabase
-      .from('profiles')
-      .update({
-        full_name: fullName,
-        role,
-        student_number: role === 'student' ? (studentNumber || null) : null,
-        onboarding_complete: role === 'student' ? false : true,
-      })
-      .eq('id', data.user.id)
-
-    if (updateErr) {
-      if (role !== 'student') {
-        setError(`Account created, but it could not be promoted to ${role} (a security policy blocks a brand-new account from granting itself elevated rights). It exists as a plain student account for now — an existing admin will need to run a SQL update in Supabase to set its role. You are also now signed in as this new account — sign out and sign back in as yourself to keep administering.`)
-      } else {
-        setError(updateErr.message)
-      }
+    if (!result.success) {
+      setError(result.error ?? 'Failed to create account')
       setLoading(false); return
     }
 
     const roleLabel = role === 'admin' ? 'Admin' : role === 'maintenance' ? 'Maintenance' : 'Student'
-    setSuccess(`✓ ${roleLabel} account created for ${fullName}. Note: you are now signed in as this new account — sign out and sign back in as yourself to keep administering.`)
+    setSuccess(`✓ ${roleLabel} account created for ${fullName}.`)
     setFullName(''); setEmail(''); setPassword(''); setSN(''); setLoading(false)
+    router.refresh()
   }
 
   const inp: React.CSSProperties = { width: '100%', background: '#27272a', border: '1px solid rgba(255,255,255,0.1)', color: '#fafafa', padding: '10px 12px', borderRadius: 8, fontSize: 13, outline: 'none', boxSizing: 'border-box' }
@@ -66,10 +42,6 @@ export default function CreateAccountPage() {
     <div style={{ padding: 28, maxWidth: 480 }}>
       <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>Create Account</h1>
       <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Directly create a student, admin, or maintenance account without the public signup flow</p>
-
-      <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 12, background: 'rgba(245,158,11,0.1)', color: '#f59e0b', border: '1px solid rgba(245,158,11,0.3)', marginBottom: 16, lineHeight: 1.5 }}>
-        ⚠ Creating an account signs your browser into that new account. You'll need to sign out and log back in as yourself afterward to keep administering.
-      </div>
 
       <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 24, display: 'flex', flexDirection: 'column', gap: 14 }}>
 
