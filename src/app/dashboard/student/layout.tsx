@@ -4,6 +4,7 @@ import SignOutButton from '@/components/ui/SignOutButton'
 import { SidebarLineNav } from '@/components/effects/SidebarLineNav'
 import Logo from '@/components/ui/Logo'
 import PageTransition from '@/components/ui/PageTransition'
+import MobileShell from '@/components/ui/MobileShell'
 import { LayoutDashboard, Inbox, User, FileText, ScrollText, Home, DoorOpen, Contact, Scale } from 'lucide-react'
 
 const ICON_CLASS = 'w-5 h-5 text-white/70 group-hover:text-white transition-colors'
@@ -32,32 +33,33 @@ export default async function StudentLayout({ children }: { children: React.Reac
   if (profile?.role === 'admin') redirect('/dashboard/admin/overview')
 
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
-      <aside className="glass-sidebar" style={{ width: 220, minWidth: 220, height: '100vh', display: 'flex', flexDirection: 'column', position: 'fixed', left: 0, top: 0, zIndex: 50 }}>
-        <div style={{ padding: '18px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Logo size={24} /></div>
-          <div>
-            <div style={{ fontSize: 12, fontWeight: 700, color: '#fafafa' }}>Corridor Hill</div>
-            <div style={{ fontSize: 9, color: '#a1a1aa', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Student Portal</div>
+    <MobileShell
+      sidebar={
+        <aside className="glass-sidebar" style={{ width: 220, minWidth: 220, height: '100vh', display: 'flex', flexDirection: 'column', position: 'fixed', left: 0, top: 0, zIndex: 50 }}>
+          <div style={{ padding: '18px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Logo size={24} /></div>
+            <div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: '#fafafa' }}>Corridor Hill</div>
+              <div style={{ fontSize: 9, color: '#a1a1aa', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Student Portal</div>
+            </div>
           </div>
-        </div>
 
-        {/* Sidebar nav logic/animation UNCHANGED — only the container wrapper became glass */}
-        <nav style={{ padding: '10px 16px', flex: 1, overflowY: 'auto' }}>
-          <SidebarLineNav items={NAV} />
-        </nav>
+          {/* Sidebar nav logic/animation UNCHANGED — only the container wrapper became glass */}
+          <nav style={{ padding: '10px 16px', flex: 1, overflowY: 'auto' }}>
+            <SidebarLineNav items={NAV} />
+          </nav>
 
-        <div style={{ padding: '10px 8px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-          <div className="glass-card" style={{ padding: '8px 10px', marginBottom: 8, animation: 'none' }}>
-            <div style={{ fontSize: 11, fontWeight: 600, color: '#fafafa', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{profile?.full_name || 'Student'}</div>
-            <div style={{ fontSize: 10, color: '#a1a1aa', fontFamily: 'monospace' }}>{profile?.student_number ?? '—'}</div>
+          <div style={{ padding: '10px 8px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+            <div className="glass-card" style={{ padding: '8px 10px', marginBottom: 8, animation: 'none' }}>
+              <div style={{ fontSize: 11, fontWeight: 600, color: '#fafafa', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{profile?.full_name || 'Student'}</div>
+              <div style={{ fontSize: 10, color: '#a1a1aa', fontFamily: 'monospace' }}>{profile?.student_number ?? '—'}</div>
+            </div>
+            <SignOutButton />
           </div>
-          <SignOutButton />
-        </div>
-      </aside>
-      <div style={{ marginLeft: 220, flex: 1, overflowY: 'auto' }}>
-        <PageTransition>{children}</PageTransition>
-      </div>
-    </div>
+        </aside>
+      }
+    >
+      <PageTransition>{children}</PageTransition>
+    </MobileShell>
   )
 }

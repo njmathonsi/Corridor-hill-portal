@@ -79,3 +79,33 @@
 @media (prefers-reduced-motion: reduce) {
   .glass-card { animation: none; }
 }
+
+/* ── Mobile sidebar: fixed-width sidebar becomes an off-canvas drawer ── */
+.app-sidebar-wrap { display: contents; }
+
+.mobile-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 55;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn { display: flex !important; }
+
+  .app-sidebar-wrap > .glass-sidebar {
+    transform: translateX(-100%);
+    transition: transform 250ms ease;
+    width: 260px !important;
+    min-width: 260px !important;
+    z-index: 58;
+  }
+  .sidebar-open > .glass-sidebar {
+    transform: translateX(0);
+  }
+
+  .app-main-content {
+    margin-left: 0 !important;
+    padding-top: 56px;
+  }
+}
