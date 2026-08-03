@@ -18,7 +18,7 @@ export default async function StudentsPage() {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-              {['Name', 'Student No.', 'Email', 'Faculty', 'Year', 'Funding', 'Status', 'Actions'].map(h => (
+              {['Name', 'Student No.', 'Email', 'Faculty', 'Year', 'Funding', 'Onboarding', 'Account', 'Actions'].map(h => (
                 <th key={h} style={{ textAlign: 'left', padding: '12px 16px', fontSize: 10, fontWeight: 600, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
               ))}
             </tr>
@@ -36,7 +36,12 @@ export default async function StudentsPage() {
                 <td style={{ padding: '12px 16px', color: '#a1a1aa' }}>{s.funding_type ?? '—'}</td>
                 <td style={{ padding: '12px 16px' }}>
                   <span style={{ padding: '3px 8px', borderRadius: 99, fontSize: 10, fontWeight: 600, background: s.onboarding_complete ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.15)', color: s.onboarding_complete ? '#10b981' : '#f59e0b', border: `1px solid ${s.onboarding_complete ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}` }}>
-                    {s.onboarding_complete ? 'Active' : 'Onboarding'}
+                    {s.onboarding_complete ? 'Onboarded' : 'Onboarding'}
+                  </span>
+                </td>
+                <td style={{ padding: '12px 16px' }}>
+                  <span style={{ padding: '3px 8px', borderRadius: 99, fontSize: 10, fontWeight: 600, background: s.is_active ? 'rgba(16,185,129,0.15)' : 'rgba(244,63,94,0.12)', color: s.is_active ? '#10b981' : '#f43f5e', border: `1px solid ${s.is_active ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)'}` }}>
+                    {s.is_active ? 'Active' : 'Inactive'}
                   </span>
                 </td>
                 <td style={{ padding: '12px 16px' }}>
@@ -45,7 +50,7 @@ export default async function StudentsPage() {
               </tr>
             ))}
             {(students ?? []).length === 0 && (
-              <tr><td colSpan={8} style={{ padding: 32, textAlign: 'center', color: '#52525b' }}>No students yet.</td></tr>
+              <tr><td colSpan={9} style={{ padding: 32, textAlign: 'center', color: '#52525b' }}>No students yet.</td></tr>
             )}
           </tbody>
         </table>

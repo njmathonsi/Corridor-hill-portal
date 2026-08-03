@@ -32,7 +32,9 @@ export default function CreateAccountPage() {
     if (signUpErr) { setError(signUpErr.message); setLoading(false); return }
     if (!data.user) { setError('Account creation failed — no user returned'); setLoading(false); return }
 
-    // Update the profile with role + extra details (the trigger creates the base row)
+    // Update the profile with role + extra details (the trigger creates the base row).
+    // Note: signUp() above already switched this browser's session to the new user,
+    // so this update — and any role change — runs as that new account, not as you.
     const { error: updateErr } = await supabase
       .from('profiles')
       .update({
@@ -43,9 +45,16 @@ export default function CreateAccountPage() {
       })
       .eq('id', data.user.id)
 
-    if (updateErr) { setError(updateErr.message); setLoading(false); return }
+    if (updateErr) {
+      if (role === 'admin') {
+        setError(`Account created, but it could not be promoted to admin (a security policy blocks a brand-new account from granting itself admin rights). It exists as a plain student account for now — an existing admin will need to run a SQL update in Supabase to set its role. You are also now signed in as this new account — sign out and sign back in as yourself to keep administering.`)
+      } else {
+        setError(updateErr.message)
+      }
+      setLoading(false); return
+    }
 
-    setSuccess(`✓ ${role === 'admin' ? 'Admin' : 'Student'} account created for ${fullName}`)
+    setSuccess(`✓ ${role === 'admin' ? 'Admin' : 'Student'} account created for ${fullName}. Note: you are now signed in as this new account — sign out and sign back in as yourself to keep administering.`)
     setFullName(''); setEmail(''); setPassword(''); setSN(''); setLoading(false)
   }
 
@@ -56,6 +65,10 @@ export default function CreateAccountPage() {
     <div style={{ padding: 28, maxWidth: 480 }}>
       <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>Create Account</h1>
       <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Directly create a student or admin account without the public signup flow</p>
+
+      <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 12, background: 'rgba(245,158,11,0.1)', color: '#f59e0b', border: '1px solid rgba(245,158,11,0.3)', marginBottom: 16, lineHeight: 1.5 }}>
+        ⚠ Creating an account signs your browser into that new account. You'll need to sign out and log back in as yourself afterward to keep administering.
+      </div>
 
       <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 24, display: 'flex', flexDirection: 'column', gap: 14 }}>
 

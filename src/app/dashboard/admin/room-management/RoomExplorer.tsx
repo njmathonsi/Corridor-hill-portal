@@ -2,7 +2,7 @@
 import { useState, useMemo, useTransition, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Inbox, X, Check, DoorOpen, ChevronRight } from 'lucide-react'
+import { Inbox, X, Check, DoorOpen, ChevronRight, UserPlus } from 'lucide-react'
 
 interface Block { id: number; code: string; description: string | null; gender: string | null }
 interface Unit  { id: number; unit_code: string; floor: number; block_id: number }
@@ -204,7 +204,7 @@ export default function RoomExplorer({ blocks, units, rooms, leases, students }:
                       return (
                         <div
                           key={room.id}
-                          onClick={() => isFull ? setViewingRoom(room) : setAssigningRoom(room)}
+                          onClick={() => roomLeases.length > 0 ? setViewingRoom(room) : setAssigningRoom(room)}
                           style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', borderRadius: 8, cursor: 'pointer', background: `${statusColor}0f`, border: `1px solid ${statusColor}44` }}
                         >
                           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -250,6 +250,7 @@ export default function RoomExplorer({ blocks, units, rooms, leases, students }:
           blockCode={selectedBlock?.code ?? ''}
           unitCode={unitById[viewingRoom.unit_id]?.unit_code ?? ''}
           onClose={() => setViewingRoom(null)}
+          onAssignAnother={() => { setAssigningRoom(viewingRoom); setViewingRoom(null) }}
         />
       )}
     </div>
@@ -344,7 +345,7 @@ function AssignModal({ room, blockCode, unitCode, students, existingLeases, pres
 }
 
 // ══════════════════════ VIEW MODAL (shows both students) ══════════════════════
-function ViewModal({ room, leases, blockCode, unitCode, onClose }: { room: Room; leases: Lease[]; blockCode: string; unitCode: string; onClose: () => void }) {
+function ViewModal({ room, leases, blockCode, unitCode, onClose, onAssignAnother }: { room: Room; leases: Lease[]; blockCode: string; unitCode: string; onClose: () => void; onAssignAnother: () => void }) {
   const [pending, startTransition] = useTransition()
   const supabase = createClient()
   const router = useRouter()
@@ -379,6 +380,11 @@ function ViewModal({ room, leases, blockCode, unitCode, onClose }: { room: Room;
             </button>
           </div>
         ))}
+        {leases.length < room.capacity && (
+          <button onClick={onAssignAnother} className="glass-btn group" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%', marginBottom: 8, padding: '9px', borderRadius: 8, color: '#10b981', border: '1px solid rgba(16,185,129,0.3)', fontSize: 12 }}>
+            <UserPlus className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Assign Another Student
+          </button>
+        )}
         <button onClick={onClose} className="glass-btn" style={{ width: '100%', padding: '9px', borderRadius: 8, fontSize: 12 }}>Close</button>
       </div>
     </div>

@@ -6,7 +6,10 @@ import { AlertTriangle, ArrowUpRight } from 'lucide-react'
 
 export default async function PassTrackerPage() {
   const supabase = createClient()
-  const { data: passes }   = await supabase.from('active_passes').select('*')
+  // active_passes returns each student's latest transit regardless of direction, so a
+  // student who has since checked back in still shows up with their old exit row. This
+  // page is specifically the manifest of who's currently outside, so exclude those rows.
+  const { data: passes } = await supabase.from('active_passes').select('*').neq('pass_status', 'in')
   const { data: students } = await supabase
     .from('profiles')
     .select('id, full_name, student_number')
