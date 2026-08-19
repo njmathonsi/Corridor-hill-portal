@@ -41,9 +41,10 @@ export default async function DisciplinaryPage() {
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 16 }}>
+      <div className="mobile-stack-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 16 }}>
         <div className="glass-card" style={{ overflow: 'hidden', ['--stagger' as any]: 3 }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+          <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+          <table style={{ width: '100%', minWidth: 560, borderCollapse: 'collapse', fontSize: 12 }}>
             <thead><tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
               {['Student', 'Offences', 'Fines', 'Last Incident', 'Flags'].map(h => (
                 <th key={h} style={{ textAlign: 'left', padding: '12px 16px', fontSize: 10, fontWeight: 600, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
@@ -69,6 +70,7 @@ export default async function DisciplinaryPage() {
               {(summary ?? []).length === 0 && <tr><td colSpan={5} style={{ padding: 32, textAlign: 'center', color: '#52525b' }}>No offences recorded.</td></tr>}
             </tbody>
           </table>
+          </div>
         </div>
 
         <div className="glass-card" style={{ padding: 16, ['--stagger' as any]: 4 }}>

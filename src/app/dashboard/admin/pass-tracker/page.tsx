@@ -44,13 +44,14 @@ export default async function PassTrackerPage() {
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: 16, alignItems: 'start' }}>
+      <div className="mobile-stack-grid" style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: 16, alignItems: 'start' }}>
         <TransitForm students={students ?? []} />
 
         {/* Live manifest table */}
         <div className="glass-card" style={{ overflow: 'hidden', ['--stagger' as any]: 3 }}>
           <div style={{ padding: '14px 18px', borderBottom: '1px solid rgba(255,255,255,0.06)', fontSize: 13, fontWeight: 600 }}>Live Building Manifest</div>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+          <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+          <table style={{ width: '100%', minWidth: 640, borderCollapse: 'collapse', fontSize: 12 }}>
             <thead>
               <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                 {['Student', 'Departed', 'Expected Return', 'Destination', 'Status', ''].map(h => (
@@ -86,6 +87,7 @@ export default async function PassTrackerPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>

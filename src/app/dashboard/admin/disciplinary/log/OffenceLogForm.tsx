@@ -77,7 +77,7 @@ export default function OffenceLogForm({ students, offenceDefinitions }: { stude
   const lbl: React.CSSProperties = { fontSize: 11, fontWeight: 600, color: '#71717a', display: 'block', marginBottom: 5, letterSpacing: '0.06em' }
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 260px', gap: 16, alignItems: 'start', maxWidth: 800 }}>
+    <div className="mobile-stack-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 260px', gap: 16, alignItems: 'start', maxWidth: 800 }}>
       <div className="glass-card" style={{ padding: 20 }}>
         {success && <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 12, background: 'rgba(16,185,129,0.12)', color: '#10b981', border: '1px solid rgba(16,185,129,0.3)', marginBottom: 16 }}>{success}</div>}
         {error   && <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 12, background: 'rgba(244,63,94,0.12)', color: '#f43f5e', border: '1px solid rgba(244,63,94,0.3)', marginBottom: 16 }}>{error}</div>}

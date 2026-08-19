@@ -73,7 +73,8 @@ export default function StudentDocumentsTable({ students, autoOpenUserId }: { st
       </div>
 
       <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+        <table style={{ width: '100%', minWidth: 600, borderCollapse: 'collapse', fontSize: 12 }}>
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
               {['Student', 'Uploads', 'Latest Upload', 'Overall Status', ''].map(h => (
@@ -127,6 +128,7 @@ export default function StudentDocumentsTable({ students, autoOpenUserId }: { st
             })}
           </tbody>
         </table>
+        </div>
       </div>
 
       {openStudent && (

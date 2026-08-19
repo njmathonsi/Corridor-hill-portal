@@ -45,7 +45,8 @@ export default async function BiometricsHubPage({ searchParams }: { searchParams
       </div>
 
       <div className="glass-card" style={{ overflow: 'hidden', ['--stagger' as any]: 3 }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+        <table style={{ width: '100%', minWidth: 640, borderCollapse: 'collapse', fontSize: 12 }}>
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
               {['Student', 'Student No.', 'Status', 'Device', 'Registered', 'Action'].map(h => (
@@ -78,6 +79,7 @@ export default async function BiometricsHubPage({ searchParams }: { searchParams
             {(students ?? []).length === 0 && <tr><td colSpan={6} style={{ padding: 32, textAlign: 'center', color: '#52525b' }}>No students registered yet.</td></tr>}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   )

@@ -115,6 +115,13 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+
+  /* Fixed-px two-column layouts (a form/panel beside a table) otherwise
+     squeeze both columns into a phone-width screen instead of reading
+     naturally top-to-bottom. */
+  .mobile-stack-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 /* ── Print: strip chrome, force a light printable report ── */

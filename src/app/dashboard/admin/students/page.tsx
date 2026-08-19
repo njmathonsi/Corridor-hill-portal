@@ -15,7 +15,8 @@ export default async function StudentsPage() {
       <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>{students?.length ?? 0} registered students</p>
 
       <div className="glass-card" style={{ overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+        <table style={{ width: '100%', minWidth: 800, borderCollapse: 'collapse', fontSize: 12 }}>
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
               {['Name', 'Student No.', 'Email', 'Faculty', 'Year', 'Funding', 'Onboarding', 'Account', 'Actions'].map(h => (
@@ -54,6 +55,7 @@ export default async function StudentsPage() {
             )}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   )
