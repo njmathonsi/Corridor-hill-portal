@@ -49,30 +49,34 @@ export default async function MoveOutAuditPage() {
             <div style={{ color: '#52525b', fontSize: 12, padding: '12px 0' }}>None.</div>
           ) : section.list.map((r: any, ri: number) => (
             <Link key={r.id} href={`/dashboard/admin/move-out-audit/${r.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div className="glass-card" style={{ padding: '14px 20px', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 16, cursor: 'pointer', ['--stagger' as any]: 3 + si * 10 + ri }}>
-                <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#3b82f6', background: 'rgba(59,130,246,0.15)', border: '1px solid rgba(59,130,246,0.3)', padding: '3px 8px', borderRadius: 4, flexShrink: 0 }}>{r.report_ref}</span>
-                <span style={{ padding: '3px 8px', borderRadius: 4, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', flexShrink: 0, background: r.inspection_type === 'move_in' ? 'rgba(59,130,246,0.15)' : 'rgba(245,158,11,0.15)', color: r.inspection_type === 'move_in' ? '#3b82f6' : '#f59e0b', border: `1px solid ${r.inspection_type === 'move_in' ? 'rgba(59,130,246,0.3)' : 'rgba(245,158,11,0.3)'}` }}>
-                  {r.inspection_type === 'move_in' ? 'Move-In' : 'Move-Out'}
-                </span>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13, fontWeight: 600 }}>
-                    Block {r.rooms?.units?.blocks?.code} · {r.rooms?.units?.unit_code} · {r.rooms?.room_number}
-                  </div>
-                  <div style={{ fontSize: 11, color: '#71717a', marginTop: 2 }}>
+              <div className="glass-card" style={{ padding: '14px 20px', marginBottom: 8, cursor: 'pointer', ['--stagger' as any]: 3 + si * 10 + ri }}>
+                <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
+                  <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#3b82f6', background: 'rgba(59,130,246,0.15)', border: '1px solid rgba(59,130,246,0.3)', padding: '3px 8px', borderRadius: 4 }}>{r.report_ref}</span>
+                  <span style={{ padding: '3px 8px', borderRadius: 4, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', background: r.inspection_type === 'move_in' ? 'rgba(59,130,246,0.15)' : 'rgba(245,158,11,0.15)', color: r.inspection_type === 'move_in' ? '#3b82f6' : '#f59e0b', border: `1px solid ${r.inspection_type === 'move_in' ? 'rgba(59,130,246,0.3)' : 'rgba(245,158,11,0.3)'}` }}>
+                    {r.inspection_type === 'move_in' ? 'Move-In' : 'Move-Out'}
+                  </span>
+                  <span style={{ padding: '3px 10px', borderRadius: 99, fontSize: 11, fontWeight: 600, background: r.is_finalised ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.15)', color: r.is_finalised ? '#10b981' : '#f59e0b', border: `1px solid ${r.is_finalised ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}`, marginLeft: 'auto' }}>
+                    {r.is_finalised ? 'Finalised' : 'In Progress'}
+                  </span>
+                </div>
+                <div style={{ fontSize: 13, fontWeight: 600 }}>
+                  Block {r.rooms?.units?.blocks?.code} · {r.rooms?.units?.unit_code} · {r.rooms?.room_number}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginTop: 4 }}>
+                  <div style={{ fontSize: 11, color: '#71717a', flex: 1 }}>
                     {r.profiles?.full_name ?? '—'} · Inspector: {r.inspector_name}
                   </div>
-                </div>
-                <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#71717a', flexShrink: 0 }}>
-                  {new Date(r.inspection_date).toLocaleDateString('en-ZA')}
-                </div>
-                {Number(r.total_damage_cost) > 0 && (
-                  <div style={{ fontSize: 14, fontWeight: 700, color: '#f59e0b', flexShrink: 0 }}>
-                    R {Number(r.total_damage_cost).toFixed(2)}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#71717a' }}>
+                      {new Date(r.inspection_date).toLocaleDateString('en-ZA')}
+                    </span>
+                    {Number(r.total_damage_cost) > 0 && (
+                      <span style={{ fontSize: 14, fontWeight: 700, color: '#f59e0b' }}>
+                        R {Number(r.total_damage_cost).toFixed(2)}
+                      </span>
+                    )}
                   </div>
-                )}
-                <span style={{ padding: '3px 10px', borderRadius: 99, fontSize: 11, fontWeight: 600, background: r.is_finalised ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.15)', color: r.is_finalised ? '#10b981' : '#f59e0b', border: `1px solid ${r.is_finalised ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}`, flexShrink: 0 }}>
-                  {r.is_finalised ? 'Finalised' : 'In Progress'}
-                </span>
+                </div>
               </div>
             </Link>
           ))}

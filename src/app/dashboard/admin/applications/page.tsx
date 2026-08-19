@@ -42,15 +42,15 @@ export default async function ApplicationsPage() {
           const c = statusColor[app.status] ?? statusColor.draft
           return (
             <div key={app.id} className="glass-card" style={{ padding: '16px 20px', ['--stagger' as any]: i + 4 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: app.status === 'submitted' || app.status === 'under_review' ? 14 : 0 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', gap: 14, marginBottom: app.status === 'submitted' || app.status === 'under_review' ? 14 : 0 }}>
                 <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg,#B45309,#F59E0B)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: '#fff', flexShrink: 0 }}>
                   {p?.full_name?.split(' ').slice(0,2).map((n: string) => n[0]).join('') ?? '?'}
                 </div>
-                <div style={{ flex: 1 }}>
+                <div style={{ flex: 1, minWidth: 180 }}>
                   <div style={{ fontSize: 14, fontWeight: 700, color: '#fafafa' }}>{p?.full_name ?? '—'}</div>
                   <div style={{ fontSize: 11, color: '#71717a', marginTop: 2 }}>{p?.student_number} · {p?.faculty} · {app.academic_year} · {p?.student_year_type === 'first_year' ? 'First Year' : 'Senior'} · {p?.funding_type ?? '—'}</div>
                 </div>
-                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
                   <span style={{ padding: '4px 12px', borderRadius: 99, fontSize: 11, fontWeight: 600, background: c.bg, color: c.color, border: `1px solid ${c.border}` }}>
                     {app.status.replace('_',' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}
                   </span>
