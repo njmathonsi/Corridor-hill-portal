@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 
-export default function AnimatedNumber({ value, prefix = '', suffix = '', decimals = 0, duration = 700 }: {
+export default function AnimatedNumber({ value, prefix = '', suffix = '', decimals = 0, duration = 350 }: {
   value: number; prefix?: string; suffix?: string; decimals?: number; duration?: number
 }) {
   const [display, setDisplay] = useState(0)

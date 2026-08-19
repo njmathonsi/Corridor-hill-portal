@@ -1,5 +1,5 @@
 'use client'
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import LineSidebar from './LineSidebar'
 
@@ -22,6 +22,16 @@ export function SidebarLineNav({
 }) {
   const pathname = usePathname()
   const router = useRouter()
+
+  // These nav items are plain <li onClick> (a custom hover-effect nav, not <Link>),
+  // so Next.js never gets a chance to auto-prefetch them. Without this, every click
+  // is a cold navigation — request the RSC payload, run the page's Supabase queries,
+  // then render. Prefetching all of them up front on mount means the payload is
+  // usually already cached client-side by the time the user actually clicks.
+  useEffect(() => {
+    for (const item of items) router.prefetch(item.href)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const activeIndex = useMemo(() => {
     const idx = items.findIndex(i => pathname === i.href || pathname.startsWith(i.href + '/'))
