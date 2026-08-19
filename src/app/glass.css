@@ -98,7 +98,12 @@
     transition: transform 250ms ease;
     width: 260px !important;
     min-width: 260px !important;
-    z-index: 58;
+    /* !important is required here: the sidebar sets an inline zIndex:50 for
+       desktop layering, which otherwise beats this rule regardless of the
+       media query and lets the mobile-backdrop (z-index 55) render on top
+       of the open drawer — every tap on a nav link then hits the backdrop
+       instead, silently closing the menu instead of navigating. */
+    z-index: 58 !important;
   }
   .sidebar-open > .glass-sidebar {
     transform: translateX(0);
@@ -107,6 +112,8 @@
   .app-main-content {
     margin-left: 0 !important;
     padding-top: 56px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 

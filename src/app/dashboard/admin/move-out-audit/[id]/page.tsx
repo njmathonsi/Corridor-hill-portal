@@ -87,7 +87,8 @@ export default async function InspectionReportPage({ params }: { params: { id: s
       </div>
 
       <div className="glass-card" style={{ padding: 0, marginBottom: 16, overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+        <table style={{ width: '100%', minWidth: 640, borderCollapse: 'collapse', fontSize: 12 }}>
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
               <th style={{ textAlign: 'left', padding: '10px 14px', fontSize: 10, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Item</th>
@@ -144,6 +145,7 @@ export default async function InspectionReportPage({ params }: { params: { id: s
             })}
           </tbody>
         </table>
+        </div>
       </div>
 
       {report.notes && (
