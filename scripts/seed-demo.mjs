@@ -102,9 +102,14 @@ async function seed() {
   if (deactivated.length) {
     const { error } = await db.from('profiles').update({ is_active: false }).in('id', deactivated)
     if (error) die('Could not deactivate existing students', error)
+    // Written BEFORE the accounts are created, not at the end of the run. If
+    // account creation fails halfway, the real students are already hidden —
+    // and without this file on disk, rollback has no record of who to restore.
+    writeFileSync(STATE_FILE, JSON.stringify({ deactivated, seededAt: new Date().toISOString() }, null, 2))
     log(`• Deactivated ${deactivated.length} existing student(s) — hidden, not deleted:`)
     for (const r of real) log(`    ${r.full_name} <${r.email}>`)
   } else {
+    writeFileSync(STATE_FILE, JSON.stringify({ deactivated: [], seededAt: new Date().toISOString() }, null, 2))
     log('• No active non-demo students to hide.')
   }
 
@@ -241,7 +246,6 @@ async function seed() {
   }
   log('• 2 maintenance ticket(s) created')
 
-  writeFileSync(STATE_FILE, JSON.stringify({ deactivated, seededAt: new Date().toISOString() }, null, 2))
   log(`\n✓ Demo ready. ${made.length} students on ${DEMO_DOMAIN}, password as supplied.`)
   log(`  Login example: ${emailFor(0)}`)
   log(`  State written to scripts/.demo-state.json — needed for rollback.`)
