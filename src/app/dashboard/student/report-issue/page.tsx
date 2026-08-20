@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import ReportIssueForm from './ReportIssueForm'
 
 const STATUS_STYLE: Record<string, { bg: string; color: string; label: string }> = {
-  pending:     { bg: 'rgba(245,158,11,0.15)', color: '#f59e0b', label: 'Pending' },
+  pending:     { bg: 'rgb(var(--brand-rgb) / 0.15)', color: 'var(--brand)', label: 'Pending' },
   assigned:    { bg: 'rgba(59,130,246,0.15)', color: '#3b82f6', label: 'Assigned' },
   in_progress: { bg: 'rgba(168,85,247,0.15)', color: '#a855f7', label: 'In Progress' },
   completed:   { bg: 'rgba(16,185,129,0.15)', color: '#10b981', label: 'Completed' },

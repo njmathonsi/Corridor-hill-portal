@@ -1,23 +1,49 @@
-export default function Logo({ size = 32 }: { size?: number }) {
+/**
+ * TENTSARI mark — direction "1c Stack": the letter T read as a pitched roof,
+ * drawn as two nested chevrons. Single-weight vector, so it survives 24px
+ * (favicon) and a single-colour reversal.
+ *
+ * `animated` swaps the fill for a stroke-draw reveal; the paths carry
+ * pathLength="1" so the dash animation in glass.css is length-independent
+ * and does not need recomputing if the geometry is ever retuned.
+ */
+export default function Logo({ size = 32, animated = false }: { size?: number; animated?: boolean }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={animated ? 'logo-draw' : undefined}
+      aria-hidden="true"
+    >
       <defs>
-        <linearGradient id="logo-blade-1" x1="14" y1="6" x2="30" y2="50" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#F59E0B" />
-          <stop offset="100%" stopColor="#9A3412" />
+        <linearGradient id="logo-roof-outer" x1="32" y1="15" x2="32" y2="50" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="var(--brand-hi)" />
+          <stop offset="100%" stopColor="var(--brand-deep)" />
         </linearGradient>
-        <linearGradient id="logo-blade-2" x1="26" y1="14" x2="40" y2="50" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#F59E0B" />
-          <stop offset="100%" stopColor="#B45309" />
-        </linearGradient>
-        <linearGradient id="logo-blade-3" x1="38" y1="20" x2="49" y2="50" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#FBBF24" />
-          <stop offset="100%" stopColor="#D97706" />
+        <linearGradient id="logo-roof-inner" x1="32" y1="34" x2="32" y2="50" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="var(--brand)" />
+          <stop offset="100%" stopColor="var(--brand-mid)" />
         </linearGradient>
       </defs>
-      <path d="M14 50 Q19 16 26 6 Q33 16 30 50 Z" fill="url(#logo-blade-1)" />
-      <path d="M26 50 Q30 22 37 14 Q43 22 40 50 Z" fill="url(#logo-blade-2)" />
-      <path d="M38 50 Q41 26 47 20 Q52 26 49 50 Z" fill="url(#logo-blade-3)" />
+      <path
+        d="M8 50 L32 15 L56 50"
+        stroke="url(#logo-roof-outer)"
+        strokeWidth="6.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        pathLength={1}
+      />
+      <path
+        d="M21 50 L32 34 L43 50"
+        stroke="url(#logo-roof-inner)"
+        strokeWidth="5.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        pathLength={1}
+      />
     </svg>
   )
 }

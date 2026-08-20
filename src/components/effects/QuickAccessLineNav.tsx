@@ -21,7 +21,7 @@ export function QuickAccessLineNav() {
     <div style={{ padding: '20px 8px', background: '#111113', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12 }}>
       <LineSidebar
         items={['Biometrics Hub', 'Pass Tracker', 'Move-Out Audit', 'Applications', 'Room Mgmt', 'Disciplinary']}
-        accentColor="#F59E0B"
+        accentColor="var(--brand)"
         textColor="#8a8a94"
         markerColor="#3a3a44"
         showIndex

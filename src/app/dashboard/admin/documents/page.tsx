@@ -50,7 +50,7 @@ export default async function AdminDocumentsPage({ searchParams }: { searchParam
 
       <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
         {[
-          { label: 'Pending Files',  value: totalPending,  color: '#f59e0b' },
+          { label: 'Pending Files',  value: totalPending,  color: 'var(--brand)' },
           { label: 'Approved Files', value: totalApproved, color: '#10b981' },
           { label: 'Rejected Files', value: totalRejected, color: '#f43f5e' },
         ].map(t => (

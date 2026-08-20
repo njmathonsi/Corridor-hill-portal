@@ -19,12 +19,12 @@ export default async function StudentHomePage() {
   ])
 
   const totalFines = (offences ?? []).reduce((s, o) => s + Number(o.fine_amount_applied ?? 0), 0)
-  const statusColor: Record<string,string> = { submitted:'#3b82f6', under_review:'#f59e0b', approved:'#10b981', rejected:'#f43f5e', draft:'#71717a' }
+  const statusColor: Record<string,string> = { submitted:'#3b82f6', under_review:'var(--brand)', approved:'#10b981', rejected:'#f43f5e', draft:'#71717a' }
 
   return (
     <div style={{ padding: 28 }}>
       <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>Welcome back, {profile?.full_name?.split(' ')[0] ?? 'Student'} 👋</h1>
-      <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Corridor Hill Residence · {profile?.student_number ?? '—'}</p>
+      <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>TENTSARI Residence · {profile?.student_number ?? '—'}</p>
 
       {/* Application CTA or status */}
       {!application ? (
@@ -60,11 +60,11 @@ export default async function StudentHomePage() {
       {/* CoC banner */}
       {!ack && (
         <Link href="/dashboard/student/onboarding/step-4">
-          <div className="glass-card group" style={{ marginBottom: 20, padding: '12px 18px', background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.3)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 600, color: '#f59e0b' }}>
+          <div className="glass-card group" style={{ marginBottom: 20, padding: '12px 18px', background: 'rgb(var(--brand-rgb) / 0.08)', border: '1px solid rgb(var(--brand-rgb) / 0.3)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 600, color: 'var(--brand)' }}>
               <ScrollText className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Sign the Code of Conduct to activate your account
             </div>
-            <ArrowRight className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" style={{ color: '#f59e0b' }} />
+            <ArrowRight className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" style={{ color: 'var(--brand)' }} />
           </div>
         </Link>
       )}
@@ -77,7 +77,7 @@ export default async function StudentHomePage() {
               <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em', marginBottom: 8 }}>Block {(lease.rooms as any)?.units?.blocks?.code} · {(lease.rooms as any)?.room_number}</div>
               <span style={{ padding: '3px 10px', borderRadius: 99, fontSize: 11, fontWeight: 600, background: 'rgba(16,185,129,0.15)', color: '#10b981', border: '1px solid rgba(16,185,129,0.3)' }}>{lease.lease_status}</span>
               {lease.assigned_key_number && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, color: '#f59e0b', marginTop: 10, fontFamily: 'monospace' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, color: 'var(--brand)', marginTop: 10, fontFamily: 'monospace' }}>
                   <KeyRound className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> {lease.assigned_key_number}
                 </div>
               )}
@@ -93,11 +93,11 @@ export default async function StudentHomePage() {
               <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 16, fontWeight: 700, color: '#10b981', marginBottom: 4 }}>
                 <Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Registered
               </div>
-              <div style={{ fontSize: 11, color: '#71717a' }}>Sync: <span style={{ color: bio.sync_status === 'synced' ? '#10b981' : '#f59e0b' }}>{bio.sync_status}</span></div>
+              <div style={{ fontSize: 11, color: '#71717a' }}>Sync: <span style={{ color: bio.sync_status === 'synced' ? '#10b981' : 'var(--brand)' }}>{bio.sync_status}</span></div>
             </>
           ) : (
             <>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 14, fontWeight: 600, color: '#f59e0b', marginBottom: 6 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 14, fontWeight: 600, color: 'var(--brand)', marginBottom: 6 }}>
                 <AlertTriangle className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Not Registered
               </div>
               <div style={{ fontSize: 12, color: '#71717a', lineHeight: 1.5 }}>Visit reception to register within 5 days of check-in.</div>
@@ -106,12 +106,12 @@ export default async function StudentHomePage() {
         </div>
       </div>
 
-      <div className="glass-card" style={{ border: `1px solid ${totalFines > 0 ? 'rgba(245,158,11,0.3)' : 'rgba(255,255,255,0.1)'}`, padding: 20 }}>
+      <div className="glass-card" style={{ border: `1px solid ${totalFines > 0 ? 'rgb(var(--brand-rgb) / 0.3)' : 'rgba(255,255,255,0.1)'}`, padding: 20 }}>
         <div style={{ fontSize: 10, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>Conduct Record</div>
         <div style={{ display: 'flex', gap: 24 }}>
           <div><div style={{ fontSize: 24, fontWeight: 800, color: (offences?.length ?? 0) > 0 ? '#f43f5e' : '#10b981' }}><AnimatedNumber value={offences?.length ?? 0} /></div><div style={{ fontSize: 10, color: '#71717a', marginTop: 2 }}>OFFENCES</div></div>
-          <div><div style={{ fontSize: 24, fontWeight: 800, color: totalFines > 0 ? '#f59e0b' : '#10b981' }}><AnimatedNumber value={totalFines} prefix="R " decimals={2} /></div><div style={{ fontSize: 10, color: '#71717a', marginTop: 2 }}>TOTAL FINES</div></div>
-          <div><div style={{ fontSize: 24, fontWeight: 800, color: ack?.is_verified ? '#10b981' : '#f59e0b' }}>{ack?.is_verified ? <Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> : <Clock className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />}</div><div style={{ fontSize: 10, color: '#71717a', marginTop: 2 }}>COC STATUS</div></div>
+          <div><div style={{ fontSize: 24, fontWeight: 800, color: totalFines > 0 ? 'var(--brand)' : '#10b981' }}><AnimatedNumber value={totalFines} prefix="R " decimals={2} /></div><div style={{ fontSize: 10, color: '#71717a', marginTop: 2 }}>TOTAL FINES</div></div>
+          <div><div style={{ fontSize: 24, fontWeight: 800, color: ack?.is_verified ? '#10b981' : 'var(--brand)' }}>{ack?.is_verified ? <Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> : <Clock className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />}</div><div style={{ fontSize: 10, color: '#71717a', marginTop: 2 }}>COC STATUS</div></div>
         </div>
       </div>
     </div>

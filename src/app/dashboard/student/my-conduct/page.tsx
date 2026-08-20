@@ -44,7 +44,7 @@ export default async function MyConductPage() {
   }
 
   const CAT_COLOR: Record<string, string> = {
-    cat1_internal: '#f59e0b',
+    cat1_internal: 'var(--brand)',
     cat2_property_damage: '#3b82f6',
     cat4_serious: '#f43f5e',
   }
@@ -57,11 +57,11 @@ export default async function MyConductPage() {
       {/* CoC acknowledgement status */}
       <div className="glass-card" style={{
         marginBottom: 20, padding: '12px 18px',
-        background: ack?.is_verified ? 'rgba(16,185,129,0.08)' : 'rgba(245,158,11,0.08)',
-        border: `1px solid ${ack?.is_verified ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}`,
+        background: ack?.is_verified ? 'rgba(16,185,129,0.08)' : 'rgb(var(--brand-rgb) / 0.08)',
+        border: `1px solid ${ack?.is_verified ? 'rgba(16,185,129,0.3)' : 'rgb(var(--brand-rgb) / 0.3)'}`,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 600, color: ack?.is_verified ? '#10b981' : '#f59e0b' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 600, color: ack?.is_verified ? '#10b981' : 'var(--brand)' }}>
           {ack
             ? ack.is_verified
               ? <><Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Code of Conduct Acknowledged & Verified — {ack.document_version}</>
@@ -79,7 +79,7 @@ export default async function MyConductPage() {
       <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
         {[
           { label: 'Total Offences', value: offences?.length ?? 0,        color: (offences?.length ?? 0) > 0 ? '#f43f5e' : '#10b981' },
-          { label: 'Total Fines',    value: totalFines, prefix: 'R ', decimals: 2, color: totalFines > 0 ? '#f59e0b' : '#10b981' },
+          { label: 'Total Fines',    value: totalFines, prefix: 'R ', decimals: 2, color: totalFines > 0 ? 'var(--brand)' : '#10b981' },
           { label: 'Outstanding',    value: openFines, prefix: 'R ', decimals: 2, color: openFines > 0 ? '#f43f5e' : '#10b981' },
           { label: 'Open Cases',     value: (offences ?? []).filter(o => !o.resolved).length, color: (offences ?? []).filter(o => !o.resolved).length > 0 ? '#f43f5e' : '#10b981' },
         ].map((t, i) => (
@@ -118,7 +118,7 @@ export default async function MyConductPage() {
                 </div>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                   {Number(o.fine_amount_applied) > 0 && (
-                    <span style={{ fontSize: 16, fontWeight: 800, color: '#f59e0b', fontFamily: 'monospace' }}>
+                    <span style={{ fontSize: 16, fontWeight: 800, color: 'var(--brand)', fontFamily: 'monospace' }}>
                       R {Number(o.fine_amount_applied).toFixed(2)}
                     </span>
                   )}

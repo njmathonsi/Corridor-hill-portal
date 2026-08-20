@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import ApplicationActions from './ApplicationActions'
+import ProcessStudentDrawer from './ProcessStudentDrawer'
 import AnimatedNumber from '@/components/ui/AnimatedNumber'
 
 export default async function ApplicationsPage() {
@@ -11,7 +12,7 @@ export default async function ApplicationsPage() {
 
   const statusColor: Record<string, { bg: string; color: string; border: string }> = {
     submitted:    { bg: 'rgba(59,130,246,0.15)',  color: '#3b82f6', border: 'rgba(59,130,246,0.3)' },
-    under_review: { bg: 'rgba(245,158,11,0.15)',  color: '#f59e0b', border: 'rgba(245,158,11,0.3)' },
+    under_review: { bg: 'rgb(var(--brand-rgb) / 0.15)',  color: 'var(--brand)', border: 'rgb(var(--brand-rgb) / 0.3)' },
     approved:     { bg: 'rgba(16,185,129,0.15)',  color: '#10b981', border: 'rgba(16,185,129,0.3)' },
     rejected:     { bg: 'rgba(244,63,94,0.12)',   color: '#f43f5e', border: 'rgba(244,63,94,0.3)'  },
     draft:        { bg: 'rgba(255,255,255,0.05)', color: '#71717a', border: 'rgba(255,255,255,0.1)' },
@@ -42,8 +43,8 @@ export default async function ApplicationsPage() {
           const c = statusColor[app.status] ?? statusColor.draft
           return (
             <div key={app.id} className="glass-card" style={{ padding: '16px 20px', ['--stagger' as any]: i + 4 }}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', gap: 14, marginBottom: app.status === 'submitted' || app.status === 'under_review' ? 14 : 0 }}>
-                <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg,#B45309,#F59E0B)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: '#fff', flexShrink: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', gap: 14, marginBottom: 14 }}>
+                <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg,var(--brand-deep),var(--brand))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: '#fff', flexShrink: 0 }}>
                   {p?.full_name?.split(' ').slice(0,2).map((n: string) => n[0]).join('') ?? '?'}
                 </div>
                 <div style={{ flex: 1, minWidth: 180 }}>
@@ -58,8 +59,22 @@ export default async function ApplicationsPage() {
                 </div>
               </div>
 
+              {/* Available at every status: an approved application can still
+                  have documents, a room or biometrics outstanding, and the
+                  pipeline is how you finish those without leaving the queue. */}
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+                <ProcessStudentDrawer
+                  applicationId={app.id}
+                  studentId={app.student_id}
+                  studentName={p?.full_name ?? '—'}
+                  initialStatus={app.status}
+                />
+              </div>
+
               {(app.status === 'submitted' || app.status === 'under_review') && (
-                <ApplicationActions applicationId={app.id} studentId={app.student_id} studentName={p?.full_name ?? ''} />
+                <div style={{ marginTop: 10 }}>
+                  <ApplicationActions applicationId={app.id} studentId={app.student_id} studentName={p?.full_name ?? ''} />
+                </div>
               )}
 
               {app.status === 'rejected' && app.rejection_reason && (

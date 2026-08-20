@@ -32,7 +32,7 @@ const DOC_LABEL: Record<DocType, string> = {
 }
 
 const STATUS_STYLE: Record<Status, { bg: string; color: string; border: string }> = {
-  pending:  { bg: 'rgba(245,158,11,0.15)', color: '#f59e0b', border: 'rgba(245,158,11,0.3)' },
+  pending:  { bg: 'rgb(var(--brand-rgb) / 0.15)', color: 'var(--brand)', border: 'rgb(var(--brand-rgb) / 0.3)' },
   approved: { bg: 'rgba(16,185,129,0.15)', color: '#10b981', border: 'rgba(16,185,129,0.3)' },
   rejected: { bg: 'rgba(244,63,94,0.12)',  color: '#f43f5e', border: 'rgba(244,63,94,0.3)'  },
 }

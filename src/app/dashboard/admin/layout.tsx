@@ -38,7 +38,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <div style={{ padding: '18px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Logo size={24} /></div>
             <div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: '#fafafa' }}>Corridor Hill</div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: '#fafafa' }}>TENTSARI</div>
               <div style={{ fontSize: 9, color: '#a1a1aa', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Admin Portal</div>
             </div>
           </div>

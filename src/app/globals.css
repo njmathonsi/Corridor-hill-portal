@@ -1,9 +1,12 @@
 :root {
-  --bg-base: #1a1613;
-  --bg-surface: #211b17;
-  --bg-card: #29211c;
-  --bg-raised: #332822;
-  --bg-active: #40312a;
+  /* Cool neutral ramp. These were warm browns (#1a1613 …) chosen to sit under
+     the old terracotta accent; against indigo the warmth read as muddy, so the
+     whole ramp was rotated cool while keeping the same lightness steps. */
+  --bg-base: #131318;
+  --bg-surface: #191922;
+  --bg-card: #1f1f2b;
+  --bg-raised: #282836;
+  --bg-active: #343446;
   --border-dim: rgba(255,255,255,0.06);
   --border-mid: rgba(255,255,255,0.10);
   --border-hi: rgba(255,255,255,0.16);
@@ -14,9 +17,9 @@
   --emerald: #10b981;
   --emerald-dim: rgba(16,185,129,0.15);
   --emerald-ring: rgba(16,185,129,0.35);
-  --amber: #f59e0b;
-  --amber-dim: rgba(245,158,11,0.15);
-  --amber-ring: rgba(245,158,11,0.35);
+  --accent: var(--brand);
+  --accent-dim: rgb(var(--brand-rgb) / 0.15);
+  --accent-ring: rgb(var(--brand-rgb) / 0.35);
   --blue: #3b82f6;
   --blue-dim: rgba(59,130,246,0.15);
   --blue-ring: rgba(59,130,246,0.35);

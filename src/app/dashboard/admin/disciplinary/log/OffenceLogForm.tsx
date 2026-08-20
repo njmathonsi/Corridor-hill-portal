@@ -122,7 +122,7 @@ export default function OffenceLogForm({ students, offenceDefinitions }: { stude
         {def?.involves_cost_recovery && (
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 12 }}>
             <div><label style={lbl}>ITEM DAMAGED</label><input value={itemDamaged} onChange={e => setItemDmg(e.target.value)} placeholder="e.g. Toilet flush handle" style={inp} /></div>
-            <div><label style={lbl}>COST RECOVERY (R)</label><input type="number" value={costRecovery} onChange={e => setCost(e.target.value)} placeholder="0.00" style={{ ...inp, color: '#f59e0b', fontFamily: 'monospace' }} /></div>
+            <div><label style={lbl}>COST RECOVERY (R)</label><input type="number" value={costRecovery} onChange={e => setCost(e.target.value)} placeholder="0.00" style={{ ...inp, color: 'var(--brand)', fontFamily: 'monospace' }} /></div>
           </div>
         )}
 
@@ -137,13 +137,13 @@ export default function OffenceLogForm({ students, offenceDefinitions }: { stude
           <>
             <div className="glass-card" style={{ padding: 16 }}>
               <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#71717a', marginBottom: 8 }}>Escalation Tier</div>
-              <div style={{ fontSize: 32, fontWeight: 800, color: tier === '1st' ? '#10b981' : tier === '2nd' ? '#f59e0b' : '#f43f5e' }}>{tier}</div>
+              <div style={{ fontSize: 32, fontWeight: 800, color: tier === '1st' ? '#10b981' : tier === '2nd' ? 'var(--brand)' : '#f43f5e' }}>{tier}</div>
               <div style={{ fontSize: 11, color: '#71717a', marginTop: 4 }}>{prevCount} previous offence{prevCount !== 1 ? 's' : ''}</div>
             </div>
             <div className="glass-card" style={{ padding: 16 }}>
               <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#71717a', marginBottom: 8 }}>Auto Outcome</div>
               <div style={{ fontSize: 14, fontWeight: 700, color: '#fafafa', marginBottom: 6 }}>{OUTCOME_LABELS[autoOutcome] ?? autoOutcome}</div>
-              {autoFine > 0 && <div style={{ fontSize: 22, fontWeight: 800, color: '#f59e0b' }}>R {autoFine.toFixed(2)}</div>}
+              {autoFine > 0 && <div style={{ fontSize: 22, fontWeight: 800, color: 'var(--brand)' }}>R {autoFine.toFixed(2)}</div>}
             </div>
             {def.category === 'cat4_serious' && (
               <div className="glass-card" style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.3)', padding: 14 }}>

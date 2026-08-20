@@ -28,7 +28,7 @@ export default async function MaintenanceDashboardPage() {
 
       <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
         {[
-          { label: 'Open (Unclaimed)', value: open.length, color: '#f59e0b' },
+          { label: 'Open (Unclaimed)', value: open.length, color: 'var(--brand)' },
           { label: 'My Active', value: mine.length, color: '#a855f7' },
           { label: 'Completed by Me', value: completed.length, color: '#10b981' },
         ].map((t, i) => (

@@ -33,7 +33,7 @@ export default async function PassTrackerPage() {
 
       <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
         {[
-          { label: 'Currently Outside', value: out,     color: '#f59e0b' },
+          { label: 'Currently Outside', value: out,     color: 'var(--brand)' },
           { label: 'Overdue',           value: overdue, color: '#f43f5e' },
           { label: 'Total Passes',      value: passes?.length ?? 0, color: '#fafafa' },
         ].map((t, i) => (
@@ -76,7 +76,7 @@ export default async function PassTrackerPage() {
                   </td>
                   <td style={{ padding: '10px 16px', color: '#a1a1aa', maxWidth: 140, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.destination ?? '—'}</td>
                   <td style={{ padding: '10px 16px' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 99, fontSize: 10, fontWeight: 600, background: p.pass_status === 'overdue' ? 'rgba(244,63,94,0.15)' : 'rgba(245,158,11,0.15)', color: p.pass_status === 'overdue' ? '#f43f5e' : '#f59e0b', border: `1px solid ${p.pass_status === 'overdue' ? 'rgba(244,63,94,0.3)' : 'rgba(245,158,11,0.3)'}` }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 99, fontSize: 10, fontWeight: 600, background: p.pass_status === 'overdue' ? 'rgba(244,63,94,0.15)' : 'rgb(var(--brand-rgb) / 0.15)', color: p.pass_status === 'overdue' ? '#f43f5e' : 'var(--brand)', border: `1px solid ${p.pass_status === 'overdue' ? 'rgba(244,63,94,0.3)' : 'rgb(var(--brand-rgb) / 0.3)'}` }}>
                       {p.pass_status === 'overdue' ? <AlertTriangle className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> : <ArrowUpRight className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />} {p.pass_status === 'overdue' ? 'Overdue' : 'Out'}
                     </span>
                   </td>

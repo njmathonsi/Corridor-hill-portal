@@ -49,7 +49,7 @@ export default function CreateAccountPage() {
           <label style={lbl}>ACCOUNT TYPE</label>
           <div style={{ display: 'flex', gap: 8 }}>
             {(['student','admin','maintenance'] as const).map(r => {
-              const accent = r === 'admin' ? '#8b5cf6' : r === 'maintenance' ? '#f59e0b' : '#3b82f6'
+              const accent = r === 'admin' ? '#8b5cf6' : r === 'maintenance' ? 'var(--brand)' : '#3b82f6'
               return (
                 <button key={r} onClick={() => setRole(r)} style={{ flex: 1, padding: '10px', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer', border: '1px solid', background: role === r ? `${accent}26` : 'transparent', color: role === r ? accent : '#71717a', borderColor: role === r ? `${accent}4d` : 'rgba(255,255,255,0.08)' }}>
                   {r === 'admin' ? '👨‍💼 Admin' : r === 'maintenance' ? '🔧 Maintenance' : '🎓 Student'}
@@ -84,7 +84,7 @@ export default function CreateAccountPage() {
         {error && <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 12, background: 'rgba(244,63,94,0.12)', color: '#f43f5e', border: '1px solid rgba(244,63,94,0.3)' }}>{error}</div>}
         {success && <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 12, background: 'rgba(16,185,129,0.12)', color: '#10b981', border: '1px solid rgba(16,185,129,0.3)' }}>{success}</div>}
 
-        <button onClick={handleCreate} disabled={loading} style={{ padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg,#B45309,#F59E0B)', color: '#fff', border: 'none', fontSize: 14, fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.5 : 1 }}>
+        <button onClick={handleCreate} disabled={loading} style={{ padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg,var(--brand-deep),var(--brand))', color: '#fff', border: 'none', fontSize: 14, fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.5 : 1 }}>
           {loading ? 'Creating…' : `+ Create ${role === 'admin' ? 'Admin' : role === 'maintenance' ? 'Maintenance' : 'Student'} Account`}
         </button>
       </div>

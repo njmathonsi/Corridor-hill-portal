@@ -27,7 +27,7 @@ export default async function OverviewPage() {
     { label: 'Total Students',       value: totalStudents ?? 0, color: '#fafafa',  href: '/dashboard/admin/students' },
     { label: 'Checked In',           value: checkedIn ?? 0,     color: '#10b981',  href: '/dashboard/admin/room-management' },
     { label: 'Pending Applications', value: pendingApps ?? 0,   color: '#3b82f6',  href: '/dashboard/admin/applications' },
-    { label: 'Biometrics Pending',   value: bioPending ?? 0,    color: '#f59e0b',  href: '/dashboard/admin/biometrics-hub' },
+    { label: 'Biometrics Pending',   value: bioPending ?? 0,    color: 'var(--brand)',  href: '/dashboard/admin/biometrics-hub' },
     { label: 'Currently Outside',    value: outsideNow ?? 0,    color: (outsideNow ?? 0) > 0 ? '#f43f5e' : '#fafafa', href: '/dashboard/admin/pass-tracker' },
   ]
 
@@ -45,7 +45,7 @@ export default async function OverviewPage() {
   return (
     <div style={{ padding: 28 }}>
       <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4, color: '#fafafa' }}>Operations Overview</h1>
-      <p style={{ fontSize: 13, color: '#a1a1aa', marginBottom: 24 }}>Corridor Hill Residence · eMalahleni · Live Dashboard</p>
+      <p style={{ fontSize: 13, color: '#a1a1aa', marginBottom: 24 }}>TENTSARI Residence · eMalahleni · Live Dashboard</p>
 
       {/* KPI tiles — glass, staggered pop-in */}
       <div style={{ display: 'flex', gap: 10, marginBottom: 24, flexWrap: 'wrap' }}>
@@ -74,7 +74,7 @@ export default async function OverviewPage() {
                 <div style={{ fontSize: 12, fontWeight: 600, color: '#fafafa' }}>{app.profiles?.full_name ?? '—'}</div>
                 <div style={{ fontSize: 10, color: '#a1a1aa' }}>{app.profiles?.faculty ?? '—'} · {app.profiles?.student_number ?? '—'}</div>
               </div>
-              <span style={{ padding: '2px 8px', borderRadius: 99, fontSize: 10, fontWeight: 600, background: app.status === 'submitted' ? 'rgba(59,130,246,0.2)' : 'rgba(245,158,11,0.2)', color: app.status === 'submitted' ? '#93c5fd' : '#fbbf24', border: `1px solid ${app.status === 'submitted' ? 'rgba(59,130,246,0.4)' : 'rgba(245,158,11,0.4)'}` }}>
+              <span style={{ padding: '2px 8px', borderRadius: 99, fontSize: 10, fontWeight: 600, background: app.status === 'submitted' ? 'rgba(59,130,246,0.2)' : 'rgb(var(--brand-rgb) / 0.2)', color: app.status === 'submitted' ? '#93c5fd' : 'var(--brand-hi)', border: `1px solid ${app.status === 'submitted' ? 'rgba(59,130,246,0.4)' : 'rgb(var(--brand-rgb) / 0.4)'}` }}>
                 {app.status.replace('_',' ')}
               </span>
             </div>
@@ -96,7 +96,7 @@ export default async function OverviewPage() {
                 <div style={{ fontSize: 10, color: '#a1a1aa' }}>{o.offence_definitions?.offence_name ?? '—'} · {new Date(o.incident_date).toLocaleDateString('en-ZA')}</div>
               </div>
               {Number(o.fine_amount_applied) > 0 && (
-                <span style={{ fontSize: 12, fontWeight: 700, color: '#fbbf24', fontFamily: 'monospace' }}>R {Number(o.fine_amount_applied).toFixed(2)}</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--brand-hi)', fontFamily: 'monospace' }}>R {Number(o.fine_amount_applied).toFixed(2)}</span>
               )}
             </div>
           ))}

@@ -31,7 +31,7 @@ export default async function MaintenancePage() {
 
       <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
         {[
-          { label: 'Open', value: open, color: '#f59e0b' },
+          { label: 'Open', value: open, color: 'var(--brand)' },
           { label: 'Completed', value: completed, color: '#10b981' },
           { label: 'Total', value: list.length, color: '#fafafa' },
         ].map((t, i) => (

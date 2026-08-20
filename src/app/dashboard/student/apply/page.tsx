@@ -78,7 +78,7 @@ export default function ApplyPage() {
   return (
     <div style={{ padding: 28, maxWidth: 560 }}>
       <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>Apply for Accommodation</h1>
-      <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Academic Year 2026 · Corridor Hill Residence · eMalahleni</p>
+      <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Academic Year 2026 · TENTSARI Residence · eMalahleni</p>
 
       <div className="glass-card" style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 14 }}>
 
@@ -132,7 +132,7 @@ export default function ApplyPage() {
 
         {error && <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 12, background: 'rgba(244,63,94,0.12)', color: '#f43f5e', border: '1px solid rgba(244,63,94,0.3)' }}>{error}</div>}
 
-        <button onClick={handleSubmit} disabled={loading} className="glass-btn group" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg,#B45309,#F59E0B)', color: '#fff', border: 'none', fontSize: 14, fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.5 : 1 }}>
+        <button onClick={handleSubmit} disabled={loading} className="glass-btn group" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg,var(--brand-deep),var(--brand))', color: '#fff', border: 'none', fontSize: 14, fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.5 : 1 }}>
           {loading ? 'Submitting…' : <><Inbox className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Submit Application</>}
         </button>
       </div>

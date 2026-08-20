@@ -120,7 +120,7 @@ export default function RoomExplorer({ blocks, units, rooms, leases, students }:
       {!selectedBlock && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 700 }}>
           {blockStats.map(({ block, total, occupied, pct, roomCount }, i) => {
-            const color = pct >= 90 ? '#f43f5e' : pct >= 60 ? '#f59e0b' : '#10b981'
+            const color = pct >= 90 ? '#f43f5e' : pct >= 60 ? 'var(--brand)' : '#10b981'
             const genderColor = GENDER_COLOR[block.gender ?? ''] ?? '#71717a'
             return (
               <div key={block.id} onClick={() => goToBlock(block)} className="glass-card" style={{ padding: '18px 22px', cursor: 'pointer', ['--stagger' as any]: i }}>
@@ -152,7 +152,7 @@ export default function RoomExplorer({ blocks, units, rooms, leases, students }:
           {floorsInBlock.map((floor, i) => {
             const { total, occupied } = floorStats(floor)
             const pct = total > 0 ? Math.round((occupied / total) * 100) : 0
-            const color = pct >= 90 ? '#f43f5e' : pct >= 60 ? '#f59e0b' : '#10b981'
+            const color = pct >= 90 ? '#f43f5e' : pct >= 60 ? 'var(--brand)' : '#10b981'
             const unitCount = units.filter(u => u.block_id === selectedBlock.id && u.floor === floor).length
             return (
               <div key={floor} onClick={() => goToFloor(floor)} className="glass-card" style={{ width: 170, padding: '16px 18px', cursor: 'pointer', ['--stagger' as any]: i }}>
@@ -174,7 +174,7 @@ export default function RoomExplorer({ blocks, units, rooms, leases, students }:
             const isExpanded = expandedUnitId === unit.id
             const unitRooms = rooms.filter(r => r.unit_id === unit.id).sort((a, b) => a.room_number.localeCompare(b.room_number))
             const pct = total > 0 ? Math.round((occupied / total) * 100) : 0
-            const color = pct >= 90 ? '#f43f5e' : pct >= 60 ? '#f59e0b' : '#10b981'
+            const color = pct >= 90 ? '#f43f5e' : pct >= 60 ? 'var(--brand)' : '#10b981'
 
             return (
               <div key={unit.id} className="glass-card" style={{ overflow: 'hidden', border: `1px solid ${isExpanded ? 'rgba(59,130,246,0.4)' : 'rgba(255,255,255,0.1)'}`, ['--stagger' as any]: i }}>
@@ -199,7 +199,7 @@ export default function RoomExplorer({ blocks, units, rooms, leases, students }:
                       const bedsUsed = roomLeases.length
                       const bedsTotal = room.capacity
                       const isFull = bedsUsed >= bedsTotal
-                      const statusColor = isFull ? '#f43f5e' : bedsUsed > 0 ? '#f59e0b' : '#10b981'
+                      const statusColor = isFull ? '#f43f5e' : bedsUsed > 0 ? 'var(--brand)' : '#10b981'
 
                       return (
                         <div

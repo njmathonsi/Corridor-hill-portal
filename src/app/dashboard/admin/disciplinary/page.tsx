@@ -31,7 +31,7 @@ export default async function DisciplinaryPage() {
       <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
         {[
           { label: 'Total Offences', value: (summary ?? []).reduce((s, r) => s + Number(r.total_offences ?? 0), 0), color: '#fafafa' },
-          { label: 'Total Fines', value: totalFines, prefix: 'R ', decimals: 2, color: '#f59e0b' },
+          { label: 'Total Fines', value: totalFines, prefix: 'R ', decimals: 2, color: 'var(--brand)' },
           { label: 'Escalation Flags', value: flagged, color: '#f43f5e' },
         ].map((t, i) => (
           <div key={t.label} className="glass-card" style={{ flex: 1, padding: '14px 18px', ['--stagger' as any]: i }}>
@@ -57,8 +57,8 @@ export default async function DisciplinaryPage() {
                     <div style={{ fontWeight: 600, color: '#fafafa' }}>{s.full_name}</div>
                     <div style={{ fontSize: 10, color: '#71717a', fontFamily: 'monospace' }}>{s.student_number}</div>
                   </td>
-                  <td style={{ padding: '12px 16px', textAlign: 'center', fontSize: 16, fontWeight: 800, color: Number(s.total_offences) > 3 ? '#f43f5e' : Number(s.total_offences) > 0 ? '#f59e0b' : '#10b981' }}>{s.total_offences ?? 0}</td>
-                  <td style={{ padding: '12px 16px', color: '#f59e0b', fontFamily: 'monospace', fontSize: 11 }}>R {Number(s.total_fines_applied ?? 0).toFixed(2)}</td>
+                  <td style={{ padding: '12px 16px', textAlign: 'center', fontSize: 16, fontWeight: 800, color: Number(s.total_offences) > 3 ? '#f43f5e' : Number(s.total_offences) > 0 ? 'var(--brand)' : '#10b981' }}>{s.total_offences ?? 0}</td>
+                  <td style={{ padding: '12px 16px', color: 'var(--brand)', fontFamily: 'monospace', fontSize: 11 }}>R {Number(s.total_fines_applied ?? 0).toFixed(2)}</td>
                   <td style={{ padding: '12px 16px', color: '#71717a', fontFamily: 'monospace', fontSize: 11 }}>{s.last_incident_date ? new Date(s.last_incident_date).toLocaleDateString('en-ZA') : '—'}</td>
                   <td style={{ padding: '12px 16px' }}>
                     {s.has_concurrent_flag && <span style={{ padding: '2px 7px', borderRadius: 99, fontSize: 10, fontWeight: 700, background: 'rgba(244,63,94,0.15)', color: '#f43f5e', border: '1px solid rgba(244,63,94,0.3)', marginRight: 4 }}>3-Rule</span>}
@@ -84,7 +84,7 @@ export default async function DisciplinaryPage() {
                 <span style={{ fontSize: 10, color: '#71717a', fontFamily: 'monospace' }}>{new Date(o.incident_date).toLocaleDateString('en-ZA')}</span>
               </div>
               <div style={{ fontSize: 11, color: '#a1a1aa' }}>{o.profiles?.full_name}</div>
-              {Number(o.fine_amount_applied) > 0 && <div style={{ fontSize: 11, color: '#f59e0b', fontWeight: 600, marginTop: 4 }}>Fine: R {Number(o.fine_amount_applied).toFixed(2)}</div>}
+              {Number(o.fine_amount_applied) > 0 && <div style={{ fontSize: 11, color: 'var(--brand)', fontWeight: 600, marginTop: 4 }}>Fine: R {Number(o.fine_amount_applied).toFixed(2)}</div>}
               {o.three_concurrent_flag && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, color: '#f43f5e', fontWeight: 700, marginTop: 4 }}>
                   <AlertTriangle className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> 3-Concurrent Rule — External DC

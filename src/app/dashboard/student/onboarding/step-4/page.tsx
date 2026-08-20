@@ -60,14 +60,14 @@ export default function Step4Page() {
   return (
     <div style={{ padding: 28, maxWidth: 560 }}>
       <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>Code of Conduct</h1>
-      <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Read and acknowledge the Corridor Hill Residence Rules. This is a binding agreement.</p>
+      <p style={{ fontSize: 13, color: '#71717a', marginBottom: 24 }}>Read and acknowledge the TENTSARI Residence Rules. This is a binding agreement.</p>
 
       {/* Scrollable rules */}
       <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 20, marginBottom: 16, maxHeight: 300, overflowY: 'auto', fontSize: 12, color: '#a1a1aa', lineHeight: 1.8 }}>
-        <div style={{ fontWeight: 700, color: '#fafafa', marginBottom: 12, fontSize: 14 }}>Corridor Hill Residence — Key Rules</div>
+        <div style={{ fontWeight: 700, color: '#fafafa', marginBottom: 12, fontSize: 14 }}>TENTSARI Residence — Key Rules</div>
 
         <div style={{ marginBottom: 14 }}>
-          <div style={{ fontWeight: 700, color: '#f59e0b', marginBottom: 6 }}>Category 1 — Internal DC Offences</div>
+          <div style={{ fontWeight: 700, color: 'var(--brand)', marginBottom: 6 }}>Category 1 — Internal DC Offences</div>
           <div>• No smoking indoors at any time — R50 fine, escalates to External DC on 3rd offence</div>
           <div>• No loud music — Speaker confiscation, church fee flag on 2nd offence</div>
           <div>• No smuggling or consuming alcohol on premises</div>
@@ -109,7 +109,7 @@ export default function Step4Page() {
         {[
           { state: checked1, set: setChecked1, text: 'I have read and understood all Category 1, 2, and 4 offences and their consequences, including fines and escalation procedures.' },
           { state: checked2, set: setChecked2, text: 'I understand that three simultaneous Category 1 offences result in automatic escalation to an External Disciplinary Committee.' },
-          { state: checked3, set: setChecked3, text: 'I agree to abide by the Corridor Hill Residence Code of Conduct for the full duration of my stay.' },
+          { state: checked3, set: setChecked3, text: 'I agree to abide by the TENTSARI Residence Code of Conduct for the full duration of my stay.' },
         ].map((item, i) => (
           <label key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '12px 14px', borderRadius: 10, background: item.state ? 'rgba(16,185,129,0.08)' : '#18181b', border: `1px solid ${item.state ? 'rgba(16,185,129,0.3)' : 'rgba(255,255,255,0.08)'}`, cursor: 'pointer', transition: 'all 0.15s' }}>
             <input type="checkbox" checked={item.state} onChange={e => item.set(e.target.checked)} style={{ marginTop: 2, flexShrink: 0, accentColor: '#10b981', width: 16, height: 16 }} />

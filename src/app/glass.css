@@ -1,10 +1,37 @@
 /* ── Glassmorphism System — append to existing src/app/globals.css ── */
 
+/* ── TENTSARI brand tokens ────────────────────────────────────────────────
+   The whole accent ramp lives here. Before this, the accent was 144 literal
+   hex/rgba occurrences across 37 files, so a palette change meant a repo-wide
+   find/replace; now it is these few lines.
+
+   The *-rgb pairs exist because a bare `var(--brand)` cannot be given an alpha
+   channel. Space-separated components let call sites write
+   `rgb(var(--brand-rgb) / 0.3)` for any opacity off the same single source.
+
+   NOT tokenised on purpose: the semantic status colours (success #10b981,
+   info #3b82f6, danger #f43f5e) — those track meaning, not brand, and must not
+   move when the brand does. Two places also keep literal hex because they are
+   read outside CSS: the Lightfall WebGL props on the login page (a shader
+   cannot parse var()) and src/app/icon.svg (a standalone favicon file with no
+   cascade to inherit from). Retune those by hand.                           */
+
+:root {
+  --brand-rgb: 129 140 248;        /* #818CF8 — primary, the mark's own tone */
+  --brand: rgb(var(--brand-rgb));
+  --brand-hi-rgb: 165 180 252;     /* #A5B4FC — highlight / top of gradients */
+  --brand-hi: rgb(var(--brand-hi-rgb));
+  --brand-mid-rgb: 99 102 241;     /* #6366F1 */
+  --brand-mid: rgb(var(--brand-mid-rgb));
+  --brand-deep: #4F46E5;
+  --brand-deepest: #3730A3;
+}
+
 .app-bg {
   position: fixed;
   inset: 0;
   z-index: -2;
-  background-image: url('/images/building-bg.png');
+  background-image: url('/images/tentsari-bg.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -14,12 +41,17 @@
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(1px);
+  /* Denser and blurrier than the 0.85/1px this carried over the old still.
+     The dusk clip's lit windows are small high-contrast points that read as
+     visual noise behind the cards, and because this layer now sits over a
+     MOVING image, anything legible through it competes for attention in a way
+     a photograph never did. Slate was also rotated cool to match the palette. */
+  background: rgba(13, 14, 24, 0.90);
+  backdrop-filter: blur(3px);
 }
 
 .glass-card {
-  background: rgba(26, 22, 19, 0.55);
+  background: rgba(19, 19, 26, 0.55);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: none;
@@ -39,7 +71,7 @@
 }
 
 .glass-sidebar {
-  background: rgba(26, 22, 19, 0.55);
+  background: rgba(19, 19, 26, 0.55);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-right: none;
@@ -163,5 +195,132 @@
     backdrop-filter: none !important;
     border: 1px solid #ddd !important;
     animation: none !important;
+  }
+}
+
+/* ══ Brand motion ══════════════════════════════════════════════════════════
+   Staged reveal for the TENTSARI "Stack" lockup: the roof draws itself, then
+   the wordmark settles in from wider tracking. The dash values are literal 1s
+   because the paths in Logo.tsx declare pathLength="1" — retuning the mark's
+   geometry will not break this.                                             */
+
+.logo-draw path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: logoDraw 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.logo-draw path:nth-child(2) { animation-delay: 180ms; }
+
+@keyframes logoDraw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* The end letter-spacing is repeated literally in each keyframe rather than
+   written as `inherit`: inside a keyframe `inherit` resolves against the
+   PARENT, not the element's own declared tracking, so it landed on `normal`
+   and silently flattened the wordmark at the end of the reveal. */
+.wordmark-reveal {
+  animation: wordmarkReveal 800ms cubic-bezier(0.16, 1, 0.3, 1) 620ms both;
+}
+.wordmark-reveal-late {
+  animation: wordmarkRevealLate 700ms cubic-bezier(0.16, 1, 0.3, 1) 900ms both;
+}
+
+@keyframes wordmarkReveal {
+  from { opacity: 0; letter-spacing: 0.7em; }
+  to   { opacity: 1; letter-spacing: 0.34em; }
+}
+
+@keyframes wordmarkRevealLate {
+  from { opacity: 0; letter-spacing: 0.5em; }
+  to   { opacity: 1; letter-spacing: 0.18em; }
+}
+
+/* ══ Ambient background video ══════════════════════════════════════════════
+   Sits over the still .app-bg, under .app-bg-overlay. Suppressed below 769px
+   and under reduced-motion, where the still frame (the video's own poster) is
+   what shows — so the layout is identical either way and nothing reflows.    */
+
+.app-bg-video {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Fades up rather than popping in once enough of the clip has buffered. */
+  animation: bgVideoFadeIn 1200ms ease both;
+}
+
+@keyframes bgVideoFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .app-bg-video { display: none; }
+}
+
+
+/* Intake drawer slides in from the right edge. Declared as a class rather
+   than an inline style so the reduced-motion block below can switch it off —
+   an inline `animation` would win over any stylesheet rule. */
+.process-drawer {
+  animation: drawerIn 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes drawerIn {
+  from { transform: translateX(100%); opacity: 0.4; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+/* ══ Content motion ════════════════════════════════════════════════════════ */
+
+/* Skeleton shimmer for loading.tsx placeholders. */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.03) 0%,
+    rgb(var(--brand-rgb) / 0.10) 50%,
+    rgba(255,255,255,0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1400ms linear infinite;
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* ══ Reduced motion ════════════════════════════════════════════════════════
+   The narrow .glass-card rule above predates the brand-motion work; this block
+   covers everything added since. Anything that animates opacity from 0 must be
+   forced back to a visible resting state here, or reduced-motion users get an
+   invisible element rather than a still one.                                 */
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-draw path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .wordmark-reveal,
+  .wordmark-reveal-late {
+    animation: none;
+    opacity: 1;
+  }
+  .app-bg-video {
+    display: none;
+  }
+  .shimmer {
+    animation: none;
+  }
+  .page-loading-pulse {
+    animation: none;
+    opacity: 1;
+  }
+  .process-drawer {
+    animation: none;
   }
 }

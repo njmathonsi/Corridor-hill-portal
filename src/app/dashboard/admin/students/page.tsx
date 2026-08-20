@@ -36,7 +36,7 @@ export default async function StudentsPage() {
                 <td style={{ padding: '12px 16px', color: '#a1a1aa', textAlign: 'center' }}>{s.year_of_study ?? '—'}</td>
                 <td style={{ padding: '12px 16px', color: '#a1a1aa' }}>{s.funding_type ?? '—'}</td>
                 <td style={{ padding: '12px 16px' }}>
-                  <span style={{ padding: '3px 8px', borderRadius: 99, fontSize: 10, fontWeight: 600, background: s.onboarding_complete ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.15)', color: s.onboarding_complete ? '#10b981' : '#f59e0b', border: `1px solid ${s.onboarding_complete ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}` }}>
+                  <span style={{ padding: '3px 8px', borderRadius: 99, fontSize: 10, fontWeight: 600, background: s.onboarding_complete ? 'rgba(16,185,129,0.15)' : 'rgb(var(--brand-rgb) / 0.15)', color: s.onboarding_complete ? '#10b981' : 'var(--brand)', border: `1px solid ${s.onboarding_complete ? 'rgba(16,185,129,0.3)' : 'rgb(var(--brand-rgb) / 0.3)'}` }}>
                     {s.onboarding_complete ? 'Onboarded' : 'Onboarding'}
                   </span>
                 </td>

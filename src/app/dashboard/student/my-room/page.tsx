@@ -64,7 +64,7 @@ export default async function MyRoomPage() {
           <div style={{ fontSize: 10, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>Key Card</div>
           {lease.assigned_key_number ? (
             <>
-              <div style={{ fontSize: 26, fontWeight: 800, fontFamily: 'monospace', color: '#f59e0b', letterSpacing: '0.04em' }}>{lease.assigned_key_number}</div>
+              <div style={{ fontSize: 26, fontWeight: 800, fontFamily: 'monospace', color: 'var(--brand)', letterSpacing: '0.04em' }}>{lease.assigned_key_number}</div>
               <div style={{ fontSize: 11, color: '#71717a', marginTop: 6 }}>Issued {lease.key_issued_at ? new Date(lease.key_issued_at).toLocaleDateString('en-ZA') : '—'}</div>
               <div style={{ fontSize: 11, color: '#a1a1aa', marginTop: 8, lineHeight: 1.5 }}>Keep your key safe. Report lost keys to reception immediately.</div>
             </>

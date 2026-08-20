@@ -47,7 +47,7 @@ export default function ApplicationActions({ applicationId, studentId, studentNa
     <div>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         {btn('Approve → Assign Room', <Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />, handleApprove, '#10b981', 'rgba(16,185,129,0.3)')}
-        {btn('Flag for Review', <Search className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />, handleReview, '#f59e0b', 'rgba(245,158,11,0.3)')}
+        {btn('Flag for Review', <Search className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />, handleReview, 'var(--brand)', 'rgb(var(--brand-rgb) / 0.3)')}
         {btn('Reject', <X className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />, () => setShowReject(!showReject), '#f43f5e', 'rgba(244,63,94,0.3)')}
       </div>
       {showReject && (

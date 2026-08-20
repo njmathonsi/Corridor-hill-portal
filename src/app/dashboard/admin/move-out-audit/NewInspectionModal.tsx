@@ -241,7 +241,7 @@ export default function NewInspectionModal({ students, rooms }: { students: Stud
                     <label style={lbl}>INSPECTION TYPE</label>
                     <div style={{ display: 'flex', gap: 8 }}>
                       {(['move_out', 'move_in'] as InspType[]).map(t => (
-                        <button key={t} onClick={() => setInspType(t)} className="glass-btn group" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '9px 12px', borderRadius: 8, fontSize: 12, fontWeight: 700, background: inspType === t ? (t === 'move_out' ? 'rgba(245,158,11,0.18)' : 'rgba(59,130,246,0.18)') : 'transparent', color: inspType === t ? (t === 'move_out' ? '#f59e0b' : '#3b82f6') : '#71717a', border: `1px solid ${inspType === t ? (t === 'move_out' ? 'rgba(245,158,11,0.4)' : 'rgba(59,130,246,0.4)') : 'rgba(255,255,255,0.08)'}` }}>
+                        <button key={t} onClick={() => setInspType(t)} className="glass-btn group" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '9px 12px', borderRadius: 8, fontSize: 12, fontWeight: 700, background: inspType === t ? (t === 'move_out' ? 'rgb(var(--brand-rgb) / 0.18)' : 'rgba(59,130,246,0.18)') : 'transparent', color: inspType === t ? (t === 'move_out' ? 'var(--brand)' : '#3b82f6') : '#71717a', border: `1px solid ${inspType === t ? (t === 'move_out' ? 'rgb(var(--brand-rgb) / 0.4)' : 'rgba(59,130,246,0.4)') : 'rgba(255,255,255,0.08)'}` }}>
                           {t === 'move_out' ? <LogOut className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> : <LogIn className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />}
                           {t === 'move_out' ? 'Move-Out' : 'Move-In'}
                         </button>
@@ -263,7 +263,7 @@ export default function NewInspectionModal({ students, rooms }: { students: Stud
                         <Check className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> Comparing against move-in report from {new Date(prevMoveIn.date).toLocaleDateString('en-ZA')}
                       </div>
                     ) : (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#f59e0b', padding: '8px 12px', borderRadius: 8, background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.25)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: 'var(--brand)', padding: '8px 12px', borderRadius: 8, background: 'rgb(var(--brand-rgb) / 0.08)', border: '1px solid rgb(var(--brand-rgb) / 0.25)' }}>
                         <AlertTriangle className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" /> No move-in report found for this room — pre-existing damage can't be verified
                       </div>
                     )
@@ -299,10 +299,10 @@ export default function NewInspectionModal({ students, rooms }: { students: Stud
                         return (
                           <div key={item.key} style={{ marginBottom: 6 }}>
                             {wasPreExisting && (
-                              <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, color: '#f59e0b', marginBottom: 2, padding: '0 4px' }}>
-                                <AlertTriangle size={12} color="#f59e0b" /> Already Not OK at move-in
+                              <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, color: 'var(--brand)', marginBottom: 2, padding: '0 4px' }}>
+                                <AlertTriangle size={12} color="var(--brand)" /> Already Not OK at move-in
                                 {cond !== 'Not_OK' && (
-                                  <button onClick={() => flagPreExisting(item.key)} style={{ marginLeft: 4, fontSize: 10, color: '#f59e0b', background: 'none', border: 'none', textDecoration: 'underline', cursor: 'pointer', padding: 0 }}>
+                                  <button onClick={() => flagPreExisting(item.key)} style={{ marginLeft: 4, fontSize: 10, color: 'var(--brand)', background: 'none', border: 'none', textDecoration: 'underline', cursor: 'pointer', padding: 0 }}>
                                     flag as pre-existing
                                   </button>
                                 )}
@@ -329,7 +329,7 @@ export default function NewInspectionModal({ students, rooms }: { students: Stud
                                 <input placeholder="Describe the problem…" value={conditions[item.key]?.problem ?? ''} onChange={e => setProblem(item.key, e.target.value)} style={{ ...inp, fontSize: 11, padding: '6px 10px' }} />
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                                   <span style={{ fontSize: 11, color: '#71717a' }}>R</span>
-                                  <input type="number" placeholder="Cost" value={conditions[item.key]?.cost ?? ''} onChange={e => setCost(item.key, parseFloat(e.target.value) || 0)} style={{ ...inp, width: 80, fontSize: 11, padding: '6px 8px', color: '#f59e0b', fontFamily: 'monospace' }} />
+                                  <input type="number" placeholder="Cost" value={conditions[item.key]?.cost ?? ''} onChange={e => setCost(item.key, parseFloat(e.target.value) || 0)} style={{ ...inp, width: 80, fontSize: 11, padding: '6px 8px', color: 'var(--brand)', fontFamily: 'monospace' }} />
                                 </div>
                               </div>
                             )}
@@ -346,7 +346,7 @@ export default function NewInspectionModal({ students, rooms }: { students: Stud
                 <div>
                   {/* Score */}
                   <div style={{ textAlign: 'center', padding: 16, background: '#27272a', borderRadius: 10, marginBottom: 16 }}>
-                    <div style={{ fontSize: 40, fontWeight: 800, color: okCount / ITEMS.length > 0.8 ? '#10b981' : okCount / ITEMS.length > 0.5 ? '#f59e0b' : '#f43f5e' }}>
+                    <div style={{ fontSize: 40, fontWeight: 800, color: okCount / ITEMS.length > 0.8 ? '#10b981' : okCount / ITEMS.length > 0.5 ? 'var(--brand)' : '#f43f5e' }}>
                       {Math.round((okCount / ITEMS.length) * 100)}%
                     </div>
                     <div style={{ fontSize: 11, color: '#71717a', marginTop: 4 }}>Room Condition Score · {okCount}/{ITEMS.length} Items OK</div>
@@ -363,13 +363,13 @@ export default function NewInspectionModal({ students, rooms }: { students: Stud
                           <span style={{ color: '#fafafa' }}>{item.name}</span>
                           <div style={{ display: 'flex', gap: 10 }}>
                             {conditions[item.key]?.problem && <span style={{ color: '#71717a' }}>{conditions[item.key].problem}</span>}
-                            <span style={{ color: '#f59e0b', fontWeight: 700, fontFamily: 'monospace' }}>R {(conditions[item.key]?.cost ?? 0).toFixed(2)}</span>
+                            <span style={{ color: 'var(--brand)', fontWeight: 700, fontFamily: 'monospace' }}>R {(conditions[item.key]?.cost ?? 0).toFixed(2)}</span>
                           </div>
                         </div>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, fontWeight: 700, fontSize: 13 }}>
                         <span>Total Damage</span>
-                        <span style={{ color: '#f59e0b', fontFamily: 'monospace' }}>R {totalDamage.toFixed(2)}</span>
+                        <span style={{ color: 'var(--brand)', fontFamily: 'monospace' }}>R {totalDamage.toFixed(2)}</span>
                       </div>
                     </div>
                   )}
@@ -381,7 +381,7 @@ export default function NewInspectionModal({ students, rooms }: { students: Stud
                   {inspType === 'move_out' && (
                     <div style={{ marginBottom: 14 }}>
                       <label style={lbl}>RECOMMENDED DEDUCTION (R)</label>
-                      <input type="number" value={deduction} onChange={e => setDeduction(e.target.value)} placeholder={totalDamage.toFixed(2)} style={{ ...inp, color: '#f59e0b', fontFamily: 'monospace' }} />
+                      <input type="number" value={deduction} onChange={e => setDeduction(e.target.value)} placeholder={totalDamage.toFixed(2)} style={{ ...inp, color: 'var(--brand)', fontFamily: 'monospace' }} />
                     </div>
                   )}
 

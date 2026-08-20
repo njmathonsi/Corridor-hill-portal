@@ -50,10 +50,10 @@ export default async function InspectionReportPage({ params }: { params: { id: s
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <h1 style={{ fontSize: 20, fontWeight: 700 }}>{report.report_ref}</h1>
-            <span style={{ padding: '3px 10px', borderRadius: 4, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', background: isMoveOut ? 'rgba(245,158,11,0.15)' : 'rgba(59,130,246,0.15)', color: isMoveOut ? '#f59e0b' : '#3b82f6', border: `1px solid ${isMoveOut ? 'rgba(245,158,11,0.3)' : 'rgba(59,130,246,0.3)'}` }}>
+            <span style={{ padding: '3px 10px', borderRadius: 4, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', background: isMoveOut ? 'rgb(var(--brand-rgb) / 0.15)' : 'rgba(59,130,246,0.15)', color: isMoveOut ? 'var(--brand)' : '#3b82f6', border: `1px solid ${isMoveOut ? 'rgb(var(--brand-rgb) / 0.3)' : 'rgba(59,130,246,0.3)'}` }}>
               {isMoveOut ? 'Move-Out' : 'Move-In'}
             </span>
-            <span style={{ padding: '3px 10px', borderRadius: 99, fontSize: 11, fontWeight: 600, background: report.is_finalised ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.15)', color: report.is_finalised ? '#10b981' : '#f59e0b' }}>
+            <span style={{ padding: '3px 10px', borderRadius: 99, fontSize: 11, fontWeight: 600, background: report.is_finalised ? 'rgba(16,185,129,0.15)' : 'rgb(var(--brand-rgb) / 0.15)', color: report.is_finalised ? '#10b981' : 'var(--brand)' }}>
               {report.is_finalised ? 'Finalised' : 'In Progress'}
             </span>
           </div>
@@ -80,7 +80,7 @@ export default async function InspectionReportPage({ params }: { params: { id: s
         </div>
         <div>
           <div style={{ fontSize: 10, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>{isMoveOut ? 'Total Damage' : 'Condition Score'}</div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: isMoveOut ? '#f59e0b' : '#10b981', fontFamily: isMoveOut ? 'monospace' : undefined }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: isMoveOut ? 'var(--brand)' : '#10b981', fontFamily: isMoveOut ? 'monospace' : undefined }}>
             {isMoveOut ? `R ${Number(report.total_damage_cost).toFixed(2)}` : `${lineItems.filter(li => li.condition_in !== 'Not_OK').length}/${lineItems.length} OK`}
           </div>
         </div>
@@ -124,9 +124,9 @@ export default async function InspectionReportPage({ params }: { params: { id: s
                   )}
                   <td style={{ padding: '9px 14px', color: '#a1a1aa' }}>
                     {li.problem_description ?? '—'}
-                    {preExisting && <div style={{ fontSize: 10, color: '#f59e0b', marginTop: 2 }}>⚠ Pre-existing at move-in — not charged to this student</div>}
+                    {preExisting && <div style={{ fontSize: 10, color: 'var(--brand)', marginTop: 2 }}>⚠ Pre-existing at move-in — not charged to this student</div>}
                   </td>
-                  {isMoveOut && <td style={{ textAlign: 'right', padding: '9px 14px', fontFamily: 'monospace', color: Number(li.repair_cost_estimate) > 0 ? '#f59e0b' : '#71717a' }}>R {Number(li.repair_cost_estimate ?? 0).toFixed(2)}</td>}
+                  {isMoveOut && <td style={{ textAlign: 'right', padding: '9px 14px', fontFamily: 'monospace', color: Number(li.repair_cost_estimate) > 0 ? 'var(--brand)' : '#71717a' }}>R {Number(li.repair_cost_estimate ?? 0).toFixed(2)}</td>}
                   <td style={{ padding: '9px 14px' }}>
                     {(li.photo_urls ?? []).length === 0 ? (
                       <span style={{ color: '#52525b' }}>—</span>
@@ -159,7 +159,7 @@ export default async function InspectionReportPage({ params }: { params: { id: s
         <div className="glass-card" style={{ padding: 16, marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
           <div>
             <div style={{ fontSize: 10, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>Recommended Deduction</div>
-            <div style={{ fontSize: 18, fontWeight: 700, color: '#f59e0b', fontFamily: 'monospace' }}>R {Number(report.recommended_deduction ?? 0).toFixed(2)}</div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--brand)', fontFamily: 'monospace' }}>R {Number(report.recommended_deduction ?? 0).toFixed(2)}</div>
           </div>
           {damagedItems.length > 0 && (
             <div style={{ textAlign: 'right' }}>

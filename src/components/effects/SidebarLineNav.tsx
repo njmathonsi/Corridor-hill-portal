@@ -11,7 +11,7 @@ export interface NavItem {
 
 export function SidebarLineNav({
   items,
-  accentColor = '#F59E0B',
+  accentColor = 'var(--brand)',
   textColor = '#a1a1aa',
   markerColor = '#3a3a44',
 }: {

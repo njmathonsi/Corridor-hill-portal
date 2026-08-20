@@ -29,7 +29,7 @@ export default async function MoveOutAuditPage() {
 
       <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
         {[
-          { label: 'In Progress', value: pending.length,   color: '#f59e0b' },
+          { label: 'In Progress', value: pending.length,   color: 'var(--brand)' },
           { label: 'Finalised',   value: finalised.length, color: '#10b981' },
           { label: 'Total',       value: reports?.length ?? 0, color: '#fafafa' },
         ].map((t, i) => (
@@ -52,10 +52,10 @@ export default async function MoveOutAuditPage() {
               <div className="glass-card" style={{ padding: '14px 20px', marginBottom: 8, cursor: 'pointer', ['--stagger' as any]: 3 + si * 10 + ri }}>
                 <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
                   <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#3b82f6', background: 'rgba(59,130,246,0.15)', border: '1px solid rgba(59,130,246,0.3)', padding: '3px 8px', borderRadius: 4 }}>{r.report_ref}</span>
-                  <span style={{ padding: '3px 8px', borderRadius: 4, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', background: r.inspection_type === 'move_in' ? 'rgba(59,130,246,0.15)' : 'rgba(245,158,11,0.15)', color: r.inspection_type === 'move_in' ? '#3b82f6' : '#f59e0b', border: `1px solid ${r.inspection_type === 'move_in' ? 'rgba(59,130,246,0.3)' : 'rgba(245,158,11,0.3)'}` }}>
+                  <span style={{ padding: '3px 8px', borderRadius: 4, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', background: r.inspection_type === 'move_in' ? 'rgba(59,130,246,0.15)' : 'rgb(var(--brand-rgb) / 0.15)', color: r.inspection_type === 'move_in' ? '#3b82f6' : 'var(--brand)', border: `1px solid ${r.inspection_type === 'move_in' ? 'rgba(59,130,246,0.3)' : 'rgb(var(--brand-rgb) / 0.3)'}` }}>
                     {r.inspection_type === 'move_in' ? 'Move-In' : 'Move-Out'}
                   </span>
-                  <span style={{ padding: '3px 10px', borderRadius: 99, fontSize: 11, fontWeight: 600, background: r.is_finalised ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.15)', color: r.is_finalised ? '#10b981' : '#f59e0b', border: `1px solid ${r.is_finalised ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}`, marginLeft: 'auto' }}>
+                  <span style={{ padding: '3px 10px', borderRadius: 99, fontSize: 11, fontWeight: 600, background: r.is_finalised ? 'rgba(16,185,129,0.15)' : 'rgb(var(--brand-rgb) / 0.15)', color: r.is_finalised ? '#10b981' : 'var(--brand)', border: `1px solid ${r.is_finalised ? 'rgba(16,185,129,0.3)' : 'rgb(var(--brand-rgb) / 0.3)'}`, marginLeft: 'auto' }}>
                     {r.is_finalised ? 'Finalised' : 'In Progress'}
                   </span>
                 </div>
@@ -71,7 +71,7 @@ export default async function MoveOutAuditPage() {
                       {new Date(r.inspection_date).toLocaleDateString('en-ZA')}
                     </span>
                     {Number(r.total_damage_cost) > 0 && (
-                      <span style={{ fontSize: 14, fontWeight: 700, color: '#f59e0b' }}>
+                      <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--brand)' }}>
                         R {Number(r.total_damage_cost).toFixed(2)}
                       </span>
                     )}

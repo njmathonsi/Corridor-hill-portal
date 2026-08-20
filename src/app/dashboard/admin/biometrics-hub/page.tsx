@@ -34,7 +34,7 @@ export default async function BiometricsHubPage({ searchParams }: { searchParams
       <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
         {[
           { label: 'Registered', value: registered, color: '#10b981' },
-          { label: 'Pending', value: pending, color: '#f59e0b' },
+          { label: 'Pending', value: pending, color: 'var(--brand)' },
           { label: 'Total', value: students?.length ?? 0, color: '#fafafa' },
         ].map((t, i) => (
           <div key={t.label} className="glass-card" style={{ flex: 1, padding: '14px 18px', ['--stagger' as any]: i }}>
@@ -64,7 +64,7 @@ export default async function BiometricsHubPage({ searchParams }: { searchParams
                   <td style={{ padding: '12px 16px', fontWeight: 600, color: '#fafafa' }}>{s.full_name} {isGuided && <span style={{ marginLeft: 6, fontSize: 10, color: '#3b82f6' }}>← Register this one</span>}</td>
                   <td style={{ padding: '12px 16px', color: '#71717a', fontFamily: 'monospace' }}>{s.student_number ?? '—'}</td>
                   <td style={{ padding: '12px 16px' }}>
-                    <span style={{ padding: '3px 10px', borderRadius: 99, fontSize: 11, fontWeight: 600, background: isRegistered ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.15)', color: isRegistered ? '#10b981' : '#f59e0b', border: `1px solid ${isRegistered ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}` }}>
+                    <span style={{ padding: '3px 10px', borderRadius: 99, fontSize: 11, fontWeight: 600, background: isRegistered ? 'rgba(16,185,129,0.15)' : 'rgb(var(--brand-rgb) / 0.15)', color: isRegistered ? '#10b981' : 'var(--brand)', border: `1px solid ${isRegistered ? 'rgba(16,185,129,0.3)' : 'rgb(var(--brand-rgb) / 0.3)'}` }}>
                       {isRegistered ? 'Registered' : 'Pending'}
                     </span>
                   </td>
