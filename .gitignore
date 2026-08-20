@@ -19,3 +19,6 @@ npm-debug.log*
 
 # typescript
 *.tsbuildinfo
+
+# Demo seeder state (records which real students were hidden)
+scripts/.demo-state.json
